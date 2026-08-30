@@ -1,0 +1,132 @@
+/* ============================================================
+   SupportDesk — jetons de design
+   Outil métier interne. Densité élevée, lisibilité prioritaire.
+   Tous les couples texte/fond respectent WCAG AA (>= 4.5:1
+   pour le texte courant, >= 3:1 pour les bordures et glyphes).
+   ============================================================ */
+
+:root {
+  /* ---------- Typographie ---------- */
+  --sd-font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --sd-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Échelle à cinq niveaux */
+  --sd-fs-1: 12px;   /* méta, libellés de colonne, badges   */
+  --sd-fs-2: 14px;   /* corps dense : tableaux, formulaires */
+  --sd-fs-3: 16px;   /* corps de lecture : fil de comm.     */
+  --sd-fs-4: 20px;   /* titres de bloc, sujet de ticket     */
+  --sd-fs-5: 28px;   /* titre d'écran, valeur d'indicateur  */
+
+  --sd-lh-tight: 1.25;
+  --sd-lh-normal: 1.45;
+  --sd-lh-loose: 1.6;
+
+  --sd-weight-regular: 400;
+  --sd-weight-medium: 500;
+  --sd-weight-semibold: 600;
+
+  --sd-track-caps: 0.06em;  /* interlettrage des libellés capitales */
+
+  /* ---------- Espacement — base 4 px ---------- */
+  --sd-space-1: 4px;
+  --sd-space-2: 8px;
+  --sd-space-3: 12px;
+  --sd-space-4: 16px;
+  --sd-space-5: 24px;
+  --sd-space-6: 32px;
+  --sd-space-7: 48px;
+  --sd-space-8: 64px;
+
+  --sd-row-h: 36px;         /* hauteur de ligne de tableau dense */
+  --sd-control-h: 32px;     /* hauteur des contrôles compacts    */
+  --sd-tap-min: 44px;       /* cible tactile minimale            */
+
+  /* ---------- Rayons, bordures, ombres ---------- */
+  --sd-radius-0: 0px;
+  --sd-radius-1: 2px;
+  --sd-radius-2: 4px;
+  --sd-radius-3: 8px;
+  --sd-border-w: 1px;
+  --sd-shadow-1: 0 1px 2px rgba(16, 26, 36, 0.08);
+  --sd-shadow-2: 0 4px 12px rgba(16, 26, 36, 0.12);
+
+  /* ---------- Neutres (bleu-gris) ---------- */
+  --sd-bg: #f4f6f8;          /* fond d'application            */
+  --sd-surface: #ffffff;     /* cartes, tableaux              */
+  --sd-surface-2: #eef1f4;   /* en-têtes de tableau, zébrures */
+  --sd-surface-3: #e3e8ec;   /* survol, séparateurs pleins    */
+  --sd-border: #d3dae0;      /* 1.7:1 sur surface — décoratif */
+  --sd-border-strong: #9aa8b4;/* 3.0:1 — bordures de contrôle */
+  --sd-text: #16202b;        /* 14.8:1 sur blanc              */
+  --sd-text-2: #46586a;      /* 7.5:1 sur blanc               */
+  --sd-text-3: #5f7080;      /* 4.8:1 sur blanc — méta        */
+  --sd-inverse-bg: #16202b;
+  --sd-inverse-text: #f4f6f8;
+
+  /* ---------- Accent ---------- */
+  --sd-accent: #1f5c33;         /* 7.3:1 avec texte blanc */
+  --sd-accent-hover: #174527;
+  --sd-accent-strong: #174527;
+  --sd-accent-fg: #ffffff;
+  --sd-accent-tint: #e7f2e9;
+  --sd-link: #1a4d8f;           /* 7.0:1 sur blanc */
+  --sd-link-hover: #123963;
+  --sd-focus: #1a4d8f;
+  --sd-focus-ring: 0 0 0 2px #ffffff, 0 0 0 4px #1a4d8f;
+
+  /* ---------- Statuts de ticket ----------
+     Quatre états, quatre traitements : la couleur n'est jamais
+     le seul porteur d'information. Chaque badge combine
+     couleur + forme (rayon/bordure) + glyphe + libellé.
+
+       OUVERT    fond ambré plein, bordure pleine, glyphe ●
+       EN_COURS  fond bleu clair, bordure TIRETÉE,   glyphe ◑
+       RESOLU    fond vert foncé plein, texte blanc, glyphe ✓
+       FERME     fond gris, libellé BARRÉ,           glyphe ✕
+  */
+  --sd-status-open-bg: #fdf1dd;
+  --sd-status-open-fg: #7a4a00;      /* 6.4:1 sur son fond */
+  --sd-status-open-border: #b8791f;
+  --sd-status-open-glyph: "\25CF";   /* ● */
+
+  --sd-status-progress-bg: #e6effa;
+  --sd-status-progress-fg: #14417a;  /* 8.0:1 sur son fond */
+  --sd-status-progress-border: #14417a;
+  --sd-status-progress-glyph: "\25D1"; /* ◑ */
+
+  --sd-status-resolved-bg: #1f5c33;
+  --sd-status-resolved-fg: #ffffff;  /* 7.3:1 */
+  --sd-status-resolved-border: #174527;
+  --sd-status-resolved-glyph: "\2713"; /* ✓ */
+
+  --sd-status-closed-bg: #e6eaee;
+  --sd-status-closed-fg: #3f4d59;    /* 7.1:1 sur son fond */
+  --sd-status-closed-border: #9aa8b4;
+  --sd-status-closed-glyph: "\2715"; /* ✕ */
+
+  /* ---------- Sémantique d'alerte ---------- */
+  --sd-danger-bg: #fdecec;
+  --sd-danger-fg: #8c1d1d;
+  --sd-danger-border: #c04242;
+  --sd-warn-bg: #fdf1dd;
+  --sd-warn-fg: #7a4a00;
+  --sd-warn-border: #b8791f;
+  --sd-info-bg: #e6effa;
+  --sd-info-fg: #14417a;
+  --sd-info-border: #14417a;
+
+  /* ---------- Note interne (élément critique) ----------
+     Réservé aux commentaires NON visibles par le client.
+     Ce vocabulaire (aubergine + hachures diagonales + cadenas)
+     n'apparaît nulle part ailleurs dans l'application. */
+  --sd-internal-bg: #f3ecf7;
+  --sd-internal-surface: #2c1a38;
+  --sd-internal-fg: #4a1f63;         /* 8.1:1 sur son fond */
+  --sd-internal-border: #4a1f63;
+  --sd-internal-on-dark: #f0e6f6;
+  --sd-internal-hatch: repeating-linear-gradient(
+      -45deg,
+      #4a1f63 0 6px,
+      transparent 6px 12px);
+  --sd-internal-label: "NOTE INTERNE \00B7 NON VISIBLE PAR LE CLIENT";
+}

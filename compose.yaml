@@ -1,0 +1,149 @@
+name: supportdesk
+
+# En développement, ce fichier ne lance QUE les dépendances.
+# Le backend tourne depuis l'IDE, le frontend en `ng serve`.
+#
+# Le backend embarque `spring-boot-docker-compose` et démarre ces services tout seul
+# (`lifecycle-management: start-only`). `docker compose up -d` reste utile pour lancer
+# l'infra sans le backend, ou pour lire les logs.
+#
+# Les services applicatifs (profil "full") sont ajoutés en J4, pour le déploiement.
+
+services:
+
+  postgres:
+    image: postgres:18-alpine
+    container_name: sd-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-supportdesk}
+      POSTGRES_USER: ${POSTGRES_USER:-supportdesk}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-supportdesk}
+    ports:
+      - "5432:5432"
+    volumes:
+      # Postgres 18+ veut UN SEUL montage sur /var/lib/postgresql et place les données dans
+      # un sous-répertoire par version majeure (pg_upgrade --link sans franchir le montage).
+      # Monter /var/lib/postgresql/data — la convention des images <= 17 — fait échouer
+      # le démarrage avec « unused mount/volume ». Voir docker-library/postgres#1259.
+      - sd-postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-supportdesk} -d ${POSTGRES_DB:-supportdesk}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    # Spring Boot reconnaît l'image `postgres` et injecte les JdbcConnectionDetails
+    # à partir de ces variables. Ne PAS redéclarer spring.datasource.* dans le backend.
+    #
+    # Pour ajouter des paramètres à l'URL JDBC générée (SSL, timeouts...), utiliser :
+    # labels:
+    #   org.springframework.boot.jdbc.parameters: 'ssl=true&sslmode=require'
+    # Inutile en local, mais c'est l'échappatoire quand l'URL doit être ajustée.
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.7.2
+    container_name: sd-keycloak
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_ADMIN:-admin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_HEALTH_ENABLED: "true"
+      KC_HTTP_PORT: "8080"
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./infra/keycloak:/opt/keycloak/data/import:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q UP"
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 30s
+
+  # CRM legacy exposé en SOAP. Boîte noire volontaire : l'étudiant a les sources dans
+  # legacy-crm/ mais ne les ouvre pas — il n'a que le WSDL, comme face à un vrai SI existant.
+  # L'image est construite par Compose : rien à préparer avant la session.
+  legacy-crm:
+    build:
+      context: ./legacy-crm
+    container_name: sd-legacy-crm
+    ports:
+      - "8082:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+
+  # ---------------------------------------------------------------
+  # Profil "full" — J4 uniquement. `docker compose --profile full up`
+  # Non démarrés par spring-boot-docker-compose : le profil les protège.
+  # ---------------------------------------------------------------
+
+  backend:
+    profiles: ["full"]
+    build:
+      context: ./backend
+    container_name: sd-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DOCKER_COMPOSE_ENABLED: "false"
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-supportdesk}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-supportdesk}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-supportdesk}
+      # LE PIÈGE DU J4, en deux lignes.
+      #
+      # L'issuer est celui que voit le NAVIGATEUR : c'est lui qui est inscrit dans le jeton,
+      # et le backend le compare tel quel. Le mettre à http://keycloak:8080 fait échouer
+      # tous les jetons avec « iss claim is not valid », alors que tout marchait en dev.
+      #
+      # Le JWKS, lui, est récupéré par le BACKEND, qui n'a aucune route vers localhost:8081 :
+      # il passe par le nom de service Docker. Les deux URL sont différentes, et c'est normal.
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://localhost:8081/realms/supportdesk
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWK_SET_URI: http://keycloak:8080/realms/supportdesk/protocol/openid-connect/certs
+      SUPPORTDESK_CRM_URL: http://legacy-crm:8080/services
+      # Le front est servi par le même nginx que l'API : même origine, donc plus de CORS.
+      SUPPORTDESK_ORIGINES_AUTORISEES: http://localhost:4200
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/actuator/health | grep -q UP"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 40s
+    depends_on:
+      postgres:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+      # Sans cette dépendance, le backend démarre avant le CRM et les premiers appels
+      # échouent — en 503 propres, mais échouent quand même.
+      legacy-crm:
+        condition: service_healthy
+
+  frontend:
+    profiles: ["full"]
+    build:
+      context: ./frontend
+      # Les jetons de design vivent hors de frontend/ : une seule source de vérité pour
+      # le visuel, atteinte par lien symbolique en développement. Un lien ne traverse pas
+      # un contexte de build — d'où ce contexte additionnel.
+      additional_contexts:
+        design: ./design
+    container_name: sd-frontend
+    ports:
+      - "4200:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  sd-postgres-data:

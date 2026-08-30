@@ -1,0 +1,28 @@
+{
+  "// Java": "Adapter le chemin du JDK 25 à la machine (java.configuration.runtimes)",
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+  "spring-boot.ls.java.home": "",
+
+  "// Frontend": "Angular 22 exige TypeScript 6 — utiliser la version du projet, pas celle de VS Code",
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "[java]": { "editor.defaultFormatter": "redhat.java" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[yaml]": { "editor.defaultFormatter": "redhat.vscode-yaml" },
+
+  "files.exclude": {
+    "**/target": true,
+    "**/.angular": true
+  },
+
+  "// Terminal": "Claude Code doit être lancé depuis la RACINE du dépôt pour voir CLAUDE.md",
+  "terminal.integrated.cwd": "${workspaceFolder}"
+}

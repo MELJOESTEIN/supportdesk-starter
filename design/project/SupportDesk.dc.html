@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./tokens.css" />
+<style>
+  body { margin: 0; background: #e7ebee; font-family: "IBM Plex Sans", system-ui, sans-serif; color: #16202b; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #1a4d8f; text-decoration: none; }
+  a:hover { color: #123963; text-decoration: underline; }
+  table { border-collapse: collapse; }
+  @keyframes sd-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+</style>
+</helmet>
+
+<div style="padding: 0 0 64px 0;">
+
+  <nav style="position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 24px; padding: 12px 32px; background: #16202b; color: #f4f6f8; box-shadow: 0 1px 2px rgba(16,26,36,0.08);">
+    <span style="font: 600 14px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em;">SUPPORTDESK</span>
+    <span style="font-size: 12px; color: #9aa8b4;">Système de design &amp; maquettes</span>
+    <div style="display: flex; align-items: center; gap: 4px; margin-left: auto; flex-wrap: wrap;">
+      <span style="font: 500 11px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: #9aa8b4; padding-right: 4px;">JETONS</span>
+      <a href="#tokens" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">0</a>
+      <span style="font: 500 11px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: #9aa8b4; padding: 0 4px 0 12px;">PORTAIL</span>
+      <a href="#s1" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">1</a>
+      <a href="#s2" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">2</a>
+      <a href="#s3" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">3</a>
+      <span style="font: 500 11px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: #9aa8b4; padding: 0 4px 0 12px;">AGENT</span>
+      <a href="#s4" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">4</a>
+      <a href="#s5" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">5</a>
+      <a href="#s6" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">6</a>
+      <span style="font: 500 11px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: #9aa8b4; padding: 0 4px 0 12px;">TRANSVERSE</span>
+      <a href="#s7" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">7</a>
+      <span style="font: 500 11px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: #9aa8b4; padding: 0 4px 0 12px;">CONNEXION</span>
+      <a href="#s8" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">8</a>
+      <a href="#s9" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">9</a>
+      <a href="#s10" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">10</a>
+      <a href="#ident" style="color: #f4f6f8; font-size: 13px; padding: 6px 8px; border-radius: 4px;">Identité</a>
+    </div>
+  </nav>
+
+  <!-- ══════════════ 0 · SYSTÈME DE DESIGN ══════════════ -->
+  <section id="tokens" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">00</span>
+      <h1 style="margin: 0; font-size: var(--sd-fs-5); font-weight: var(--sd-weight-semibold); line-height: var(--sd-lh-tight);">Système de design</h1>
+    </div>
+    <p style="margin: 0 0 24px 0; max-width: 720px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-normal); color: var(--sd-text-2); text-wrap: pretty;">Palette sobre, contrastes vérifiés WCAG AA, échelle typographique à cinq niveaux, grille d'espacement en base 4 px. Les jetons sont livrés dans <code style="font-family: var(--sd-font-mono); font-size: 14px; background: var(--sd-surface-2); padding: 1px 4px; border-radius: 2px;">tokens.css</code> et cette maquette les consomme directement.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+
+      <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-3); padding: 24px;">
+        <h2 style="margin: 0 0 16px 0; font-size: var(--sd-fs-1); font-weight: 600; letter-spacing: var(--sd-track-caps); text-transform: uppercase; color: var(--sd-text-3); font-family: var(--sd-font-mono);">Neutres &amp; accent</h2>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+          <div style="height: 56px; background: var(--sd-bg); border: 1px solid var(--sd-border); border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-2);">bg</div>
+          <div style="height: 56px; background: var(--sd-surface-2); border: 1px solid var(--sd-border); border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-2);">surface-2</div>
+          <div style="height: 56px; background: var(--sd-surface-3); border: 1px solid var(--sd-border); border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-2);">surface-3</div>
+          <div style="height: 56px; background: var(--sd-border-strong); border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; font: 500 11px/1 var(--sd-font-mono); color: #16202b;">border</div>
+          <div style="height: 56px; background: var(--sd-text-3); border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; font: 500 11px/1 var(--sd-font-mono); color: #fff;">text-3</div>
+          <div style="height: 56px; background: var(--sd-text-2); border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; font: 500 11px/1 var(--sd-font-mono); color: #fff;">text-2</div>
+          <div style="height: 56px; background: var(--sd-text); border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; font: 500 11px/1 var(--sd-font-mono); color: #fff;">text</div>
+          <div style="height: 56px; background: var(--sd-accent); border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; font: 500 11px/1 var(--sd-font-mono); color: #fff;">accent</div>
+        </div>
+        <p style="margin: 12px 0 0 0; font-size: var(--sd-fs-1); color: var(--sd-text-3); line-height: var(--sd-lh-normal);">Texte courant 14,8:1 sur blanc. Méta 4,8:1. Accent 7,3:1 avec texte blanc.</p>
+      </div>
+
+      <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-3); padding: 24px;">
+        <h2 style="margin: 0 0 16px 0; font-size: var(--sd-fs-1); font-weight: 600; letter-spacing: var(--sd-track-caps); text-transform: uppercase; color: var(--sd-text-3); font-family: var(--sd-font-mono);">Échelle typographique</h2>
+        <div style="display: grid; gap: 10px;">
+          <div style="display: flex; align-items: baseline; gap: 16px;"><span style="width: 92px; flex: none; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">28 / 1.25</span><span style="font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.1;">Titre d'écran</span></div>
+          <div style="display: flex; align-items: baseline; gap: 16px;"><span style="width: 92px; flex: none; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">20 / 1.25</span><span style="font-size: var(--sd-fs-4); font-weight: 600;">Sujet de ticket</span></div>
+          <div style="display: flex; align-items: baseline; gap: 16px;"><span style="width: 92px; flex: none; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">16 / 1.6</span><span style="font-size: var(--sd-fs-3);">Corps de lecture — fil de commentaires</span></div>
+          <div style="display: flex; align-items: baseline; gap: 16px;"><span style="width: 92px; flex: none; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">14 / 1.45</span><span style="font-size: var(--sd-fs-2);">Corps dense — tableaux, formulaires</span></div>
+          <div style="display: flex; align-items: baseline; gap: 16px;"><span style="width: 92px; flex: none; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">12 / 1.45</span><span style="font-size: var(--sd-fs-1); font-family: var(--sd-font-mono); letter-spacing: var(--sd-track-caps); text-transform: uppercase; color: var(--sd-text-3);">Méta, colonnes, badges</span></div>
+        </div>
+      </div>
+
+      <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-3); padding: 24px; grid-column: span 2;">
+        <h2 style="margin: 0 0 4px 0; font-size: var(--sd-fs-1); font-weight: 600; letter-spacing: var(--sd-track-caps); text-transform: uppercase; color: var(--sd-text-3); font-family: var(--sd-font-mono);">Statuts — quatre traitements distinguables sans la couleur</h2>
+        <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">Chaque état combine trois signaux redondants : glyphe, forme du cadre, libellé. En niveaux de gris comme en vision dichromate, les quatre restent différenciés.</p>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+          <div style="border: 1px solid var(--sd-border); border-radius: 4px; padding: 16px;">
+            <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 11px; background: var(--sd-status-open-bg); color: var(--sd-status-open-fg); border: 1px solid var(--sd-status-open-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">●</span>OUVERT</span>
+            <p style="margin: 12px 0 0 0; font-size: var(--sd-fs-1); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">Pilule · bordure pleine · disque plein. Ambre.</p>
+          </div>
+          <div style="border: 1px solid var(--sd-border); border-radius: 4px; padding: 16px;">
+            <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-progress-bg); color: var(--sd-status-progress-fg); border: 1px dashed var(--sd-status-progress-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">◑</span>EN_COURS</span>
+            <p style="margin: 12px 0 0 0; font-size: var(--sd-fs-1); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">Angle droit · bordure tiretée · demi-disque. Bleu.</p>
+          </div>
+          <div style="border: 1px solid var(--sd-border); border-radius: 4px; padding: 16px;">
+            <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-resolved-bg); color: var(--sd-status-resolved-fg); border: 1px solid var(--sd-status-resolved-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">✓</span>RESOLU</span>
+            <p style="margin: 12px 0 0 0; font-size: var(--sd-fs-1); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">Aplat foncé · texte inversé · coche. Vert.</p>
+          </div>
+          <div style="border: 1px solid var(--sd-border); border-radius: 4px; padding: 16px;">
+            <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-closed-bg); color: var(--sd-status-closed-fg); border: 1px solid var(--sd-status-closed-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">✕</span><span style="text-decoration: line-through;">FERME</span></span>
+            <p style="margin: 12px 0 0 0; font-size: var(--sd-fs-1); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">Angle droit · libellé barré · croix. Gris.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-3); padding: 24px;">
+        <h2 style="margin: 0 0 16px 0; font-size: var(--sd-fs-1); font-weight: 600; letter-spacing: var(--sd-track-caps); text-transform: uppercase; color: var(--sd-text-3); font-family: var(--sd-font-mono);">Espacement — base 4 px</h2>
+        <div style="display: grid; gap: 6px;">
+          <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 68px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">space-1 4</span><span style="height: 12px; width: 4px; background: var(--sd-accent);"></span></div>
+          <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 68px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">space-2 8</span><span style="height: 12px; width: 8px; background: var(--sd-accent);"></span></div>
+          <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 68px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">space-3 12</span><span style="height: 12px; width: 12px; background: var(--sd-accent);"></span></div>
+          <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 68px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">space-4 16</span><span style="height: 12px; width: 16px; background: var(--sd-accent);"></span></div>
+          <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 68px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">space-5 24</span><span style="height: 12px; width: 24px; background: var(--sd-accent);"></span></div>
+          <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 68px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">space-6 32</span><span style="height: 12px; width: 32px; background: var(--sd-accent);"></span></div>
+          <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 68px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">space-7 48</span><span style="height: 12px; width: 48px; background: var(--sd-accent);"></span></div>
+          <div style="display: flex; align-items: center; gap: 12px;"><span style="width: 68px; font: 500 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">space-8 64</span><span style="height: 12px; width: 64px; background: var(--sd-accent);"></span></div>
+        </div>
+        <p style="margin: 12px 0 0 0; font-size: var(--sd-fs-1); color: var(--sd-text-3); line-height: var(--sd-lh-normal);">Ligne de tableau 36 px, contrôle compact 32 px, cible tactile 44 px.</p>
+      </div>
+
+      <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-3); padding: 24px;">
+        <h2 style="margin: 0 0 8px 0; font-size: var(--sd-fs-1); font-weight: 600; letter-spacing: var(--sd-track-caps); text-transform: uppercase; color: var(--sd-text-3); font-family: var(--sd-font-mono);">Vocabulaire « note interne »</h2>
+        <p style="margin: 0 0 12px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">Aubergine, hachures diagonales, cadenas. Ce vocabulaire n'apparaît nulle part ailleurs : il ne signifie qu'une seule chose.</p>
+        <div style="border: 2px solid var(--sd-internal-border); border-radius: 4px; overflow: hidden;">
+          <div style="height: 8px; background: var(--sd-internal-hatch); background-color: var(--sd-internal-bg);"></div>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: var(--sd-internal-surface); color: var(--sd-internal-on-dark); font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em;"><span aria-hidden="true">🔒</span>NOTE INTERNE · NON VISIBLE PAR LE CLIENT</div>
+          <div style="padding: 12px; background: var(--sd-internal-bg); color: var(--sd-internal-fg); font-size: var(--sd-fs-2); line-height: var(--sd-lh-normal);">Contenu réservé à l'équipe.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════ 1 · LISTE DE MES TICKETS ══════════════ -->
+  <section id="s1" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">01 · PORTAIL CLIENT</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Liste de mes tickets</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2);">Tableau dense, tri par dernière activité, pagination serveur.</p>
+
+    <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-2); background: var(--sd-bg);">
+      <div style="display: flex; align-items: center; gap: 24px; padding: 0 24px; height: 56px; background: var(--sd-surface); border-bottom: 1px solid var(--sd-border);">
+        <span style="font: 600 14px/1 var(--sd-font-mono); letter-spacing: 0.06em;">SUPPORTDESK</span>
+        <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); border-left: 1px solid var(--sd-border); padding-left: 24px;">Espace client</span>
+        <div style="display: flex; gap: 4px; margin-left: 24px;">
+          <span style="padding: 6px 12px; font-size: var(--sd-fs-2); font-weight: 500; color: var(--sd-text); border-bottom: 2px solid var(--sd-accent);">Mes tickets</span>
+          <span style="padding: 6px 12px; font-size: var(--sd-fs-2); color: var(--sd-text-2);">Base de connaissances</span>
+        </div>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Camille Roussel</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">ATELIER VERNET</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-surface); color: var(--sd-text-2); border: 1px solid var(--sd-border-strong);"><span aria-hidden="true">○</span>CLIENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+      </div>
+
+      <div style="padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+          <h3 style="margin: 0; font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.2;">Mes tickets</h3>
+          <span style="font-size: var(--sd-fs-2); color: var(--sd-text-3); align-self: flex-end; padding-bottom: 4px;">18 tickets</span>
+          <div style="margin-left: auto; display: flex; align-items: center; gap: 8px;">
+            <label style="display: flex; align-items: center; height: var(--sd-control-h); border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); padding: 0 8px; gap: 6px;">
+              <span aria-hidden="true" style="color: var(--sd-text-3); font-size: 13px;">⌕</span>
+              <input type="text" placeholder="Rechercher dans mes tickets" style="border: 0; outline: none; font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); width: 220px; color: var(--sd-text); background: transparent;" />
+            </label>
+            <button type="button" style="height: var(--sd-control-h); padding: 0 14px; border: 0; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); font-weight: 500; cursor: pointer;" style-hover="background: var(--sd-accent-strong);">Nouveau ticket</button>
+          </div>
+        </div>
+
+        <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); overflow: hidden;">
+          <table style="width: 100%; font-size: var(--sd-fs-2);">
+            <thead>
+              <tr style="background: var(--sd-surface-2);">
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 116px;">RÉF</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border);">SUJET</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 148px;">STATUT</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 116px;">CRÉÉ LE</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 168px;">DERNIÈRE ACTIVITÉ ↓</th>
+                <th style="text-align: right; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 76px;">MSG</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--sd-border);" style-hover="background: var(--sd-surface-2);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h); font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4821</td>
+                <td style="padding: 8px 12px;"><a href="#s2" style="font-weight: 500;">Facture de mars non téléchargeable</a></td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 11px; background: var(--sd-status-open-bg); color: var(--sd-status-open-fg); border: 1px solid var(--sd-status-open-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">●</span>OUVERT</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2); font-variant-numeric: tabular-nums;">24 août 2026</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">il y a 14 min · <span style="color: var(--sd-text-3);">vous</span></td>
+                <td style="padding: 8px 12px; text-align: right; font-family: var(--sd-font-mono); color: var(--sd-text-2);">3</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);" style-hover="background: var(--sd-surface-3);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h); font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4790</td>
+                <td style="padding: 8px 12px;"><a href="#s2" style="font-weight: 500;">Accès refusé au tableau de bord depuis lundi</a></td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-progress-bg); color: var(--sd-status-progress-fg); border: 1px dashed var(--sd-status-progress-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">◑</span>EN_COURS</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2); font-variant-numeric: tabular-nums;">19 août 2026</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">il y a 2 h · <span style="color: var(--sd-text-3);">Nadia B.</span></td>
+                <td style="padding: 8px 12px; text-align: right; font-family: var(--sd-font-mono); color: var(--sd-text-2);">7</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border);" style-hover="background: var(--sd-surface-2);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h); font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4712</td>
+                <td style="padding: 8px 12px;"><a href="#s2" style="font-weight: 500;">Ajouter un second utilisateur au contrat</a></td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-progress-bg); color: var(--sd-status-progress-fg); border: 1px dashed var(--sd-status-progress-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">◑</span>EN_COURS</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2); font-variant-numeric: tabular-nums;">11 août 2026</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">hier, 17:42 · <span style="color: var(--sd-text-3);">Yann M.</span></td>
+                <td style="padding: 8px 12px; text-align: right; font-family: var(--sd-font-mono); color: var(--sd-text-2);">4</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);" style-hover="background: var(--sd-surface-3);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h); font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4655</td>
+                <td style="padding: 8px 12px;"><a href="#s2" style="font-weight: 500;">Export CSV tronqué au-delà de 5 000 lignes</a></td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-resolved-bg); color: var(--sd-status-resolved-fg); border: 1px solid var(--sd-status-resolved-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">✓</span>RESOLU</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2); font-variant-numeric: tabular-nums;">2 août 2026</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">14 août, 09:15 · <span style="color: var(--sd-text-3);">Nadia B.</span></td>
+                <td style="padding: 8px 12px; text-align: right; font-family: var(--sd-font-mono); color: var(--sd-text-2);">9</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border);" style-hover="background: var(--sd-surface-2);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h); font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4519</td>
+                <td style="padding: 8px 12px;"><a href="#s2" style="font-weight: 500;">Changement d'adresse de facturation</a></td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-closed-bg); color: var(--sd-status-closed-fg); border: 1px solid var(--sd-status-closed-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">✕</span><span style="text-decoration: line-through;">FERME</span></span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2); font-variant-numeric: tabular-nums;">21 juil. 2026</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">28 juil., 11:03 · <span style="color: var(--sd-text-3);">système</span></td>
+                <td style="padding: 8px 12px; text-align: right; font-family: var(--sd-font-mono); color: var(--sd-text-2);">2</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);" style-hover="background: var(--sd-surface-3);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h); font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4488</td>
+                <td style="padding: 8px 12px;"><a href="#s2" style="font-weight: 500;">Double prélèvement sur juin</a></td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-closed-bg); color: var(--sd-status-closed-fg); border: 1px solid var(--sd-status-closed-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">✕</span><span style="text-decoration: line-through;">FERME</span></span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2); font-variant-numeric: tabular-nums;">3 juil. 2026</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">9 juil., 16:20 · <span style="color: var(--sd-text-3);">Yann M.</span></td>
+                <td style="padding: 8px 12px; text-align: right; font-family: var(--sd-font-mono); color: var(--sd-text-2);">5</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--sd-surface-2); border-top: 1px solid var(--sd-border);">
+            <span style="font-size: var(--sd-fs-1); color: var(--sd-text-2); font-variant-numeric: tabular-nums;">1–6 sur 18</span>
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 4px;">
+              <button type="button" style="height: 28px; min-width: 28px; padding: 0 8px; border: 1px solid var(--sd-border-strong); background: var(--sd-surface); border-radius: 4px; font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text-3); cursor: not-allowed;">‹</button>
+              <button type="button" style="height: 28px; min-width: 28px; border: 1px solid var(--sd-accent); background: var(--sd-accent); color: var(--sd-accent-fg); border-radius: 4px; font: 600 13px/1 var(--sd-font-mono); cursor: pointer;">1</button>
+              <button type="button" style="height: 28px; min-width: 28px; border: 1px solid var(--sd-border-strong); background: var(--sd-surface); border-radius: 4px; font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text); cursor: pointer;">2</button>
+              <button type="button" style="height: 28px; min-width: 28px; border: 1px solid var(--sd-border-strong); background: var(--sd-surface); border-radius: 4px; font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text); cursor: pointer;">3</button>
+              <button type="button" style="height: 28px; min-width: 28px; padding: 0 8px; border: 1px solid var(--sd-border-strong); background: var(--sd-surface); border-radius: 4px; font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text); cursor: pointer;">›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 2 · DÉTAIL CLIENT ══════════════ -->
+  <section id="s2" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">02 · PORTAIL CLIENT</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Détail d'un ticket</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2);">En-tête récapitulatif, fil chronologique, champ de réponse en bas de fil.</p>
+
+    <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-2); background: var(--sd-bg);">
+      <div style="display: flex; align-items: center; gap: 24px; padding: 0 24px; height: 56px; background: var(--sd-surface); border-bottom: 1px solid var(--sd-border);">
+        <span style="font: 600 14px/1 var(--sd-font-mono); letter-spacing: 0.06em;">SUPPORTDESK</span>
+        <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); border-left: 1px solid var(--sd-border); padding-left: 24px;">Espace client</span>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Camille Roussel</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">ATELIER VERNET</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-surface); color: var(--sd-text-2); border: 1px solid var(--sd-border-strong);"><span aria-hidden="true">○</span>CLIENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+      </div>
+
+      <div style="padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 24px; align-items: start;">
+        <div>
+          <a href="#s1" style="font-size: var(--sd-fs-2);">← Mes tickets</a>
+          <div style="display: flex; align-items: flex-start; gap: 12px; margin: 8px 0 4px 0;">
+            <h3 style="margin: 0; font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.2;">Facture de mars non téléchargeable</h3>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
+            <span style="font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4821</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 11px; background: var(--sd-status-open-bg); color: var(--sd-status-open-fg); border: 1px solid var(--sd-status-open-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">●</span>OUVERT</span>
+            <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Ouvert le 24 août 2026 à 09:12 · 3 messages</span>
+          </div>
+
+          <div style="display: grid; gap: 16px;">
+            <article style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px;">
+              <span style="width: 32px; height: 32px; border-radius: 50%; background: var(--sd-surface-3); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">CR</span>
+              <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); overflow: hidden;">
+                <div style="display: flex; align-items: baseline; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);">
+                  <span style="font-size: var(--sd-fs-2); font-weight: 600;">Camille Roussel</span>
+                  <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">vous · 24 août, 09:12</span>
+                </div>
+                <div style="padding: 16px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-text); text-wrap: pretty;">
+                  <p style="margin: 0 0 12px 0;">Bonjour, depuis ce matin le bouton de téléchargement de la facture de mars ne répond plus. Les factures d'avril et mai se téléchargent normalement.</p>
+                  <p style="margin: 0;">J'ai essayé sur Chrome et Firefox, même résultat. Aucun message d'erreur n'apparaît.</p>
+                </div>
+              </div>
+            </article>
+
+            <article style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px;">
+              <span style="width: 32px; height: 32px; border-radius: 50%; background: var(--sd-accent-tint); border: 1px solid var(--sd-accent); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-accent);">NB</span>
+              <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-left: 3px solid var(--sd-accent); border-radius: var(--sd-radius-2); overflow: hidden;">
+                <div style="display: flex; align-items: baseline; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--sd-border); background: var(--sd-accent-tint);">
+                  <span style="font-size: var(--sd-fs-2); font-weight: 600;">Nadia Belkacem</span>
+                  <span style="font-size: var(--sd-fs-1); color: var(--sd-accent); font-family: var(--sd-font-mono); letter-spacing: 0.04em;">SUPPORT SUPPORTDESK</span>
+                  <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); margin-left: auto;">24 août, 10:38</span>
+                </div>
+                <div style="padding: 16px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-text); text-wrap: pretty;">
+                  <p style="margin: 0 0 12px 0;">Bonjour Camille, merci pour ces précisions. Je reproduis le problème de mon côté sur la facture de mars uniquement — il s'agit d'un document généré avant notre migration du 12 mars.</p>
+                  <p style="margin: 0;">Je la régénère et vous reviens aujourd'hui. En attendant, souhaitez-vous que je vous l'envoie par courriel ?</p>
+                </div>
+              </div>
+            </article>
+
+            <article style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px;">
+              <span style="width: 32px; height: 32px; border-radius: 50%; background: var(--sd-surface-3); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">CR</span>
+              <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); overflow: hidden;">
+                <div style="display: flex; align-items: baseline; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);">
+                  <span style="font-size: var(--sd-fs-2); font-weight: 600;">Camille Roussel</span>
+                  <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">vous · il y a 14 min</span>
+                </div>
+                <div style="padding: 16px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-text);">
+                  <p style="margin: 0;">Oui, par courriel ce serait parfait. Merci.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div style="margin-top: 24px; background: var(--sd-surface); border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-2); overflow: hidden;">
+            <div style="padding: 8px 16px; background: var(--sd-surface-2); border-bottom: 1px solid var(--sd-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">RÉPONDRE</div>
+            <textarea placeholder="Votre réponse…" style="display: block; width: 100%; min-height: 96px; border: 0; outline: none; resize: vertical; padding: 16px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-3); line-height: var(--sd-lh-normal); color: var(--sd-text);"></textarea>
+            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--sd-border);">
+              <button type="button" style="height: 36px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); color: var(--sd-text); cursor: pointer;">Joindre un fichier</button>
+              <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Visible par l'équipe support.</span>
+              <button type="button" style="margin-left: auto; height: 36px; padding: 0 20px; border: 0; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); font-weight: 500; cursor: pointer;">Envoyer la réponse</button>
+            </div>
+          </div>
+        </div>
+
+        <aside style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px;">
+          <h4 style="margin: 0 0 12px 0; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">RÉCAPITULATIF</h4>
+          <dl style="margin: 0; display: grid; grid-template-columns: 96px minmax(0, 1fr); row-gap: 8px; column-gap: 12px; font-size: var(--sd-fs-2);">
+            <dt style="color: var(--sd-text-3);">Référence</dt><dd style="margin: 0; font-family: var(--sd-font-mono); font-size: 13px;">TCK-4821</dd>
+            <dt style="color: var(--sd-text-3);">Catégorie</dt><dd style="margin: 0;">Facturation</dd>
+            <dt style="color: var(--sd-text-3);">Créé le</dt><dd style="margin: 0; font-variant-numeric: tabular-nums;">24 août 2026</dd>
+            <dt style="color: var(--sd-text-3);">Dernière act.</dt><dd style="margin: 0;">il y a 14 min</dd>
+            <dt style="color: var(--sd-text-3);">Interlocuteur</dt><dd style="margin: 0;">Nadia Belkacem</dd>
+          </dl>
+          <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--sd-border);">
+            <button type="button" style="width: 100%; height: 36px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); color: var(--sd-text); cursor: pointer;">Clôturer ce ticket</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 3 · NOUVEAU TICKET ══════════════ -->
+  <section id="s3" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">03 · PORTAIL CLIENT</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Nouveau ticket</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2);">Quatre champs, une seule colonne, un seul bouton d'action primaire.</p>
+
+    <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-2); background: var(--sd-bg);">
+      <div style="display: flex; align-items: center; gap: 24px; padding: 0 24px; height: 56px; background: var(--sd-surface); border-bottom: 1px solid var(--sd-border);">
+        <span style="font: 600 14px/1 var(--sd-font-mono); letter-spacing: 0.06em;">SUPPORTDESK</span>
+        <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); border-left: 1px solid var(--sd-border); padding-left: 24px;">Espace client</span>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Camille Roussel</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">ATELIER VERNET</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-surface); color: var(--sd-text-2); border: 1px solid var(--sd-border-strong);"><span aria-hidden="true">○</span>CLIENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+      </div>
+
+      <div style="padding: 32px 24px 40px 24px; display: flex; justify-content: center;">
+        <form style="width: 640px;">
+          <a href="#s1" style="font-size: var(--sd-fs-2);">← Mes tickets</a>
+          <h3 style="margin: 8px 0 4px 0; font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.2;">Nouveau ticket</h3>
+          <p style="margin: 0 0 24px 0; font-size: var(--sd-fs-3); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">Réponse sous un jour ouvré. Vous recevrez une confirmation par courriel.</p>
+
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 24px; display: grid; gap: 20px;">
+            <div style="display: grid; gap: 6px;">
+              <label style="font-size: var(--sd-fs-2); font-weight: 500;">Sujet</label>
+              <input type="text" placeholder="Résumez le problème en une phrase" style="height: 40px; border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 12px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-3); color: var(--sd-text); background: var(--sd-surface); outline: none;" />
+              <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Obligatoire · 80 caractères maximum</span>
+            </div>
+
+            <div style="display: grid; gap: 6px;">
+              <label style="font-size: var(--sd-fs-2); font-weight: 500;">Catégorie</label>
+              <select style="height: 40px; border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 12px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-3); color: var(--sd-text); background: var(--sd-surface);">
+                <option>Facturation</option>
+                <option>Accès et connexion</option>
+                <option>Anomalie technique</option>
+                <option>Demande d'évolution</option>
+                <option>Autre</option>
+              </select>
+            </div>
+
+            <div style="display: grid; gap: 6px;">
+              <label style="font-size: var(--sd-fs-2); font-weight: 500;">Description</label>
+              <textarea placeholder="Ce que vous avez fait, ce que vous attendiez, ce qui s'est passé." style="min-height: 160px; resize: vertical; border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 12px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-3); line-height: var(--sd-lh-normal); color: var(--sd-text); background: var(--sd-surface); outline: none;"></textarea>
+            </div>
+
+            <div style="display: grid; gap: 6px;">
+              <label style="font-size: var(--sd-fs-2); font-weight: 500;">Pièce jointe <span style="color: var(--sd-text-3); font-weight: 400;">(facultatif)</span></label>
+              <div style="display: flex; align-items: center; gap: 12px; border: 1px dashed var(--sd-border-strong); border-radius: 4px; padding: 12px; background: var(--sd-surface-2);">
+                <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); color: var(--sd-text); cursor: pointer;">Choisir un fichier</button>
+                <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Capture d'écran, PDF ou journal. 10 Mo maximum.</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px; margin-top: 16px;">
+            <button type="button" style="height: 40px; padding: 0 24px; border: 0; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-family: var(--sd-font-sans); font-size: var(--sd-fs-3); font-weight: 500; cursor: pointer;">Envoyer le ticket</button>
+            <button type="button" style="height: 40px; padding: 0 16px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-3); color: var(--sd-text); cursor: pointer;">Annuler</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 4 · TABLEAU DE BORD ══════════════ -->
+  <section id="s4" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">04 · BACK-OFFICE AGENT</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Tableau de bord</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2);">Six indicateurs agrégés, puis l'activité des quatorze derniers jours.</p>
+
+    <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-2); background: var(--sd-bg); display: grid; grid-template-columns: 208px minmax(0, 1fr);">
+      <div style="background: var(--sd-inverse-bg); color: var(--sd-inverse-text); padding: 16px 0;">
+        <div style="padding: 0 16px 16px 16px; font: 600 13px/1 var(--sd-font-mono); letter-spacing: 0.06em;">SUPPORTDESK<span style="display: block; margin-top: 6px; font: 400 11px/1 var(--sd-font-sans); letter-spacing: 0; color: #9aa8b4;">Back-office agent</span></div>
+        <nav style="display: grid;">
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); font-weight: 500; background: rgba(255,255,255,0.10); border-left: 3px solid var(--sd-accent);">Tableau de bord</span>
+          <a href="#s5" style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">File des tickets <span style="font-family: var(--sd-font-mono); font-size: 11px; color: #9aa8b4;">247</span></a>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Mes assignations <span style="font-family: var(--sd-font-mono); font-size: 11px; color: #9aa8b4;">12</span></span>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Clients</span>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Rapports</span>
+        </nav>
+        <div style="margin-top: 24px; padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.14); font-size: var(--sd-fs-1); color: #9aa8b4;">Nadia Belkacem<span style="display: block; margin-top: 2px;">Agent · Niveau 2</span></div>
+      </div>
+
+      <div style="padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px; height: 48px; padding: 0 24px; margin: -24px -24px 24px -24px; background: var(--sd-surface); border-bottom: 1px solid var(--sd-border);">
+          <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Équipe Facturation</span>
+          <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Nadia Belkacem</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">SUPPORTDESK · NIVEAU 2</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-accent); color: var(--sd-accent-fg); border: 1px solid var(--sd-accent);"><span aria-hidden="true">◆</span>AGENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+        </div>
+        <div style="display: flex; align-items: flex-end; gap: 12px; margin-bottom: 16px;">
+          <h3 style="margin: 0; font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.2;">Tableau de bord</h3>
+          <span style="font-size: var(--sd-fs-2); color: var(--sd-text-3); padding-bottom: 4px;">Équipe Facturation · 29 août 2026, 08:40</span>
+          <select style="margin-left: auto; height: var(--sd-control-h); border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 8px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); background: var(--sd-surface); color: var(--sd-text);">
+            <option>14 derniers jours</option>
+            <option>7 derniers jours</option>
+            <option>Mois en cours</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px;">
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px; border-top: 3px solid var(--sd-status-open-border);">
+            <div style="font: 600 11px/1.3 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); min-height: 28px;">● TICKETS OUVERTS</div>
+            <div style="font-size: var(--sd-fs-5); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 8px;">64</div>
+            <div style="font-size: var(--sd-fs-1); color: var(--sd-text-2); margin-top: 4px;">+6 depuis hier</div>
+          </div>
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px; border-top: 3px solid var(--sd-status-progress-border);">
+            <div style="font: 600 11px/1.3 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); min-height: 28px;">◑ EN COURS</div>
+            <div style="font-size: var(--sd-fs-5); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 8px;">38</div>
+            <div style="font-size: var(--sd-fs-1); color: var(--sd-text-2); margin-top: 4px;">dont 12 assignés à vous</div>
+          </div>
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px; border-top: 3px solid var(--sd-accent);">
+            <div style="font: 600 11px/1.3 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); min-height: 28px;">✓ RÉSOLUS · 7 JOURS</div>
+            <div style="font-size: var(--sd-fs-5); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 8px;">129</div>
+            <div style="font-size: var(--sd-fs-1); color: var(--sd-text-2); margin-top: 4px;">+11 % vs semaine préc.</div>
+          </div>
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px; border-top: 3px solid var(--sd-border-strong);">
+            <div style="font: 600 11px/1.3 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); min-height: 28px;">1<sup>RE</sup> RÉPONSE · MÉDIANE</div>
+            <div style="font-size: var(--sd-fs-5); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 8px;">1 h 47</div>
+            <div style="font-size: var(--sd-fs-1); color: var(--sd-text-2); margin-top: 4px;">objectif 2 h · tenu</div>
+          </div>
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px; border-top: 3px solid var(--sd-border-strong);">
+            <div style="font: 600 11px/1.3 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); min-height: 28px;">SLA RESPECTÉ</div>
+            <div style="font-size: var(--sd-fs-5); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 8px;">94,2 %</div>
+            <div style="font-size: var(--sd-fs-1); color: var(--sd-text-2); margin-top: 4px;">seuil contractuel 90 %</div>
+          </div>
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px; border-top: 3px solid var(--sd-danger-border);">
+            <div style="font: 600 11px/1.3 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-danger-fg); min-height: 28px;">⚠ SANS RÉPONSE &gt; 48 H</div>
+            <div style="font-size: var(--sd-fs-5); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.1; margin-top: 8px; color: var(--sd-danger-fg);">9</div>
+            <div style="font-size: var(--sd-fs-1); color: var(--sd-text-2); margin-top: 4px;"><a href="#s5">Voir la liste</a></div>
+          </div>
+        </div>
+
+        <div style="margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start;">
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 20px;">
+            <div style="display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px;">
+              <h4 style="margin: 0; font-size: var(--sd-fs-3); font-weight: 600;">Activité — 14 derniers jours</h4>
+              <div style="margin-left: auto; display: flex; gap: 16px; font-size: var(--sd-fs-1); color: var(--sd-text-2);">
+                <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: var(--sd-status-progress-border); display: inline-block;"></span>Créés</span>
+                <span style="display: inline-flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: var(--sd-accent); display: inline-block;"></span>Résolus</span>
+              </div>
+            </div>
+            <div style="display: flex; align-items: flex-end; gap: 10px; height: 168px; border-bottom: 1px solid var(--sd-border-strong); padding-bottom: 0;">
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 52%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 44%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 61%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 57%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 38%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 49%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 27%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 31%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 71%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 58%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 84%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 66%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 66%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 79%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 58%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 62%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 47%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 55%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 33%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 29%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 76%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 68%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 92%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 74%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 69%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 81%; background: var(--sd-accent);"></span></div>
+              <div style="flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;"><span style="flex: 1; height: 55%; background: var(--sd-status-progress-border);"></span><span style="flex: 1; height: 60%; background: var(--sd-accent);"></span></div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 6px; font: 400 11px/1 var(--sd-font-mono); color: var(--sd-text-3);">
+              <span style="flex: 1; text-align: center;">16</span><span style="flex: 1; text-align: center;">17</span><span style="flex: 1; text-align: center;">18</span><span style="flex: 1; text-align: center;">19</span><span style="flex: 1; text-align: center;">20</span><span style="flex: 1; text-align: center;">21</span><span style="flex: 1; text-align: center;">22</span><span style="flex: 1; text-align: center;">23</span><span style="flex: 1; text-align: center;">24</span><span style="flex: 1; text-align: center;">25</span><span style="flex: 1; text-align: center;">26</span><span style="flex: 1; text-align: center;">27</span><span style="flex: 1; text-align: center;">28</span><span style="flex: 1; text-align: center;">29</span>
+            </div>
+          </div>
+
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 20px;">
+            <h4 style="margin: 0 0 16px 0; font-size: var(--sd-fs-3); font-weight: 600;">Répartition par statut</h4>
+            <div style="display: grid; gap: 12px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--sd-fs-2); margin-bottom: 4px;"><span>● Ouvert</span><span style="font-family: var(--sd-font-mono); color: var(--sd-text-2);">64</span></div>
+                <div style="height: 8px; background: var(--sd-surface-3); border-radius: 4px; overflow: hidden;"><span style="display: block; height: 100%; width: 26%; background: var(--sd-status-open-border);"></span></div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--sd-fs-2); margin-bottom: 4px;"><span>◑ En cours</span><span style="font-family: var(--sd-font-mono); color: var(--sd-text-2);">38</span></div>
+                <div style="height: 8px; background: var(--sd-surface-3); border-radius: 4px; overflow: hidden;"><span style="display: block; height: 100%; width: 15%; background: var(--sd-status-progress-border);"></span></div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--sd-fs-2); margin-bottom: 4px;"><span>✓ Résolu</span><span style="font-family: var(--sd-font-mono); color: var(--sd-text-2);">96</span></div>
+                <div style="height: 8px; background: var(--sd-surface-3); border-radius: 4px; overflow: hidden;"><span style="display: block; height: 100%; width: 39%; background: var(--sd-accent);"></span></div>
+              </div>
+              <div>
+                <div style="display: flex; justify-content: space-between; font-size: var(--sd-fs-2); margin-bottom: 4px;"><span>✕ Fermé</span><span style="font-family: var(--sd-font-mono); color: var(--sd-text-2);">49</span></div>
+                <div style="height: 8px; background: var(--sd-surface-3); border-radius: 4px; overflow: hidden;"><span style="display: block; height: 100%; width: 20%; background: var(--sd-status-closed-border);"></span></div>
+              </div>
+            </div>
+            <p style="margin: 16px 0 0 0; padding-top: 16px; border-top: 1px solid var(--sd-border); font-size: var(--sd-fs-1); color: var(--sd-text-3); line-height: var(--sd-lh-normal);">247 tickets sur la période. Un ticket résolu passe à « fermé » après sept jours sans réponse du client.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 5 · FILE DES TICKETS ══════════════ -->
+  <section id="s5" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">05 · BACK-OFFICE AGENT</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">File des tickets</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2);">Même tableau que le portail, colonnes agent en plus, filtres statut / client / assigné.</p>
+
+    <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-2); background: var(--sd-bg); display: grid; grid-template-columns: 208px minmax(0, 1fr);">
+      <div style="background: var(--sd-inverse-bg); color: var(--sd-inverse-text); padding: 16px 0;">
+        <div style="padding: 0 16px 16px 16px; font: 600 13px/1 var(--sd-font-mono); letter-spacing: 0.06em;">SUPPORTDESK<span style="display: block; margin-top: 6px; font: 400 11px/1 var(--sd-font-sans); letter-spacing: 0; color: #9aa8b4;">Back-office agent</span></div>
+        <nav style="display: grid;">
+          <a href="#s4" style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Tableau de bord</a>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); font-weight: 500; background: rgba(255,255,255,0.10); border-left: 3px solid var(--sd-accent);">File des tickets <span style="font-family: var(--sd-font-mono); font-size: 11px; color: #9aa8b4;">247</span></span>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Mes assignations <span style="font-family: var(--sd-font-mono); font-size: 11px; color: #9aa8b4;">12</span></span>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Clients</span>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Rapports</span>
+        </nav>
+      </div>
+
+      <div style="padding: 24px;">
+        <div style="display: flex; align-items: center; gap: 12px; height: 48px; padding: 0 24px; margin: -24px -24px 24px -24px; background: var(--sd-surface); border-bottom: 1px solid var(--sd-border);">
+          <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Équipe Facturation</span>
+          <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Nadia Belkacem</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">SUPPORTDESK · NIVEAU 2</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-accent); color: var(--sd-accent-fg); border: 1px solid var(--sd-accent);"><span aria-hidden="true">◆</span>AGENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+        </div>
+        <div style="display: flex; align-items: flex-end; gap: 12px; margin-bottom: 16px;">
+          <h3 style="margin: 0; font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.2;">File des tickets</h3>
+          <span style="font-size: var(--sd-fs-2); color: var(--sd-text-3); padding-bottom: 4px;">102 résultats sur 247</span>
+        </div>
+
+        <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2) var(--sd-radius-2) 0 0; border-bottom: 0; padding: 12px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); margin-right: 2px;">STATUT</span>
+            <button type="button" onClick="{{ setOpen }}" style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 13px; background: var(--sd-status-open-bg); color: var(--sd-status-open-fg); border: 1px solid var(--sd-status-open-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; cursor: pointer;"><span aria-hidden="true">●</span>OUVERT <span aria-hidden="true" style="opacity: 0.7;">✕</span></button>
+            <button type="button" onClick="{{ setProgress }}" style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-progress-bg); color: var(--sd-status-progress-fg); border: 1px dashed var(--sd-status-progress-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; cursor: pointer;"><span aria-hidden="true">◑</span>EN_COURS <span aria-hidden="true" style="opacity: 0.7;">✕</span></button>
+            <button type="button" style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 2px; background: var(--sd-surface); color: var(--sd-text-2); border: 1px solid var(--sd-border-strong); font: 500 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; cursor: pointer;"><span aria-hidden="true">✓</span>RESOLU</button>
+            <button type="button" style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 2px; background: var(--sd-surface); color: var(--sd-text-2); border: 1px solid var(--sd-border-strong); font: 500 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; cursor: pointer;"><span aria-hidden="true">✕</span>FERME</button>
+          </div>
+          <label style="display: flex; align-items: center; gap: 6px; font-size: var(--sd-fs-2); color: var(--sd-text-2);">Client
+            <select style="height: var(--sd-control-h); border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 8px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); background: var(--sd-surface); color: var(--sd-text); min-width: 168px;">
+              <option>Tous les clients</option>
+              <option>Atelier Vernet</option>
+              <option>Groupe Lauzière</option>
+              <option>Mérieux &amp; Fils</option>
+            </select>
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; font-size: var(--sd-fs-2); color: var(--sd-text-2);">Assigné à
+            <select style="height: var(--sd-control-h); border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 8px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); background: var(--sd-surface); color: var(--sd-text); min-width: 168px;">
+              <option>Nadia Belkacem</option>
+              <option>Tous les agents</option>
+              <option>Non assigné</option>
+              <option>Yann Mercier</option>
+            </select>
+          </label>
+          <button type="button" style="margin-left: auto; height: var(--sd-control-h); padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); color: var(--sd-text); cursor: pointer;">Réinitialiser</button>
+        </div>
+
+        <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: 0 0 var(--sd-radius-2) var(--sd-radius-2); overflow: hidden;">
+          <table style="width: 100%; font-size: var(--sd-fs-2);">
+            <thead>
+              <tr style="background: var(--sd-surface-2);">
+                <th style="width: 32px; padding: 8px 12px; border-bottom: 1px solid var(--sd-border);"><input type="checkbox" /></th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 108px;">RÉF</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border);">SUJET</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 156px;">CLIENT</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 140px;">ASSIGNÉ À</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 92px;">PRIORITÉ</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 148px;">STATUT</th>
+                <th style="text-align: left; padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3); border-bottom: 1px solid var(--sd-border); width: 148px;">DERNIÈRE ACTIVITÉ ↓</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--sd-border); background: var(--sd-danger-bg);" style-hover="background: #fbe0e0;">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4402</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Prélèvement en double sur le contrat annuel</a> <span style="font: 600 11px/1 var(--sd-font-mono); color: var(--sd-danger-fg); border: 1px solid var(--sd-danger-border); border-radius: 2px; padding: 2px 4px; margin-left: 4px;">SLA DÉPASSÉ</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Groupe Lauzière</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Non assigné</td>
+                <td style="padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-danger-fg);">HAUTE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 11px; background: var(--sd-status-open-bg); color: var(--sd-status-open-fg); border: 1px solid var(--sd-status-open-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">●</span>OUVERT</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">il y a 3 j</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border);" style-hover="background: var(--sd-surface-2);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4821</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Facture de mars non téléchargeable</a></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Atelier Vernet</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Nadia Belkacem</td>
+                <td style="padding: 8px 12px; font: 500 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">NORMALE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 11px; background: var(--sd-status-open-bg); color: var(--sd-status-open-fg); border: 1px solid var(--sd-status-open-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">●</span>OUVERT</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">il y a 14 min</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);" style-hover="background: var(--sd-surface-3);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4818</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Relance : avoir non reçu après annulation</a></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Mérieux &amp; Fils</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Nadia Belkacem</td>
+                <td style="padding: 8px 12px; font: 500 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">NORMALE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-progress-bg); color: var(--sd-status-progress-fg); border: 1px dashed var(--sd-status-progress-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">◑</span>EN_COURS</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">il y a 51 min</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border);" style-hover="background: var(--sd-surface-2);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4790</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Accès refusé au tableau de bord depuis lundi</a></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Atelier Vernet</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Nadia Belkacem</td>
+                <td style="padding: 8px 12px; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-danger-fg);">HAUTE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-progress-bg); color: var(--sd-status-progress-fg); border: 1px dashed var(--sd-status-progress-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">◑</span>EN_COURS</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">il y a 2 h</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);" style-hover="background: var(--sd-surface-3);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4771</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Modification du RIB de prélèvement</a></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Groupe Lauzière</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Yann Mercier</td>
+                <td style="padding: 8px 12px; font: 500 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">NORMALE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-progress-bg); color: var(--sd-status-progress-fg); border: 1px dashed var(--sd-status-progress-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">◑</span>EN_COURS</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">hier, 18:07</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border);" style-hover="background: var(--sd-surface-2);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4712</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Ajouter un second utilisateur au contrat</a></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Atelier Vernet</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Yann Mercier</td>
+                <td style="padding: 8px 12px; font: 500 12px/1 var(--sd-font-mono); color: var(--sd-text-3);">BASSE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-progress-bg); color: var(--sd-status-progress-fg); border: 1px dashed var(--sd-status-progress-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">◑</span>EN_COURS</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">hier, 17:42</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);" style-hover="background: var(--sd-surface-3);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4655</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Export CSV tronqué au-delà de 5 000 lignes</a></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Atelier Vernet</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Nadia Belkacem</td>
+                <td style="padding: 8px 12px; font: 500 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">NORMALE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-resolved-bg); color: var(--sd-status-resolved-fg); border: 1px solid var(--sd-status-resolved-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">✓</span>RESOLU</span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">14 août, 09:15</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border);" style-hover="background: var(--sd-surface-2);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4519</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Changement d'adresse de facturation</a></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Mérieux &amp; Fils</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Yann Mercier</td>
+                <td style="padding: 8px 12px; font: 500 12px/1 var(--sd-font-mono); color: var(--sd-text-3);">BASSE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-closed-bg); color: var(--sd-status-closed-fg); border: 1px solid var(--sd-status-closed-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">✕</span><span style="text-decoration: line-through;">FERME</span></span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">28 juil., 11:03</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);" style-hover="background: var(--sd-surface-3);">
+                <td style="padding: 8px 12px; height: var(--sd-row-h);"><input type="checkbox" /></td>
+                <td style="padding: 8px 12px; font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4488</td>
+                <td style="padding: 8px 12px;"><a href="#s6" style="font-weight: 500;">Double prélèvement sur juin</a></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Groupe Lauzière</td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">Nadia Belkacem</td>
+                <td style="padding: 8px 12px; font: 500 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">NORMALE</td>
+                <td style="padding: 8px 12px;"><span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 2px; background: var(--sd-status-closed-bg); color: var(--sd-status-closed-fg); border: 1px solid var(--sd-status-closed-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">✕</span><span style="text-decoration: line-through;">FERME</span></span></td>
+                <td style="padding: 8px 12px; color: var(--sd-text-2);">9 juil., 16:20</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--sd-surface-2); border-top: 1px solid var(--sd-border);">
+            <span style="font-size: var(--sd-fs-1); color: var(--sd-text-2); font-variant-numeric: tabular-nums;">1–9 sur 102</span>
+            <label style="font-size: var(--sd-fs-1); color: var(--sd-text-2); display: flex; align-items: center; gap: 6px; margin-left: 16px;">Lignes
+              <select style="height: 26px; border: 1px solid var(--sd-border-strong); border-radius: 4px; font-family: var(--sd-font-mono); font-size: 12px; background: var(--sd-surface); color: var(--sd-text);">
+                <option>50</option>
+                <option>100</option>
+                <option>200</option>
+              </select>
+            </label>
+            <div style="margin-left: auto; display: flex; align-items: center; gap: 4px;">
+              <button type="button" style="height: 28px; min-width: 28px; padding: 0 8px; border: 1px solid var(--sd-border-strong); background: var(--sd-surface); border-radius: 4px; font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text-3); cursor: not-allowed;">‹</button>
+              <button type="button" style="height: 28px; min-width: 28px; border: 1px solid var(--sd-accent); background: var(--sd-accent); color: var(--sd-accent-fg); border-radius: 4px; font: 600 13px/1 var(--sd-font-mono); cursor: pointer;">1</button>
+              <button type="button" style="height: 28px; min-width: 28px; border: 1px solid var(--sd-border-strong); background: var(--sd-surface); border-radius: 4px; font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text); cursor: pointer;">2</button>
+              <button type="button" style="height: 28px; min-width: 28px; border: 1px solid var(--sd-border-strong); background: var(--sd-surface); border-radius: 4px; font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text); cursor: pointer;">3</button>
+              <span style="font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text-3); padding: 0 4px;">…</span>
+              <button type="button" style="height: 28px; min-width: 28px; padding: 0 8px; border: 1px solid var(--sd-border-strong); background: var(--sd-surface); border-radius: 4px; font: 500 13px/1 var(--sd-font-mono); color: var(--sd-text); cursor: pointer;">›</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 6 · DÉTAIL AGENT ══════════════ -->
+  <section id="s6" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">06 · BACK-OFFICE AGENT</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Détail d'un ticket — côté agent</h2>
+    </div>
+    <sc-if value="{{ showAnnotations }}" hint-placeholder-val="{{ true }}"><p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2); max-width: 880px; text-wrap: pretty;">Le fil mêle réponses client et notes internes. La distinction repose sur cinq signaux simultanés : couleur aubergine, hachures diagonales, cadenas, bande d'en-tête sombre portant le libellé « non visible par le client », et décalage horizontal du bloc. Le composeur change entièrement d'apparence selon le mode, et le libellé du bouton d'envoi nomme explicitement le destinataire.</p></sc-if>
+
+    <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-2); background: var(--sd-bg); display: grid; grid-template-columns: 208px minmax(0, 1fr);">
+      <div style="background: var(--sd-inverse-bg); color: var(--sd-inverse-text); padding: 16px 0;">
+        <div style="padding: 0 16px 16px 16px; font: 600 13px/1 var(--sd-font-mono); letter-spacing: 0.06em;">SUPPORTDESK<span style="display: block; margin-top: 6px; font: 400 11px/1 var(--sd-font-sans); letter-spacing: 0; color: #9aa8b4;">Back-office agent</span></div>
+        <nav style="display: grid;">
+          <a href="#s4" style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Tableau de bord</a>
+          <a href="#s5" style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">File des tickets</a>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); font-weight: 500; background: rgba(255,255,255,0.10); border-left: 3px solid var(--sd-accent);">Mes assignations <span style="font-family: var(--sd-font-mono); font-size: 11px; color: #9aa8b4;">12</span></span>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Clients</span>
+          <span style="padding: 8px 16px; font-size: var(--sd-fs-2); color: #cfd8de; border-left: 3px solid transparent;">Rapports</span>
+        </nav>
+      </div>
+
+      <div style="padding: 24px; display: grid; grid-template-columns: minmax(0, 1fr) 292px; gap: 24px; align-items: start;">
+        <div style="display: flex; align-items: center; gap: 12px; height: 48px; padding: 0 24px; margin: -24px -24px 24px -24px; background: var(--sd-surface); border-bottom: 1px solid var(--sd-border); grid-column: 1 / -1;">
+          <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Équipe Facturation</span>
+          <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Nadia Belkacem</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">SUPPORTDESK · NIVEAU 2</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-accent); color: var(--sd-accent-fg); border: 1px solid var(--sd-accent);"><span aria-hidden="true">◆</span>AGENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+        </div>
+        <div>
+          <a href="#s5" style="font-size: var(--sd-fs-2);">← File des tickets</a>
+          <h3 style="margin: 8px 0 4px 0; font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.2;">Facture de mars non téléchargeable</h3>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+            <span style="font-family: var(--sd-font-mono); font-size: 13px; color: var(--sd-text-2);">TCK-4821</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 10px; border-radius: 11px; background: var(--sd-status-open-bg); color: var(--sd-status-open-fg); border: 1px solid var(--sd-status-open-border); font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em;"><span aria-hidden="true">●</span>OUVERT</span>
+            <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Atelier Vernet · Camille Roussel · ouvert il y a 5 j · 3 messages, 2 notes internes</span>
+          </div>
+
+          <div style="display: grid; gap: 16px;">
+            <article style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px;">
+              <span style="width: 32px; height: 32px; border-radius: 50%; background: var(--sd-surface-3); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">CR</span>
+              <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); overflow: hidden;">
+                <div style="display: flex; align-items: baseline; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);">
+                  <span style="font-size: var(--sd-fs-2); font-weight: 600;">Camille Roussel</span>
+                  <span style="font: 500 11px/1 var(--sd-font-mono); letter-spacing: 0.04em; color: var(--sd-text-3);">CLIENT</span>
+                  <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); margin-left: auto;">24 août, 09:12</span>
+                </div>
+                <div style="padding: 16px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-text); text-wrap: pretty;">
+                  <p style="margin: 0;">Bonjour, depuis ce matin le bouton de téléchargement de la facture de mars ne répond plus. Les factures d'avril et mai se téléchargent normalement. J'ai essayé sur Chrome et Firefox, même résultat.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- NOTE INTERNE -->
+            <article style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px; margin-left: 48px;">
+              <span style="width: 32px; height: 32px; border-radius: 4px; background: var(--sd-internal-surface); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-internal-on-dark);">YM</span>
+              <div style="border: 2px solid var(--sd-internal-border); border-radius: var(--sd-radius-2); overflow: hidden; background: var(--sd-internal-bg);">
+                <div style="height: 8px; background: var(--sd-internal-hatch); background-color: var(--sd-internal-bg);"></div>
+                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--sd-internal-surface); color: var(--sd-internal-on-dark);">
+                  <span aria-hidden="true">🔒</span>
+                  <span style="font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em;">NOTE INTERNE · NON VISIBLE PAR LE CLIENT</span>
+                  <span style="margin-left: auto; font-size: var(--sd-fs-1); opacity: 0.85;">Yann Mercier · 24 août, 09:58</span>
+                </div>
+                <div style="padding: 16px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-internal-fg); text-wrap: pretty;">
+                  <p style="margin: 0;">Documents antérieurs à la migration du 12 mars : le lien signé pointe vers l'ancien bucket. Ticket infra INF-217 ouvert. Ne pas mentionner la migration au client, la communication officielle part vendredi.</p>
+                </div>
+              </div>
+            </article>
+
+            <article style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px;">
+              <span style="width: 32px; height: 32px; border-radius: 50%; background: var(--sd-accent-tint); border: 1px solid var(--sd-accent); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-accent);">NB</span>
+              <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-left: 3px solid var(--sd-accent); border-radius: var(--sd-radius-2); overflow: hidden;">
+                <div style="display: flex; align-items: baseline; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--sd-border); background: var(--sd-accent-tint);">
+                  <span style="font-size: var(--sd-fs-2); font-weight: 600;">Nadia Belkacem</span>
+                  <span style="font: 500 11px/1 var(--sd-font-mono); letter-spacing: 0.04em; color: var(--sd-accent);">RÉPONSE ENVOYÉE AU CLIENT</span>
+                  <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); margin-left: auto;">24 août, 10:38</span>
+                </div>
+                <div style="padding: 16px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-text); text-wrap: pretty;">
+                  <p style="margin: 0;">Bonjour Camille, merci pour ces précisions. Je reproduis le problème sur la facture de mars uniquement. Je la régénère et vous reviens aujourd'hui. En attendant, souhaitez-vous que je vous l'envoie par courriel ?</p>
+                </div>
+              </div>
+            </article>
+
+            <article style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px; margin-left: 48px;">
+              <span style="width: 32px; height: 32px; border-radius: 4px; background: var(--sd-internal-surface); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-internal-on-dark);">NB</span>
+              <div style="border: 2px solid var(--sd-internal-border); border-radius: var(--sd-radius-2); overflow: hidden; background: var(--sd-internal-bg);">
+                <div style="height: 8px; background: var(--sd-internal-hatch); background-color: var(--sd-internal-bg);"></div>
+                <div style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--sd-internal-surface); color: var(--sd-internal-on-dark);">
+                  <span aria-hidden="true">🔒</span>
+                  <span style="font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em;">NOTE INTERNE · NON VISIBLE PAR LE CLIENT</span>
+                  <span style="margin-left: auto; font-size: var(--sd-fs-1); opacity: 0.85;">Nadia Belkacem · hier, 16:20</span>
+                </div>
+                <div style="padding: 16px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-internal-fg); text-wrap: pretty;">
+                  <p style="margin: 0;">Régénération lancée, INF-217 toujours en attente côté infra. Si rien lundi, j'envoie le PDF à la main et je bascule le ticket sur Yann pour le suivi.</p>
+                </div>
+              </div>
+            </article>
+
+            <article style="display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px;">
+              <span style="width: 32px; height: 32px; border-radius: 50%; background: var(--sd-surface-3); display: inline-flex; align-items: center; justify-content: center; font: 600 12px/1 var(--sd-font-mono); color: var(--sd-text-2);">CR</span>
+              <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); overflow: hidden;">
+                <div style="display: flex; align-items: baseline; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--sd-border); background: var(--sd-surface-2);">
+                  <span style="font-size: var(--sd-fs-2); font-weight: 600;">Camille Roussel</span>
+                  <span style="font: 500 11px/1 var(--sd-font-mono); letter-spacing: 0.04em; color: var(--sd-text-3);">CLIENT</span>
+                  <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); margin-left: auto;">il y a 14 min</span>
+                </div>
+                <div style="padding: 16px; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-text);">
+                  <p style="margin: 0;">Oui, par courriel ce serait parfait. Merci.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- COMPOSEUR À DEUX MODES -->
+          <div style="margin-top: 24px;">
+            <div style="display: flex; gap: 4px;">
+              <button type="button" onClick="{{ setClient }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border: 2px solid var(--sd-accent); border-bottom-color: var(--sd-surface); border-radius: 4px 4px 0 0; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); font-weight: 600; color: var(--sd-accent); cursor: pointer; margin-bottom: -2px; position: relative; z-index: 2;">
+                <span aria-hidden="true">✉</span>Répondre au client
+              </button>
+              <button type="button" onClick="{{ setInternal }}" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border: 2px solid var(--sd-internal-border); border-bottom-color: var(--sd-internal-border); border-radius: 4px 4px 0 0; background: var(--sd-internal-bg); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); font-weight: 600; color: var(--sd-internal-fg); cursor: pointer; margin-bottom: -2px;">
+                <span aria-hidden="true">🔒</span>Note interne
+              </button>
+            </div>
+
+            <sc-if value="{{ isClient }}" hint-placeholder-val="{{ true }}">
+              <div style="border: 2px solid var(--sd-accent); border-radius: 0 4px 4px 4px; background: var(--sd-surface); overflow: hidden;">
+                <div style="display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: var(--sd-accent-tint); border-bottom: 1px solid var(--sd-accent);">
+                  <span aria-hidden="true" style="color: var(--sd-accent);">✉</span>
+                  <span style="font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; color: var(--sd-accent);">RÉPONSE PUBLIQUE · SERA ENVOYÉE À CAMILLE ROUSSEL</span>
+                </div>
+                <textarea placeholder="Votre réponse au client…" style="display: block; width: 100%; min-height: 112px; border: 0; outline: none; resize: vertical; padding: 16px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-3); line-height: var(--sd-lh-normal); color: var(--sd-text); background: var(--sd-surface);"></textarea>
+                <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--sd-border); background: var(--sd-surface);">
+                  <select style="height: 36px; border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 8px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); background: var(--sd-surface); color: var(--sd-text);">
+                    <option>Réponse type…</option>
+                    <option>Accusé de réception</option>
+                    <option>Demande de complément</option>
+                  </select>
+                  <label style="display: flex; align-items: center; gap: 6px; font-size: var(--sd-fs-2); color: var(--sd-text-2);"><input type="checkbox" />Passer à <span style="font: 600 12px/1 var(--sd-font-mono);">EN_COURS</span></label>
+                  <button type="button" style="margin-left: auto; height: 40px; padding: 0 20px; border: 0; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); font-weight: 600; cursor: pointer;">Envoyer au client</button>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isInternal }}" hint-placeholder-val="{{ true }}">
+              <div style="border: 2px solid var(--sd-internal-border); border-radius: 0 4px 4px 4px; background: var(--sd-internal-bg); overflow: hidden; box-shadow: 0 0 0 4px rgba(74,31,99,0.12);">
+                <div style="height: 10px; background: var(--sd-internal-hatch); background-color: var(--sd-internal-bg);"></div>
+                <div style="display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--sd-internal-surface); color: var(--sd-internal-on-dark);">
+                  <span aria-hidden="true">🔒</span>
+                  <span style="font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em;">NOTE INTERNE · NON VISIBLE PAR LE CLIENT</span>
+                  <span style="margin-left: auto; font-size: var(--sd-fs-1); opacity: 0.85;">Visible par l'équipe support uniquement</span>
+                </div>
+                <textarea placeholder="Note pour l'équipe — le client ne la verra pas." style="display: block; width: 100%; min-height: 112px; border: 0; outline: none; resize: vertical; padding: 16px; font-family: var(--sd-font-mono); font-size: 15px; line-height: var(--sd-lh-normal); color: var(--sd-internal-fg); background: var(--sd-internal-bg);"></textarea>
+                <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-top: 2px solid var(--sd-internal-border); background: var(--sd-internal-bg);">
+                  <label style="display: flex; align-items: center; gap: 6px; font-size: var(--sd-fs-2); color: var(--sd-internal-fg);"><input type="checkbox" />Mentionner un collègue</label>
+                  <button type="button" style="margin-left: auto; height: 40px; padding: 0 20px; border: 0; border-radius: 4px; background: var(--sd-internal-surface); color: var(--sd-internal-on-dark); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;"><span aria-hidden="true">🔒</span>Enregistrer la note interne</button>
+                </div>
+                <div style="height: 10px; background: var(--sd-internal-hatch); background-color: var(--sd-internal-bg);"></div>
+              </div>
+            </sc-if>
+
+            <p style="margin: 12px 0 0 0; font-size: var(--sd-fs-1); color: var(--sd-text-3); line-height: var(--sd-lh-normal); max-width: 640px;">Basculez d'un onglet à l'autre : la zone de saisie change de couleur, de bordure, de police et de libellé de bouton. Aucun envoi possible sans que le destinataire soit écrit en clair au-dessus du champ.</p>
+          </div>
+        </div>
+
+        <aside style="display: grid; gap: 12px;">
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px;">
+            <h4 style="margin: 0 0 12px 0; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">TRAITEMENT</h4>
+            <div style="display: grid; gap: 10px;">
+              <label style="display: grid; gap: 4px; font-size: var(--sd-fs-1); color: var(--sd-text-3);">Statut
+                <select style="height: var(--sd-control-h); border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 8px; font-family: var(--sd-font-mono); font-size: 13px; background: var(--sd-surface); color: var(--sd-text);">
+                  <option>OUVERT</option>
+                  <option>EN_COURS</option>
+                  <option>RESOLU</option>
+                  <option>FERME</option>
+                </select>
+              </label>
+              <label style="display: grid; gap: 4px; font-size: var(--sd-fs-1); color: var(--sd-text-3);">Assigné à
+                <select style="height: var(--sd-control-h); border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 8px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); background: var(--sd-surface); color: var(--sd-text);">
+                  <option>Nadia Belkacem</option>
+                  <option>Yann Mercier</option>
+                  <option>Non assigné</option>
+                </select>
+              </label>
+              <label style="display: grid; gap: 4px; font-size: var(--sd-fs-1); color: var(--sd-text-3);">Priorité
+                <select style="height: var(--sd-control-h); border: 1px solid var(--sd-border-strong); border-radius: 4px; padding: 0 8px; font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); background: var(--sd-surface); color: var(--sd-text);">
+                  <option>Normale</option>
+                  <option>Haute</option>
+                  <option>Basse</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px;">
+            <h4 style="margin: 0 0 12px 0; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">CLIENT</h4>
+            <dl style="margin: 0; display: grid; grid-template-columns: 92px minmax(0, 1fr); row-gap: 8px; column-gap: 12px; font-size: var(--sd-fs-2);">
+              <dt style="color: var(--sd-text-3);">Compte</dt><dd style="margin: 0;">Atelier Vernet</dd>
+              <dt style="color: var(--sd-text-3);">Contact</dt><dd style="margin: 0;">Camille Roussel</dd>
+              <dt style="color: var(--sd-text-3);">Contrat</dt><dd style="margin: 0;">Standard · SLA 2 h</dd>
+              <dt style="color: var(--sd-text-3);">Tickets</dt><dd style="margin: 0;"><a href="#s5">18 au total, 3 ouverts</a></dd>
+            </dl>
+          </div>
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 16px;">
+            <h4 style="margin: 0 0 12px 0; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">JOURNAL</h4>
+            <ol style="margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; font-size: var(--sd-fs-1); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">
+              <li>hier, 16:20 — note interne ajoutée par Nadia B.</li>
+              <li>24 août, 10:41 — priorité passée à Normale</li>
+              <li>24 août, 09:20 — assigné à Nadia B.</li>
+              <li>24 août, 09:12 — ticket créé par le client</li>
+            </ol>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 7 · ÉTATS SYSTÈME ══════════════ -->
+  <section id="s7" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">07 · TRANSVERSE</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">États système</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2);">Chargement, liste vide, erreur serveur — puis la page 403, traitée comme un écran à part entière.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;">
+
+      <div style="background: var(--sd-surface); border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-1);">
+        <div style="padding: 8px 16px; background: var(--sd-surface-2); border-bottom: 1px solid var(--sd-border); font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">CHARGEMENT</div>
+        <div style="padding: 16px;">
+          <div style="display: grid; gap: 8px;">
+            <div style="display: flex; gap: 8px; align-items: center;"><span style="height: 12px; width: 88px; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out infinite;"></span><span style="height: 12px; flex: 1; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out infinite;"></span></div>
+            <div style="height: 1px; background: var(--sd-border);"></div>
+            <div style="display: flex; gap: 8px; align-items: center;"><span style="height: 12px; width: 88px; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out 0.1s infinite;"></span><span style="height: 12px; flex: 1; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out 0.1s infinite;"></span></div>
+            <div style="height: 1px; background: var(--sd-border);"></div>
+            <div style="display: flex; gap: 8px; align-items: center;"><span style="height: 12px; width: 88px; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out 0.2s infinite;"></span><span style="height: 12px; flex: 1; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out 0.2s infinite;"></span></div>
+            <div style="height: 1px; background: var(--sd-border);"></div>
+            <div style="display: flex; gap: 8px; align-items: center;"><span style="height: 12px; width: 88px; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out 0.3s infinite;"></span><span style="height: 12px; flex: 1; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out 0.3s infinite;"></span></div>
+            <div style="height: 1px; background: var(--sd-border);"></div>
+            <div style="display: flex; gap: 8px; align-items: center;"><span style="height: 12px; width: 88px; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out 0.4s infinite;"></span><span style="height: 12px; flex: 1; background: var(--sd-surface-3); border-radius: 2px; animation: sd-pulse 1.4s ease-in-out 0.4s infinite;"></span></div>
+          </div>
+          <p style="margin: 16px 0 0 0; font-size: var(--sd-fs-2); color: var(--sd-text-2); line-height: var(--sd-lh-normal);">Squelette calé sur la hauteur de ligne réelle (36 px) pour éviter le saut de mise en page. Au-delà de 10 s, message « la requête prend plus de temps que prévu » avec bouton d'annulation.</p>
+        </div>
+      </div>
+
+      <div style="background: var(--sd-surface); border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-1);">
+        <div style="padding: 8px 16px; background: var(--sd-surface-2); border-bottom: 1px solid var(--sd-border); font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">LISTE VIDE</div>
+        <div style="padding: 40px 24px; text-align: center;">
+          <div style="width: 44px; height: 44px; margin: 0 auto 16px auto; border: 2px dashed var(--sd-border-strong); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--sd-text-3); font-size: 18px;" aria-hidden="true">⌕</div>
+          <h4 style="margin: 0 0 8px 0; font-size: var(--sd-fs-4); font-weight: 600;">Aucun ticket ne correspond</h4>
+          <p style="margin: 0 auto 20px auto; max-width: 320px; font-size: var(--sd-fs-3); color: var(--sd-text-2); line-height: var(--sd-lh-normal); text-wrap: pretty;">Trois filtres sont actifs : statut OUVERT, client Atelier Vernet, assigné à Yann Mercier.</p>
+          <div style="display: flex; gap: 8px; justify-content: center;">
+            <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); font-weight: 500; cursor: pointer;">Retirer les filtres</button>
+            <button type="button" style="height: 36px; padding: 0 16px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); color: var(--sd-text); cursor: pointer;">Voir toute la file</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: var(--sd-surface); border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-1);">
+        <div style="padding: 8px 16px; background: var(--sd-surface-2); border-bottom: 1px solid var(--sd-border); font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">ERREUR SERVEUR · 500</div>
+        <div style="padding: 40px 24px; text-align: center;">
+          <div style="width: 44px; height: 44px; margin: 0 auto 16px auto; border: 2px solid var(--sd-danger-border); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: var(--sd-danger-fg); font-size: 20px; background: var(--sd-danger-bg);" aria-hidden="true">!</div>
+          <h4 style="margin: 0 0 8px 0; font-size: var(--sd-fs-4); font-weight: 600;">La liste n'a pas pu être chargée</h4>
+          <p style="margin: 0 auto 20px auto; max-width: 340px; font-size: var(--sd-fs-3); color: var(--sd-text-2); line-height: var(--sd-lh-normal); text-wrap: pretty;">Le serveur n'a pas répondu. Vos filtres et votre saisie en cours sont conservés.</p>
+          <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 16px;">
+            <button type="button" style="height: 36px; padding: 0 16px; border: 0; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); font-weight: 500; cursor: pointer;">Réessayer</button>
+            <button type="button" style="height: 36px; padding: 0 16px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); color: var(--sd-text); cursor: pointer;">Signaler l'incident</button>
+          </div>
+          <p style="margin: 0; font: 400 12px/1.4 var(--sd-font-mono); color: var(--sd-text-3);">Référence : ERR-8F2C41 · 29 août 2026, 08:41<br />À citer si vous signalez l'incident.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 403 -->
+    <div style="margin-top: 16px; border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); overflow: hidden; box-shadow: var(--sd-shadow-2); background: var(--sd-bg);">
+      <div style="display: flex; align-items: center; gap: 24px; padding: 0 24px; height: 56px; background: var(--sd-surface); border-bottom: 1px solid var(--sd-border);">
+        <span style="font: 600 14px/1 var(--sd-font-mono); letter-spacing: 0.06em;">SUPPORTDESK</span>
+        <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); border-left: 1px solid var(--sd-border); padding-left: 24px;">Espace client</span>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Camille Roussel</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">ATELIER VERNET</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-surface); color: var(--sd-text-2); border: 1px solid var(--sd-border-strong);"><span aria-hidden="true">○</span>CLIENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+      </div>
+
+      <div style="padding: 56px 24px 64px 24px; display: flex; justify-content: center;">
+        <div style="width: 720px;">
+          <span style="display: inline-block; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.08em; color: var(--sd-text-3); border: 1px solid var(--sd-border-strong); border-radius: 2px; padding: 5px 8px;">403 · ACCÈS NON AUTORISÉ</span>
+          <h3 style="margin: 16px 0 12px 0; font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.2;">Ce ticket appartient à un autre compte</h3>
+          <p style="margin: 0 0 24px 0; font-size: var(--sd-fs-3); color: var(--sd-text-2); line-height: var(--sd-lh-loose); text-wrap: pretty; max-width: 620px;">Vous n'avez rien fait de mal, et rien n'a été signalé. Le ticket <span style="font-family: var(--sd-font-mono); font-size: 15px; color: var(--sd-text);">TCK-4402</span> est rattaché au compte <strong style="font-weight: 600; color: var(--sd-text);">Groupe Lauzière</strong>. Chaque ticket n'est lisible que par le compte qui l'a ouvert : c'est ce qui garantit que vos échanges avec le support restent privés, dans les deux sens.</p>
+
+          <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2); padding: 20px 24px; margin-bottom: 24px;">
+            <h4 style="margin: 0 0 12px 0; font: 600 12px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">POURQUOI CE MESSAGE APPARAÎT</h4>
+            <ul style="margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: var(--sd-fs-3); color: var(--sd-text); line-height: var(--sd-lh-normal);">
+              <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px;"><span aria-hidden="true" style="color: var(--sd-text-3);">1</span>Le lien vous a été transmis par une personne d'un autre compte.</li>
+              <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px;"><span aria-hidden="true" style="color: var(--sd-text-3);">2</span>Vous êtes connecté avec une adresse différente de celle qui a ouvert le ticket.</li>
+              <li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 8px;"><span aria-hidden="true" style="color: var(--sd-text-3);">3</span>Le ticket a été transféré vers un autre compte à la demande de son auteur.</li>
+            </ul>
+          </div>
+
+          <h4 style="margin: 0 0 12px 0; font-size: var(--sd-fs-3); font-weight: 600;">Ce que vous pouvez faire</h4>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
+            <a href="#s1" style="display: inline-flex; align-items: center; height: 40px; padding: 0 20px; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-size: var(--sd-fs-2); font-weight: 500; text-decoration: none;">Revenir à mes tickets</a>
+            <a href="#s3" style="display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); color: var(--sd-text); font-size: var(--sd-fs-2); text-decoration: none;">Ouvrir un ticket sur ce sujet</a>
+            <button type="button" style="height: 40px; padding: 0 16px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: var(--sd-fs-2); color: var(--sd-text); cursor: pointer;">Changer de compte</button>
+          </div>
+
+          <p style="margin: 0; padding-top: 20px; border-top: 1px solid var(--sd-border); font-size: var(--sd-fs-2); color: var(--sd-text-2); line-height: var(--sd-lh-normal); max-width: 620px;">Si ce ticket devrait vous être accessible, demandez à son auteur de vous ajouter en interlocuteur depuis le récapitulatif du ticket. Le support ne peut pas ouvrir cet accès à sa place.</p>
+          <p style="margin: 12px 0 0 0; font: 400 12px/1.4 var(--sd-font-mono); color: var(--sd-text-3);">Réf. de la tentative : ACC-2026-08-29-0841 · aucune donnée du ticket n'a été affichée.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 8 · ACCUEIL NON CONNECTÉ ══════════════ -->
+  <section id="s8" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">08 · CONNEXION</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Accueil non connecté</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2); max-width: 880px; text-wrap: pretty;">Aucun menu, aucune navigation, aucune donnée — et aucun champ de saisie : l'identification a lieu sur Keycloak, l'application ne voit jamais d'identifiant ni de mot de passe.</p>
+    <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); box-shadow: var(--sd-shadow-2); background: var(--sd-surface); min-height: 480px; display: flex; align-items: center; justify-content: center; padding: 64px 32px;">
+      <div style="width: 420px; text-align: center;">
+        <div style="font: 600 20px/1 var(--sd-font-mono); letter-spacing: 0.10em;">SUPPORTDESK</div>
+        <p style="margin: 20px 0 32px 0; font-size: var(--sd-fs-3); line-height: var(--sd-lh-loose); color: var(--sd-text-2); text-wrap: pretty;">L'espace de suivi des demandes de support. Vos tickets, leurs réponses et leur avancement, au même endroit.</p>
+        <a href="#s9" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 48px; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-size: var(--sd-fs-3); font-weight: 600; text-decoration: none;">Se connecter</a>
+        <p style="margin: 16px 0 0 0; font: 400 12px/1.5 var(--sd-font-mono); color: var(--sd-text-3);">Vous serez redirigé vers le portail d'identité de votre organisation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 9 · RETOUR DE CONNEXION ══════════════ -->
+  <section id="s9" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">09 · CONNEXION</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Retour de connexion</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2); max-width: 880px; text-wrap: pretty;">Écran transitoire d'une à deux secondes, le temps d'échanger le code d'autorisation contre un jeton. Même composant de chargement que l'écran 07, à l'échelle d'une page.</p>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;">
+      <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); box-shadow: var(--sd-shadow-1); background: var(--sd-surface); overflow: hidden;">
+        <div style="padding: 8px 16px; background: var(--sd-surface-2); border-bottom: 1px solid var(--sd-border); font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">ÉTAT NOMINAL · TRANSITOIRE</div>
+        <div style="min-height: 384px; display: flex; align-items: center; justify-content: center; padding: 48px 32px;">
+          <div style="width: 320px; text-align: center;">
+            <div style="font: 600 20px/1 var(--sd-font-mono); letter-spacing: 0.10em;">SUPPORTDESK</div>
+            <div style="display: flex; gap: 6px; justify-content: center; margin: 28px 0 20px 0;">
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--sd-accent); animation: sd-pulse 1.4s ease-in-out infinite;"></span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--sd-accent); animation: sd-pulse 1.4s ease-in-out 0.2s infinite;"></span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: var(--sd-accent); animation: sd-pulse 1.4s ease-in-out 0.4s infinite;"></span>
+            </div>
+            <p style="margin: 0; font-size: var(--sd-fs-3); color: var(--sd-text); line-height: var(--sd-lh-normal);">Connexion en cours…</p>
+            <p style="margin: 8px 0 0 0; font-size: var(--sd-fs-2); color: var(--sd-text-3);">Ne fermez pas cette fenêtre.</p>
+          </div>
+        </div>
+      </div>
+      <div style="border: 1px solid var(--sd-border-strong); border-radius: var(--sd-radius-3); box-shadow: var(--sd-shadow-1); background: var(--sd-surface); overflow: hidden;">
+        <div style="padding: 8px 16px; background: var(--sd-surface-2); border-bottom: 1px solid var(--sd-border); font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.06em; color: var(--sd-text-3);">VARIANTE D'ÉCHEC</div>
+        <div style="min-height: 384px; display: flex; align-items: center; justify-content: center; padding: 48px 32px;">
+          <div style="width: 340px; text-align: center;">
+            <div style="font: 600 20px/1 var(--sd-font-mono); letter-spacing: 0.10em;">SUPPORTDESK</div>
+            <h4 style="margin: 28px 0 8px 0; font-size: var(--sd-fs-4); font-weight: 600;">La connexion n'a pas abouti</h4>
+            <p style="margin: 0 0 24px 0; font-size: var(--sd-fs-3); color: var(--sd-text-2); line-height: var(--sd-lh-normal); text-wrap: pretty;">Vous pouvez réessayer maintenant.</p>
+            <a href="#s9" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 44px; border-radius: 4px; background: var(--sd-accent); color: var(--sd-accent-fg); font-size: var(--sd-fs-3); font-weight: 600; text-decoration: none;">Réessayer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ 10 · SESSION TERMINÉE ══════════════ -->
+  <section id="s10" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">10 · CONNEXION</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Session terminée</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2); max-width: 880px; text-wrap: pretty;">Déconnexion volontaire ou jeton expiré. Traitement inverse de l'écran 403 : fond sombre, pleine page, aucun en-tête, aucune identité affichée, une seule action. Le 403 conserve au contraire la coque de l'application connectée, son en-tête d'identité et un texte explicatif — on ne peut pas confondre « vous n'êtes plus connecté » et « vous êtes connecté mais ce ticket n'est pas le vôtre ».</p>
+    <div style="border: 1px solid var(--sd-inverse-bg); border-radius: var(--sd-radius-3); box-shadow: var(--sd-shadow-2); background: var(--sd-inverse-bg); color: var(--sd-inverse-text); min-height: 480px; display: flex; align-items: center; justify-content: center; padding: 64px 32px;">
+      <div style="width: 400px; text-align: center;">
+        <div style="font: 600 20px/1 var(--sd-font-mono); letter-spacing: 0.10em; color: var(--sd-inverse-text);">SUPPORTDESK</div>
+        <span style="display: inline-block; margin-top: 24px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; color: #cfd8de; border: 1px solid #6b7b8a; border-radius: 2px; padding: 5px 8px;">SESSION FERMÉE</span>
+        <h4 style="margin: 16px 0 8px 0; font-size: var(--sd-fs-5); font-weight: 600; line-height: 1.2; color: var(--sd-inverse-text);">Vous êtes déconnecté</h4>
+        <p style="margin: 0 0 28px 0; font-size: var(--sd-fs-3); color: #cfd8de; line-height: var(--sd-lh-loose); text-wrap: pretty;">Votre session a pris fin. Reconnectez-vous pour retrouver vos tickets.</p>
+        <a href="#s9" style="display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 48px; border-radius: 4px; background: var(--sd-surface); color: var(--sd-text); font-size: var(--sd-fs-3); font-weight: 600; text-decoration: none;">Se reconnecter</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ BLOC D'IDENTITÉ ══════════════ -->
+  <section id="ident" style="max-width: 1440px; margin: 0 auto; padding: 48px 32px 0 32px;">
+    <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px;">
+      <span style="font: 600 12px/1 'IBM Plex Mono', monospace; letter-spacing: 0.06em; color: var(--sd-text-3);">TRANSVERSE</span>
+      <h2 style="margin: 0; font-size: var(--sd-fs-4); font-weight: 600;">Bloc d'identité de l'en-tête</h2>
+    </div>
+    <p style="margin: 0 0 16px 0; font-size: var(--sd-fs-2); color: var(--sd-text-2); max-width: 880px; text-wrap: pretty;">Présent en haut à droite de tous les écrans connectés — 01 à 06 et 403. Nom, rattachement, rôle et déconnexion. Le rôle est le seul élément de l'interface à utiliser un badge plein : il se lit sans être cherché, et chaque rôle a son propre glyphe en plus de sa couleur.</p>
+    <div style="background: var(--sd-surface); border: 1px solid var(--sd-border); border-radius: var(--sd-radius-3); padding: 24px; display: grid; gap: 16px;">
+      <div style="display: flex; align-items: center; gap: 24px; padding: 0 24px; height: 56px; border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2);">
+        <span style="font: 600 14px/1 var(--sd-font-mono); letter-spacing: 0.06em;">SUPPORTDESK</span>
+        <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3); border-left: 1px solid var(--sd-border); padding-left: 24px;">Espace client</span>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Camille Roussel</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">ATELIER VERNET</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-surface); color: var(--sd-text-2); border: 1px solid var(--sd-border-strong);"><span aria-hidden="true">○</span>CLIENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 24px; padding: 0 24px; height: 56px; border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2);">
+        <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Équipe Facturation</span>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Nadia Belkacem</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">SUPPORTDESK · NIVEAU 2</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-accent); color: var(--sd-accent-fg); border: 1px solid var(--sd-accent);"><span aria-hidden="true">◆</span>AGENT</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 24px; padding: 0 24px; height: 56px; border: 1px solid var(--sd-border); border-radius: var(--sd-radius-2);">
+        <span style="font-size: var(--sd-fs-1); color: var(--sd-text-3);">Administration · tous les comptes</span>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 12px;">
+          <div style="display: grid; gap: 2px; justify-items: end;">
+            <span style="font-size: var(--sd-fs-2); font-weight: 500; line-height: 1.2;">Yann Mercier</span>
+            <span style="font: 400 11px/1.2 var(--sd-font-mono); color: var(--sd-text-3);">SUPPORTDESK · ADMIN</span>
+          </div>
+          <span style="display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 2px; font: 600 11px/1 var(--sd-font-mono); letter-spacing: 0.08em; background: var(--sd-inverse-bg); color: var(--sd-inverse-text); border: 1px solid var(--sd-inverse-bg);"><span aria-hidden="true">▲</span>ADMINISTRATEUR</span>
+          <span style="width: 1px; height: 24px; background: var(--sd-border);"></span>
+          <button type="button" style="height: 32px; padding: 0 12px; border: 1px solid var(--sd-border-strong); border-radius: 4px; background: var(--sd-surface); font-family: var(--sd-font-sans); font-size: 13px; color: var(--sd-text); cursor: pointer;">Se déconnecter</button>
+        </div>
+      </div>
+      <p style="margin: 0; padding-top: 16px; border-top: 1px solid var(--sd-border); font-size: var(--sd-fs-2); color: var(--sd-text-2); line-height: var(--sd-lh-normal); max-width: 760px;">Le badge de rôle ne disparaît jamais et ne se réduit jamais à une couleur : ○ pour Client (contour neutre), ◆ pour Agent (aplat vert), ▲ pour Administrateur (aplat sombre). La déconnexion est une action secondaire, toujours au même endroit, jamais cachée dans un menu.</p>
+    </div>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showAnnotations&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Présentation&quot;,&quot;label&quot;:&quot;Afficher les notes de conception&quot;}}">
+class Component extends DCLogic {
+  state = { mode: "client", statusFilter: { open: true, progress: true } };
+  renderVals() {
+    return {
+      showAnnotations: this.props.showAnnotations ?? true,
+      isClient: this.state.mode === "client",
+      isInternal: this.state.mode === "internal",
+      setClient: () => this.setState({ mode: "client" }),
+      setInternal: () => this.setState({ mode: "internal" }),
+      setOpen: () => {},
+      setProgress: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

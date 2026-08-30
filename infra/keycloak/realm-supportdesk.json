@@ -1,0 +1,133 @@
+{
+  "realm": "supportdesk",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "roles": {
+    "realm": [
+      { "name": "CLIENT", "description": "Declare et suit ses propres tickets" },
+      { "name": "AGENT", "description": "Traite les tickets de tous les clients" },
+      { "name": "ADMIN", "description": "Administre les agents et les referentiels" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "supportdesk-front",
+      "name": "SupportDesk Frontend (Angular)",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:4200/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4200"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:4200/*"
+      },
+      "protocolMappers": [
+        {
+          "name": "audience-supportdesk-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "supportdesk-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "crm-client-ref",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "crmClientRef",
+            "claim.name": "crm_client_ref",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "supportdesk-api",
+      "name": "SupportDesk API (Spring Boot resource server)",
+      "description": "Existe uniquement pour servir d audience aux access tokens. Aucun flow actif.",
+      "enabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false
+    }
+  ],
+  "users": [
+    {
+      "username": "alice",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "alice@transports-nord.fr",
+      "firstName": "Alice",
+      "lastName": "Durand",
+      "credentials": [
+        { "type": "password", "value": "password", "temporary": false }
+      ],
+      "realmRoles": ["CLIENT"],
+      "attributes": {
+        "crmClientRef": ["CLI-0001"]
+      }
+    },
+    {
+      "username": "david",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "david@ateliers-sud.fr",
+      "firstName": "David",
+      "lastName": "Marchand",
+      "credentials": [
+        { "type": "password", "value": "password", "temporary": false }
+      ],
+      "realmRoles": ["CLIENT"],
+      "attributes": {
+        "crmClientRef": ["CLI-0002"]
+      }
+    },
+    {
+      "username": "bob",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "bob@supportdesk.fr",
+      "firstName": "Bob",
+      "lastName": "Lefevre",
+      "credentials": [
+        { "type": "password", "value": "password", "temporary": false }
+      ],
+      "realmRoles": ["AGENT"]
+    },
+    {
+      "username": "carol",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "carol@supportdesk.fr",
+      "firstName": "Carol",
+      "lastName": "Nguyen",
+      "credentials": [
+        { "type": "password", "value": "password", "temporary": false }
+      ],
+      "realmRoles": ["ADMIN", "AGENT"]
+    }
+  ]
+}
