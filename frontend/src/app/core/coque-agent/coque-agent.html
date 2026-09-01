@@ -1,0 +1,62 @@
+<div class="coque">
+  <aside class="nav">
+    <div class="nav__marque">
+      SUPPORTDESK
+      <span class="nav__sous-titre">Back-office agent</span>
+    </div>
+
+    <nav class="nav__liens" aria-label="Navigation du back-office">
+      <a routerLink="/agent" [routerLinkActiveOptions]="{ exact: true }"
+         routerLinkActive="nav__lien--actif" class="nav__lien">Tableau de bord</a>
+      <a routerLink="/agent/file" routerLinkActive="nav__lien--actif" class="nav__lien">
+        File des tickets
+        @if (nombreDansLaFile(); as nombre) {
+          <span class="nav__compteur" [attr.aria-label]="nombre + ' tickets ouverts ou en cours'">
+            {{ nombre }}
+          </span>
+        }
+      </a>
+      <!--
+        Surface de maquette : ces trois entrées ne mènent nulle part. Elles sont conservées
+        parce que le design les prévoit, mais elles doivent SE VOIR comme indisponibles —
+        rendues comme les vraies, un agent clique et croit à une panne. Leur compteur est
+        retiré : un nombre à côté d'un lien mort est doublement trompeur.
+      -->
+      <span class="nav__lien nav__lien--inerte" aria-disabled="true">
+        Mes assignations <span class="nav__bientot">bientôt</span>
+      </span>
+      <span class="nav__lien nav__lien--inerte" aria-disabled="true">
+        Clients <span class="nav__bientot">bientôt</span>
+      </span>
+      <span class="nav__lien nav__lien--inerte" aria-disabled="true">
+        Rapports <span class="nav__bientot">bientôt</span>
+      </span>
+    </nav>
+
+    @if (session.utilisateur(); as utilisateur) {
+      <div class="nav__pied">
+        {{ utilisateur.nomComplet }}
+        <span class="nav__pied-role">Agent · Niveau 2</span>
+      </div>
+    }
+  </aside>
+
+  <div class="coque__droite">
+    <div class="coque__barre">
+      <span class="coque__equipe">Équipe Facturation</span>
+      @if (session.utilisateur(); as utilisateur) {
+        <div class="coque__identite">
+          <sd-bloc-identite
+            [utilisateur]="utilisateur"
+            rattachement="SupportDesk"
+            (deconnexion)="deconnecter()"
+          />
+        </div>
+      }
+    </div>
+
+    <main class="coque__contenu">
+      <router-outlet />
+    </main>
+  </div>
+</div>

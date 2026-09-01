@@ -1,0 +1,86 @@
+### SSO MULTI-APPLICATIONS — CE QUE LE PARTAGE DE SESSION NE PARTAGE PAS
+#
+# Depuis l'ajout de l'intranet (port 4300), le realm compte DEUX applications de connexion.
+# Elles partagent la session Keycloak. Elles ne partagent pas les autorisations.
+#
+# ⚠ CE FICHIER NE DÉMONTRE PAS LE PARTAGE DE SESSION.
+#
+# Le flux « mot de passe » utilisé ici ouvre une session NEUVE à chaque appel : les deux
+# jetons ci-dessous auront deux `sid` différents. Le partage de session ne s'observe que
+# dans un navigateur, où le cookie de Keycloak existe.
+#
+# Ce fichier démontre l'autre moitié, celle qu'on oublie : l'isolation des autorisations.
+# C'est aussi la moitié qui protège.
+
+@keycloak = http://localhost:8081/realms/supportdesk
+@api = http://localhost:8080
+
+### 1 · Un jeton émis pour SUPPORTDESK
+# @name jetonSupportdesk
+POST {{keycloak}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=supportdesk-front&username=alice&password=password
+
+### 2 · Un jeton émis pour L'INTRANET — même personne, même mot de passe, même annuaire
+# @name jetonIntranet
+POST {{keycloak}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=intranet-front&username=alice&password=password
+
+@sd = {{jetonSupportdesk.response.body.access_token}}
+@intra = {{jetonIntranet.response.body.access_token}}
+
+### 3 · Décoder les deux, et comparer trois claims
+# À faire à la main, ou avec ./jeton.sh :
+#
+#   ./jeton.sh alice --claims
+#
+# Ce qu'on doit voir :
+#
+#   claim            SupportDesk          Intranet
+#   ---------------  -------------------  -------------------
+#   azp              supportdesk-front    intranet-front
+#   aud              supportdesk-api      intranet-api        <- la différence qui compte
+#   crm_client_ref   CLI-0001             ABSENT              <- deux apps, deux jeux de claims
+#
+# `crm_client_ref` absent n'est pas un oubli : l'intranet n'a aucune raison de connaître la
+# référence CRM d'un client. Minimisation des données, appliquée au jeton lui-même.
+
+### 4 · LE TEST — le jeton de l'intranet sur l'API de SupportDesk
+#
+# Attendu : HTTP 401, en-tête WWW-Authenticate « invalid_token ».
+#
+# Ajouter un client à un realm donne la SESSION, pas les DROITS. C'est ValidateurAudience,
+# branché dans ConfigurationSecurite#decodeurJwt, qui refuse.
+GET {{api}}/api/tickets?taille=1
+Authorization: Bearer {{intra}}
+
+### 5 · Le contre-test — le jeton de SupportDesk, la même personne
+#
+# Attendu : HTTP 200. Sans cette requête, un resource server cassé qui refuse TOUT ferait
+# passer l'étape 4 pour une réussite.
+GET {{api}}/api/tickets?taille=1
+Authorization: Bearer {{sd}}
+
+### 6 · CORS n'est pas de l'autorisation
+#
+# L'origine http://localhost:4300 est AUTORISÉE par le backend en profil dev. La réponse
+# ci-dessous porte donc `Access-Control-Allow-Origin: http://localhost:4300`… et reste un 401.
+#
+# La requête est partie, le serveur a répondu, et il a refusé. CORS dit qui peut appeler ;
+# il ne dit jamais qui a le droit. Les deux sont confondus en permanence.
+GET {{api}}/api/tickets?taille=1
+Origin: http://localhost:4300
+Authorization: Bearer {{intra}}
+
+###
+# Ce que l'étudiant doit retenir :
+#
+# 1. Le SSO partage l'AUTHENTIFICATION. Il ne partage jamais l'AUTORISATION.
+# 2. `aud` est ce qui empêche une application du realm d'appeler l'API d'une autre. Un
+#    resource server qui ne le vérifie pas « marche » parfaitement — jusqu'au jour où
+#    quelqu'un ajoute un client au realm.
+# 3. Deux applications d'un même annuaire ne reçoivent pas les mêmes claims. Ce qu'on ne
+#    met pas dans un jeton ne peut pas fuir avec lui.

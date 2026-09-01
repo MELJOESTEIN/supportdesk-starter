@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intranet ACME</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="entete">
+    <div class="entete__marque">INTRANET&nbsp;ACME</div>
+    <p class="entete__note">
+      Une <strong>autre application</strong> que SupportDesk. Même organisation, même annuaire,
+      autre code, autre serveur, autre port.
+    </p>
+  </header>
+
+  <main class="page">
+    <!-- Déconnecté -->
+    <section id="anonyme" class="carte" hidden>
+      <h1 class="carte__titre">Portail interne</h1>
+      <p class="carte__texte">
+        Cette page ne connaît aucun mot de passe et n'en verra jamais. Elle demande au portail
+        d'identité de l'organisation qui vous êtes, et se contente de sa réponse.
+      </p>
+      <button type="button" id="connexion" class="bouton">Se connecter</button>
+      <p class="carte__mention">
+        Si vous êtes déjà connecté à SupportDesk, vous ne ressaisirez rien.
+      </p>
+    </section>
+
+    <!-- Connecté -->
+    <section id="session" class="carte" hidden>
+      <h1 class="carte__titre">Bonjour <span id="nom"></span></h1>
+      <p class="carte__texte" id="preuve-sso"></p>
+
+      <h2 class="carte__sous-titre">Ce que dit le jeton de CETTE application</h2>
+      <dl class="claims" id="claims"></dl>
+
+      <h2 class="carte__sous-titre">La question qui compte</h2>
+      <p class="carte__texte">
+        La session est partagée. <strong>L'autorisation ne l'est pas.</strong> Ce jeton a été
+        émis pour l'intranet ; l'API de SupportDesk attend l'audience
+        <code>supportdesk-api</code>. Envoyons-le quand même.
+      </p>
+      <button type="button" id="essai-api" class="bouton bouton--sombre">
+        Appeler l'API SupportDesk avec ce jeton
+      </button>
+      <pre class="resultat" id="resultat-api" hidden></pre>
+
+      <h2 class="carte__sous-titre">Déconnexion unique</h2>
+      <p class="carte__texte">
+        Fermer la session ici la ferme partout : c'est la même, chez le portail d'identité.
+        Rouvrez SupportDesk après avoir cliqué.
+      </p>
+      <button type="button" id="deconnexion" class="bouton bouton--fantome">
+        Se déconnecter partout
+      </button>
+    </section>
+
+    <section id="erreur" class="carte carte--alerte" hidden>
+      <h1 class="carte__titre">Le portail d'identité n'a pas répondu</h1>
+      <p class="carte__texte" id="message-erreur"></p>
+    </section>
+  </main>
+
+  <footer class="pied">
+    Application de démonstration. Ce qu'elle prouve, et ce qu'elle ne prouve pas :
+    <code>intranet/README.md</code>.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

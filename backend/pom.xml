@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<!-- La version publiée est 4.1.1 ; start.spring.io écrit 4.1.1.RELEASE, qui ne résout pas. -->
+		<version>4.1.1</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>com.supportdesk</groupId>
+	<artifactId>backend</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>supportdesk-backend</name>
+	<description>API SupportDesk</description>
+
+	<properties>
+		<java.version>25</java.version>
+		<jaxb2-maven-plugin.version>4.1.0</jaxb2-maven-plugin.version>
+		<!-- Ligne Boot 4 : springdoc 3.x. La 2.9.0 est la ligne Boot 3. -->
+		<springdoc.version>3.1.0</springdoc.version>
+	</properties>
+
+	<dependencies>
+		<!-- Boot 4 : webmvc, pas web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<!-- Boot 4 : Flyway a son starter, sans lui l'autoconfiguration ne s'active pas -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-flyway</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<!--
+		  Boot 4 : le starter s'appelle spring-boot-starter-SECURITY-oauth2-resource-server.
+		  L'ancien nom (spring-boot-starter-oauth2-resource-server) existe encore mais son
+		  POM 4.1.1 le déclare « deprecated in favor of » celui-ci.
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<!-- Consommation du CRM legacy (lot 5). Boot 4 : « webservices », sans tiret. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webservices</artifactId>
+		</dependency>
+		<!--
+		  Le starter webservices n'embarque PAS de client HTTP : sans httpclient5, le
+		  WebServiceTemplate tombe sur le transport JDK, qui n'offre ni pool ni
+		  response-timeout. C'est le client HTTP qui porte les timeouts.
+		-->
+		<dependency>
+			<groupId>org.apache.httpcomponents.client5</groupId>
+			<artifactId>httpclient5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-graphql</artifactId>
+		</dependency>
+		<!--
+		  Boot 4 : l'autoconfiguration du cache vit dans son propre module. Sans ce starter,
+		  @EnableCaching échoue au démarrage sur « required a bean of type CacheManager » —
+		  message qui ne dit pas qu'il manque une dépendance. Même piège que Flyway.
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+		<!-- Cache avec expiration : le cache simple de Boot n'en a pas. -->
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>${springdoc.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!--
+		  Démarre les conteneurs de compose.yaml et fournit les JdbcConnectionDetails.
+		  Portée optional : jamais embarqué dans l'image de production.
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-docker-compose</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Un starter de test par technologie : c'est la règle en Boot 4 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-flyway-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webservices-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-graphql-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!--
+		  ATTENTION : l'artefact est spring-boot-testcontainers, SANS « starter ».
+		  spring-boot-starter-testcontainers n'existe pas et n'a jamais été publié.
+		  Testcontainers 2.x a renommé ses modules : postgresql -> testcontainers-postgresql.
+		-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers-junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers-postgresql</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!--
+			  XSD -> classes JAXB. Le contrat vient du fournisseur (le WSDL publié par le
+			  CRM l'inclut) ; on ne code pas les POJO à la main, on régénère.
+			  Sur Java 25, xjc n'est plus dans le JDK (JEP 320) : c'est une dépendance de build.
+			-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>${jaxb2-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>xjc-crm</id>
+						<goals><goal>xjc</goal></goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sources><source>src/main/resources/contrats/clients.xsd</source></sources>
+					<packageName>com.supportdesk.client.contrat</packageName>
+					<clearOutputDir>false</clearOutputDir>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

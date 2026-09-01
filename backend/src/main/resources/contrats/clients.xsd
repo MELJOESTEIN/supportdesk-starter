@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Contrat du CRM legacy ACME, EXTRAIT DU WSDL PUBLIÉ par le fournisseur :
+
+      curl -s http://localhost:8082/services/clients.wsdl
+
+  Ce fichier n'est pas écrit ici, il est reçu. On ne le modifie jamais : le jour où le
+  fournisseur publie une nouvelle version, on la récupère et on régénère les classes JAXB.
+
+  Note : le WSDL déclare ses préfixes de namespace sur <wsdl:definitions>. Extraire le
+  bloc <xs:schema> sans les reporter donne un schéma que XJC refuse — le préfixe tns:
+  n'y est plus déclaré nulle part.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://legacy.acme.fr/crm" xmlns:tns="http://legacy.acme.fr/crm">
+
+  <xs:complexType name="Client">
+    <xs:sequence>
+      <xs:element name="clientRef" type="xs:string" />
+      <xs:element name="raisonSociale" type="xs:string" />
+      <xs:element name="siret" type="xs:string" />
+      <xs:element name="contactEmail" type="xs:string" />
+      <xs:element name="contactTel" type="xs:string" />
+      <xs:element name="actif" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+
+  
+  <xs:element name="GetClientRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="clientRef" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetClientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="client" type="tns:Client" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  
+  <xs:element name="SearchClientsRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="namePattern" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="SearchClientsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="client" type="tns:Client" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
+  

@@ -1,0 +1,89 @@
+<!--
+  `novalidate` n'est pas un détail. La directive [formField] reflète `required` dans le DOM,
+  ce qui déclenche la validation native du navigateur : celle-ci **bloque l'événement submit
+  avant qu'Angular ne le voie**, et affiche une bulle grise non traduisible, non stylable,
+  qui ne ressemble à rien du reste de l'application. Le bouton semblait ne rien faire.
+
+  Avec `novalidate`, un seul système parle : celui qui affiche des messages en français,
+  aux couleurs du produit, et qui sait aussi valider ce que HTML ne sait pas.
+-->
+<form class="formulaire" novalidate (submit)="$event.preventDefault(); envoyer()">
+  <a routerLink="/mes-tickets" class="formulaire__retour">← Mes tickets</a>
+
+  <h1 class="formulaire__titre">Nouveau ticket</h1>
+  <p class="formulaire__intro">
+    Réponse sous un jour ouvré. Vous recevrez une confirmation par courriel.
+  </p>
+
+  <div class="formulaire__carte">
+    <div class="champ">
+      <label for="sujet" class="champ__libelle">Sujet</label>
+      <input
+        id="sujet"
+        type="text"
+        placeholder="Résumez le problème en une phrase"
+        [formField]="formulaire.sujet"
+        [attr.aria-invalid]="messageErreur(formulaire.sujet()) ? 'true' : null"
+        aria-describedby="sujet-aide"
+      />
+      <span
+        id="sujet-aide"
+        class="champ__aide"
+        [class.champ__aide--erreur]="messageErreur(formulaire.sujet())"
+      >
+        {{ messageErreur(formulaire.sujet()) ?? 'Obligatoire · ' + sujetMax + ' caractères maximum' }}
+      </span>
+    </div>
+
+    <div class="champ">
+      <label for="categorie" class="champ__libelle">Catégorie</label>
+      <select id="categorie" [formField]="formulaire.categorie">
+        @for (c of categories; track c.valeur) {
+          <option [value]="c.valeur">{{ c.libelle }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="champ">
+      <label for="description" class="champ__libelle">Description</label>
+      <textarea
+        id="description"
+        placeholder="Ce que vous avez fait, ce que vous attendiez, ce qui s'est passé."
+        [formField]="formulaire.description"
+        [attr.aria-invalid]="messageErreur(formulaire.description()) ? 'true' : null"
+        aria-describedby="description-aide"
+      ></textarea>
+      @if (messageErreur(formulaire.description()); as erreur) {
+        <span id="description-aide" class="champ__aide champ__aide--erreur">{{ erreur }}</span>
+      }
+    </div>
+
+    <div class="champ">
+      <span class="champ__libelle">
+        Pièce jointe <span class="champ__facultatif">(facultatif)</span>
+      </span>
+      <div class="piece-jointe">
+        <button type="button" class="piece-jointe__bouton" disabled>Choisir un fichier</button>
+        <span class="piece-jointe__aide">
+          Capture d'écran, PDF ou journal. 10 Mo maximum.
+          <em>Le téléversement n'est pas encore branché.</em>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  @if (erreurEnvoi(); as erreur) {
+    <p class="formulaire__erreur" role="alert">{{ erreur }}</p>
+  }
+
+  <div class="formulaire__actions">
+    <button
+      type="submit"
+      class="formulaire__bouton formulaire__bouton--primaire"
+      [disabled]="envoiEnCours()"
+    >
+      {{ envoiEnCours() ? 'Envoi…' : 'Envoyer le ticket' }}
+    </button>
+    <button type="button" class="formulaire__bouton" (click)="annuler()">Annuler</button>
+  </div>
+</form>

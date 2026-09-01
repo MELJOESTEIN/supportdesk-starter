@@ -72,9 +72,12 @@ Tu dois y voir `CLAUDE.md` chargé. Test décisif — pose la question sans donn
 
 > Quel starter Spring Boot dois-je utiliser pour du web sur ce projet ?
 
-S'il répond `spring-boot-starter-webmvc`, le contexte fonctionne. S'il répond
-`spring-boot-starter-web`, il ne lit pas le fichier : tu es probablement lancé depuis un
-sous-dossier.
+S'il répond `spring-boot-starter-webmvc`, le contexte fonctionne.
+
+> **Ne teste pas l'inverse en te plaçant dans un sous-dossier** : Claude Code remonte
+> l'arborescence et retrouve le `CLAUDE.md` parent. Vérifié le 31 août 2026 — lancé depuis
+> `legacy-crm/`, il donne quand même la bonne réponse. Pour voir le contraste, pose la même
+> question depuis un dossier vide hors du projet : tu obtiendras `spring-boot-starter-web`.
 
 C'est aussi la démonstration à faire en séance au J1 — bien plus convaincante qu'un discours.
 
@@ -132,58 +135,71 @@ supportdesk/
 │
 ├── infra/keycloak/               ← realm importé au démarrage
 │
-└── legacy-crm/                   ← CRM SOAP, construit par Compose — boîte noire, lis le WSDL
-
-     backend/   ← à créer au J1 : Spring Boot 4.1
-     frontend/  ← à créer au J1 : Angular 22
+├── intranet/                     ← seconde application du realm — démo SSO du J2, port 4300
+├── legacy-crm/                   ← CRM SOAP, construit par Compose — boîte noire en séance
+├── backend/                      ← Spring Boot 4.1 — REST, GraphQL, client SOAP
+├── frontend/                     ← Angular 22 — portail client et back-office agent
+├── verif/                        ← la démonstration rejouable (.http, jeton.sh, pkce.sh)
+├── PARCOURS.md                   ← de git clone à l'application qui tourne
+└── .github/workflows/ci.yml      ← build et tests des trois modules
 ```
 
-> **`backend/` et `frontend/` n'existent pas encore, et c'est voulu.** Tu les construis en
-> séance. Ce dépôt te donne le contexte, l'infrastructure, les compétences de l'agent et la
-> maquette — pas le code.
-
 > **`angular-developer/` et `angular-new-app/` sont des liens symboliques** vers
-> `.agents/skills/`. Leur cible est **à l'intérieur** de `supportdesk/` : l'archive de
-> l'étudiant reste correcte quelle que soit la façon dont tu la fabriques, et le dossier
-> peut être déplacé d'un bloc. Ce sont les deux compétences officielles Angular, verrouillées
-> par `skills-lock.json` — les six autres sont écrites pour ce projet.
+> `.agents/skills/`, à l'intérieur du dépôt. Ce sont les deux compétences officielles Angular,
+> verrouillées par `skills-lock.json` — les six autres sont écrites pour ce projet.
 
 ---
 
 ## Ordre de lecture
 
-Dans cet ordre, avant le premier jour :
-
 1. **`docs/methode-agentique.md`** — comment on travaille avec un agent de codage sur ce projet.
-   C'est le document de référence de la semaine, à garder ouvert.
-2. **`CLAUDE.md`** — le contexte du projet : versions épinglées, conventions, et surtout la
-   section « Pièges connus ». L'agent le lit à chaque session ; toi aussi.
-3. **[La carte du code](https://MELJOESTEIN.github.io/supportdesk-carte-du-code/)** — où vit
-   quoi, et dans quel ordre le code s'écrit.
+2. **`CLAUDE.md`** — le contexte : versions épinglées, conventions, et la section « Pièges
+   connus ». L'agent le lit à chaque session ; toi aussi.
+3. **`PARCOURS.md`** — de `git clone` à l'application qui tourne.
+4. **[La carte du code](https://MELJOESTEIN.github.io/supportdesk-carte-du-code/)** — où vit quoi,
+   et dans quel ordre le code s'écrit. Puis **[le banc
+   d'essai](https://MELJOESTEIN.github.io/supportdesk-carte-du-code/banc-essai/)** pour éprouver
+   les API, et **[l'index des
+   concepts](https://MELJOESTEIN.github.io/supportdesk-carte-du-code/concepts/)** en référence.
 
-Puis, au J1, avant d'écrire la moindre ligne : **`docs/produit.md`**. Tu le remplis, l'agent le
-critique. Jamais l'inverse.
+### Le mode tuteur
+
+Ce dépôt porte l'application **terminée**. Tu ne la construis pas : tu la lis, tu l'exécutes, tu
+la casses et tu la répares. Pour que l'agent t'accompagne sans coder à ta place :
+
+```
+/tuteur-spring-boot
+```
+
+Il bascule alors en formateur : il te renvoie la question d'avant, t'oriente vers le fichier
+précis, et te laisse te tromper quand l'erreur est instructive. Détail dans
+`.claude/skills/tuteur-spring-boot/SKILL.md`.
+
+### Tes quatre livrables
+
+Ce sont des gabarits vides. C'est toi qui les remplis — l'agent les critique, il ne les rédige pas.
+
+| Fichier | Quand |
+|---|---|
+| `docs/produit.md` | le modèle de domaine, avant de toucher au code |
+| `docs/audit-securite.md` | ton rapport d'audit OWASP |
+| `docs/decision-architecture.md` | ton arbitrage REST / GraphQL / SOAP, argumenté sur ce code |
+| `docs/contexte-agent.md` | ce que tu ajouterais au `CLAUDE.md` après cette semaine |
 
 ---
 
 ## Démarrer
 
-```bash
-cp .env.example .env
-docker compose up -d          # Postgres, Keycloak, CRM legacy
-docker compose ps             # les 3 services doivent être « healthy »
-```
-
-Le premier démarrage construit l'image du CRM legacy : compte quelques minutes.
+**La procédure complète, de `git clone` à l'application qui tourne, est dans
+[`PARCOURS.md`](PARCOURS.md).** En résumé :
 
 ```bash
-docker compose logs -f keycloak   # suivre l'import du realm
-docker compose stop               # arrêter ; `down -v` pour repartir de zéro
-```
+# Tout en conteneurs — le mode du J4
+docker compose --profile full up -d --build
 
-`backend/` et `frontend/` se lancent au J1, une fois créés :
-
-```bash
+# Développement — l'infra en conteneurs, le code sur la machine
+docker compose up -d                                    # dépendances seules
+docker compose --profile sso up -d intranet             # seconde app, pour la démo SSO du J2
 cd backend  && ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 cd frontend && npm start
 ```
@@ -198,6 +214,7 @@ dépend.
 | Backend | http://localhost:8080 |
 | Keycloak | http://localhost:8081 — `admin` / `admin` |
 | CRM legacy (WSDL) | http://localhost:8082/services/clients.wsdl |
+| Intranet ACME (démo SSO, profil `sso`) | http://localhost:4300 |
 
 Utilisateurs de test, mot de passe `password` : `alice` (CLIENT, CLI-0001) · `david` (CLIENT,
 CLI-0002) · `bob` (AGENT) · `carol` (ADMIN).

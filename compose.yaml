@@ -77,6 +77,27 @@ services:
       retries: 20
       start_period: 20s
 
+  # Seconde application du realm, pour la démonstration SSO du J2.
+  #
+  # Profil dédié : ce n'est PAS une dépendance de SupportDesk, et `docker compose up -d` ne
+  # doit pas s'alourdir d'un conteneur qui ne sert que trente minutes dans la semaine.
+  #
+  #   docker compose --profile sso up -d intranet
+  #
+  # Page statique, aucune étape de construction, démarrage immédiat.
+  intranet:
+    profiles: ["sso"]
+    build:
+      context: ./intranet
+    container_name: sd-intranet
+    ports:
+      - "4300:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
   # ---------------------------------------------------------------
   # Profil "full" — J4 uniquement. `docker compose --profile full up`
   # Non démarrés par spring-boot-docker-compose : le profil les protège.

@@ -1,0 +1,84 @@
+.entete {
+  display: flex;
+  align-items: center;
+  gap: var(--sd-space-3);
+  margin-bottom: var(--sd-space-4);
+
+  &__titre {
+    margin: 0;
+    font-size: var(--sd-fs-5);
+    font-weight: var(--sd-weight-semibold);
+    line-height: 1.2;
+  }
+
+  &__compte {
+    font-size: var(--sd-fs-2);
+    color: var(--sd-text-3);
+    align-self: flex-end;
+    padding-bottom: var(--sd-space-1);
+  }
+
+  &__actions {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--sd-space-2);
+  }
+
+  &__bouton {
+    display: inline-flex;
+    align-items: center;
+    height: var(--sd-control-h);
+    padding: 0 14px;
+    border-radius: var(--sd-radius-2);
+    background: var(--sd-accent);
+    color: var(--sd-accent-fg);
+    font-size: var(--sd-fs-2);
+    font-weight: var(--sd-weight-medium);
+    text-decoration: none;
+
+    &:hover { background: var(--sd-accent-strong); color: var(--sd-accent-fg); text-decoration: none; }
+  }
+}
+
+.recherche {
+  display: flex;
+  align-items: center;
+  height: var(--sd-control-h);
+  border: var(--sd-border-w) solid var(--sd-border-strong);
+  border-radius: var(--sd-radius-2);
+  background: var(--sd-surface);
+  padding: 0 var(--sd-space-2);
+  gap: 6px;
+
+  &__icone {
+    color: var(--sd-text-3);
+    font-size: 13px;
+  }
+
+  input {
+    border: 0;
+    outline: none;
+    width: 220px;
+    background: transparent;
+    font-size: var(--sd-fs-2);
+  }
+}
+
+.carte {
+  background: var(--sd-surface);
+  border: var(--sd-border-w) solid var(--sd-border);
+  border-radius: var(--sd-radius-2);
+  overflow: hidden;
+}
+
+// Message affiché quand une garde a renvoyé l'utilisateur depuis la zone agent. Discret :
+// il informe, il n'accuse pas — se tromper de zone n'est pas une faute.
+.renvoi {
+  margin: 0 0 var(--sd-space-4);
+  padding: var(--sd-space-3);
+  border-left: 3px solid var(--sd-border-strong);
+  background: var(--sd-surface-2);
+  font-size: var(--sd-fs-2);
+  color: var(--sd-text-2);
+}

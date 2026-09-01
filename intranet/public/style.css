@@ -1,0 +1,91 @@
+/*
+ * Volontairement SANS rapport avec le système de design de SupportDesk : cette page doit
+ * se voir comme une autre application, pas comme un écran de plus. Aucun jeton partagé,
+ * aucune dépendance — le point est justement qu'elles n'ont rien en commun sauf l'annuaire.
+ */
+:root {
+  --encre: #16202b;
+  --papier: #f4f6f8;
+  --surface: #ffffff;
+  --trait: #d3dae2;
+  --accent: #1c4f7c;
+  --alerte: #8c1d1d;
+  --vert: #1f5c33;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--encre);
+  font: 15px/1.55 "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.entete {
+  background: var(--encre);
+  color: #fff;
+  padding: 20px 24px;
+}
+
+.entete__marque { font-weight: 700; letter-spacing: 0.14em; font-size: 15px; }
+.entete__note { margin: 6px 0 0; font-size: 13px; color: #b9c4d0; max-width: 62ch; }
+
+.page { max-width: 760px; margin: 0 auto; padding: 24px; }
+
+.carte {
+  background: var(--surface);
+  border: 1px solid var(--trait);
+  border-radius: 4px;
+  padding: 24px;
+}
+
+.carte--alerte { border-left: 4px solid var(--alerte); }
+.carte__titre { margin: 0 0 10px; font-size: 22px; }
+.carte__sous-titre { margin: 26px 0 8px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #5b6b7c; }
+.carte__texte { margin: 0 0 14px; max-width: 66ch; }
+.carte__mention { margin: 12px 0 0; font-size: 13px; color: #5b6b7c; }
+
+.bouton {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-radius: 3px;
+  padding: 9px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.bouton--sombre { background: var(--encre); border-color: var(--encre); }
+.bouton--fantome { background: transparent; color: var(--encre); border-color: var(--trait); }
+.bouton:hover { filter: brightness(1.12); }
+
+.claims { margin: 0; display: grid; grid-template-columns: 1fr; gap: 2px; }
+
+@media (min-width: 620px) {
+  .claims { grid-template-columns: 168px minmax(0, 1fr); }
+}
+
+.claims dt { padding: 8px 0; font-size: 13px; color: #5b6b7c; border-top: 1px solid var(--trait); }
+.claims dd { margin: 0; padding: 8px 0; border-top: 1px solid var(--trait); overflow-wrap: anywhere; }
+.claims__absent strong, .claims__absent em { color: var(--alerte); }
+.claims__aide { display: block; margin-top: 4px; font-size: 12.5px; color: #5b6b7c; }
+
+code { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 13px; }
+
+.resultat {
+  margin: 12px 0 0;
+  padding: 14px;
+  border-radius: 3px;
+  background: #0f1720;
+  color: #dfe7ee;
+  font: 12.5px/1.5 "IBM Plex Mono", ui-monospace, monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* Le résultat ATTENDU est un refus. Le vert dit « la protection a fonctionné ». */
+.resultat--attendu { border-left: 4px solid var(--vert); }
+.resultat--inattendu { border-left: 4px solid var(--alerte); }
+
+.pied { max-width: 760px; margin: 0 auto; padding: 8px 24px 32px; font-size: 12.5px; color: #5b6b7c; }

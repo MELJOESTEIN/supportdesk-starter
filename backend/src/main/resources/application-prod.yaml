@@ -1,0 +1,30 @@
+# Profil de production — activé par SPRING_PROFILES_ACTIVE=prod (lot 6).
+spring:
+  docker:
+    compose:
+      enabled: false
+
+  graphql:
+    schema:
+      # Effet JVM entier : Introspection.enabledJvmWide(false). En production, l'API ne
+      # publie pas sa propre carte.
+      introspection:
+        enabled: false
+      printer:
+        enabled: false
+    graphiql:
+      enabled: false
+
+# Swagger UI et la documentation OpenAPI n'existent pas en production :
+# c'est de la surface d'attaque, et une carte de l'API offerte.
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

@@ -1,0 +1,109 @@
+<h1 class="sd-hors-ecran">Détail d'un ticket — back-office</h1>
+
+@if (ticket.isLoading()) {
+  <sd-etat-chargement [nombreLignes]="5" />
+} @else if (ticket.error()) {
+  <sd-etat-erreur titre="Ce ticket n'a pas pu être chargé" (reessayer)="ticket.reload()" />
+} @else if (ticket.value(); as t) {
+  <div class="detail">
+    <div class="detail__fil">
+      <a routerLink="/agent/file" class="detail__retour">← File des tickets</a>
+
+      <h2 class="detail__titre">{{ t.sujet }}</h2>
+
+      <div class="detail__meta">
+        <span class="detail__ref">{{ t.reference }}</span>
+        <sd-badge-statut [statut]="t.statut" />
+        <span class="detail__contexte">
+          {{ t.clientRaisonSociale ?? t.crmClientRef }} · ouvert
+          {{ t.creeLe | dateRelative }} · {{ messagesPublics() }} messages,
+          {{ notesInternes() }} notes internes
+        </span>
+      </div>
+
+      <sd-fil-commentaires [commentaires]="t.commentaires" [vueAgent]="true" />
+
+      <div class="detail__composeur">
+        <sd-composeur
+          [modeAgent]="true"
+          [destinataire]="t.clientRaisonSociale ?? t.crmClientRef"
+          (envoyer)="enregistrer($event)"
+        />
+        <p class="detail__aide">
+          Basculez d'un onglet à l'autre : la zone de saisie change de couleur, de bordure, de
+          police et de libellé de bouton. Aucun envoi possible sans que le destinataire soit
+          écrit en clair au-dessus du champ.
+        </p>
+      </div>
+    </div>
+
+    <aside class="cotes">
+      <section class="cote">
+        <h2 class="cote__titre">TRAITEMENT</h2>
+        <div class="cote__champs">
+          <label class="cote__champ">
+            Statut
+            <select class="cote__select cote__select--mono" (change)="changerStatut($any($event.target).value)">
+              @for (statut of statuts; track statut) {
+                <option [value]="statut" [selected]="statut === t.statut">{{ statut }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="cote__champ">
+            Assigné à
+            <select class="cote__select" (change)="assigner($any($event.target).value)">
+              <option value="" [selected]="!t.assigneA">Non assigné</option>
+              @for (agent of agents.value(); track agent.username) {
+                <option [value]="agent.username" [selected]="agent.username === t.assigneA?.username">{{
+                  agent.nomComplet
+                }}</option>
+              }
+            </select>
+          </label>
+
+          <label class="cote__champ">
+            Priorité
+            <select class="cote__select" (change)="changerPriorite($any($event.target).value)">
+              @for (priorite of priorites; track priorite) {
+                <option [value]="priorite" [selected]="priorite === t.priorite">{{ priorite }}</option>
+              }
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="cote">
+        <h2 class="cote__titre">CLIENT</h2>
+        <dl class="cote__liste">
+          <dt>Compte</dt>
+          <dd>{{ t.clientRaisonSociale ?? '—' }}</dd>
+          <dt>Référence</dt>
+          <dd class="cote__mono">{{ t.crmClientRef }}</dd>
+          <dt>Contact</dt>
+          <dd>{{ t.clientContact ?? '—' }}</dd>
+        </dl>
+        <p class="cote__note">
+          Compte et contact sont lus dans le CRM legacy, en SOAP, à chaque ouverture du
+          ticket. La référence, elle, est la seule donnée client stockée en base.
+        </p>
+      </section>
+
+      <section class="cote">
+        <h2 class="cote__titre">JOURNAL</h2>
+        @if (t.evenements.length === 0) {
+          <p class="cote__vide">Aucun événement enregistré.</p>
+        } @else {
+          <ol class="cote__journal">
+            @for (evenement of t.evenements; track evenement.id) {
+              <li>
+                <span class="cote__journal-date">{{ evenement.creeLe | dateRelative }}</span>
+                — {{ evenement.detail }}
+              </li>
+            }
+          </ol>
+        }
+      </section>
+    </aside>
+  </div>
+}

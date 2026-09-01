@@ -1,0 +1,83 @@
+### GraphQL — le back-office agent
+#
+# GraphQL n'est PAS ouvert à l'espace client : un langage de requête entre les mains du
+# public élargit la surface d'attaque sans bénéfice, et le portail client a trois écrans
+# dont les besoins sont connus. Ici, l'agent compose sa vue.
+
+@api = http://localhost:8080
+@bob = {{jetonBob.response.body.access_token}}
+@alice = {{jetonAlice.response.body.access_token}}
+
+### 1 · Une requête, trois sources
+# Tickets (Postgres), fiches clients (CRM SOAP) et agents (Postgres) en un aller-retour.
+# En REST, il en faudrait trois — ou un endpoint sur mesure de plus.
+POST {{api}}/graphql
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{
+  "query": "{ tickets(taille: 5) { total contenu { reference sujet statut client { raisonSociale siret } assigneA { nomComplet equipe } } } }"
+}
+
+### 2 · Le tableau de bord
+POST {{api}}/graphql
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{
+  "query": "query TB($jours: Int!) { tableauDeBord(jours: $jours) { arreteLe totalPeriode indicateurs { cle valeur precision alerte } repartition { statut nombre } } }",
+  "variables": { "jours": 14 }
+}
+
+### 3 · Une mutation
+POST {{api}}/graphql
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{
+  "query": "mutation { changerPriorite(id: 1, priorite: HAUTE) { reference priorite } }"
+}
+
+### 4 · Un client est refusé : 403
+# Deux barrières, volontairement : la chaîne de filtres réserve /graphql aux agents, ET
+# chaque méthode porte @PreAuthorize.
+POST {{api}}/graphql
+Authorization: Bearer {{alice}}
+Content-Type: application/json
+
+{ "query": "{ tickets { total } }" }
+
+### 5 · Sans jeton : 401
+POST {{api}}/graphql
+Content-Type: application/json
+
+{ "query": "{ tickets { total } }" }
+
+### 6 · L'amplification par alias est arrêtée
+# Trente fois la même requête sous trente noms différents. La profondeur ne voit rien —
+# ça reste plat. C'est la complexité qui l'arrête :
+#
+#   "maximum query complexity exceeded 450 > 200"
+#
+# Rien de tout cela n'est actif par défaut dans spring-graphql : sans les deux
+# instrumentations déclarées dans ConfigurationGraphQl, cette requête serait exécutée.
+POST {{api}}/graphql
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{
+  "query": "{ a0: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a1: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a2: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a3: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a4: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a5: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a6: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a7: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a8: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a9: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a10: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a11: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a12: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a13: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a14: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a15: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a16: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a17: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a18: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a19: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a20: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a21: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a22: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a23: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a24: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a25: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a26: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a27: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a28: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } a29: tickets(taille: 100) { contenu { reference sujet statut priorite assigneA { nomComplet equipe niveau } } } }"
+}
+
+### 7 · Un ticket inexistant : erreur de CHAMP, HTTP 200
+# C'est le protocole GraphQL : la requête a réussi, un champ a échoué, et `path` dit
+# lequel. Un écran peut rendre partiellement plutôt que de tout perdre.
+POST {{api}}/graphql
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{ "query": "{ ticket(id: 999999) { reference } }" }
+
+### 8 · GraphiQL, en développement seulement
+# En profil `prod`, introspection et GraphiQL sont coupés : l'API ne publie pas sa carte.
+GET {{api}}/graphiql

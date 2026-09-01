@@ -1,0 +1,76 @@
+### Parcours d'un agent
+#
+# Joue 00-tokens.http d'abord.
+
+@api = http://localhost:8080
+@bob = {{jetonBob.response.body.access_token}}
+
+### 1 · La file : tous les comptes
+# `clientRaisonSociale` vient du CRM legacy, lu en SOAP. Une page de 25 tickets touchant
+# 7 comptes ne fait que 7 appels : voir 50-crm.http.
+GET {{api}}/api/tickets?taille=25
+Authorization: Bearer {{bob}}
+
+### 2 · Le MÊME ticket que la requête 2 de 10-parcours-client.http
+GET {{api}}/api/tickets/1
+Authorization: Bearer {{bob}}
+
+###
+# Compare les deux réponses côte à côte. Pour bob :
+#   - cinq commentaires au lieu de trois, dont deux `INTERNE` ;
+#   - `evenements` contient le journal du ticket.
+#
+# Ce n'est pas l'affichage qui change : c'est la RÉPONSE HTTP. Les notes internes ne sont
+# pas chargées pour un client — elles ne quittent jamais la base.
+
+### 3 · Filtrer la file
+GET {{api}}/api/tickets?statuts=OUVERT,EN_COURS&assigneA=bob&taille=10
+Authorization: Bearer {{bob}}
+
+### 4 · Les tickets non assignés
+GET {{api}}/api/tickets?assigneA=NON_ASSIGNE
+Authorization: Bearer {{bob}}
+
+### 5 · Écrire une note interne
+POST {{api}}/api/tickets/1/commentaires
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{
+  "contenu": "Relancer l'infra sur INF-217 avant de répondre au client.",
+  "visibilite": "INTERNE"
+}
+
+### 6 · Rejoue maintenant la requête 2 de 10-parcours-client.http
+# La note qu'on vient d'écrire n'apparaît pas dans la réponse servie à alice.
+
+### 7 · Changer le statut
+PATCH {{api}}/api/tickets/1
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{ "statut": "EN_COURS" }
+
+### 8 · Une transition interdite : 409
+# Un ticket fermé ne se rouvre pas — le client en ouvre un nouveau.
+PATCH {{api}}/api/tickets/5
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{ "statut": "OUVERT" }
+
+### 9 · Le tableau de bord
+GET {{api}}/api/tableau-de-bord?jours=14
+Authorization: Bearer {{bob}}
+
+### 10 · La liste des agents
+GET {{api}}/api/agents
+Authorization: Bearer {{bob}}
+
+### 11 · Un agent ne peut pas déclarer de ticket : 403
+# Il n'appartient à aucun compte client — le ticket n'aurait pas de propriétaire.
+POST {{api}}/api/tickets
+Authorization: Bearer {{bob}}
+Content-Type: application/json
+
+{ "sujet": "Essai", "categorie": "AUTRE", "description": "Test" }

@@ -1,0 +1,46 @@
+<div class="pagination">
+  <span class="pagination__intervalle">{{ intervalle() }}</span>
+
+  @if (taillesDisponibles(); as tailles) {
+    <label class="pagination__taille">
+      Lignes
+      <select (change)="surTaille($any($event.target).value)">
+        @for (t of tailles; track t) {
+          <option [value]="t" [selected]="t === page().taille">{{ t }}</option>
+        }
+      </select>
+    </label>
+  }
+
+  <nav class="pagination__pages" aria-label="Pagination">
+    <button
+      type="button"
+      class="pagination__bouton"
+      [disabled]="page().page === 0"
+      (click)="changerPage.emit(page().page - 1)"
+      aria-label="Page précédente"
+    >‹</button>
+
+    @for (n of numeros(); track n) {
+      <button
+        type="button"
+        class="pagination__bouton"
+        [class.pagination__bouton--actif]="n === page().page"
+        [attr.aria-current]="n === page().page ? 'page' : null"
+        (click)="changerPage.emit(n)"
+      >{{ n + 1 }}</button>
+    }
+
+    @if (aDesPagesMasquees()) {
+      <span class="pagination__ellipse" aria-hidden="true">…</span>
+    }
+
+    <button
+      type="button"
+      class="pagination__bouton"
+      [disabled]="page().page >= page().totalPages - 1"
+      (click)="changerPage.emit(page().page + 1)"
+      aria-label="Page suivante"
+    >›</button>
+  </nav>
+</div>

@@ -1,5 +1,9 @@
 {
   "realm": "supportdesk",
+  "displayName": "SupportDesk",
+  "internationalizationEnabled": true,
+  "defaultLocale": "fr",
+  "supportedLocales": ["fr", "en"],
   "enabled": true,
   "sslRequired": "none",
   "registrationAllowed": false,
@@ -60,6 +64,53 @@
           }
         }
       ]
+    },
+    {
+      "clientId": "intranet-front",
+      "name": "Intranet ACME (demonstration SSO)",
+      "description": "Seconde application du realm. Elle prouve deux choses a la fois : la session Keycloak est partagee, et l autorisation ne l est pas. Voir verif/60-sso.http.",
+      "enabled": true,
+      "publicClient": true,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "redirectUris": [
+        "http://localhost:4300/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4300"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:4300/*"
+      },
+      "protocolMappers": [
+        {
+          "name": "audience-intranet-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.client.audience": "intranet-api",
+            "id.token.claim": "false",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "intranet-api",
+      "name": "Intranet API (audience seulement)",
+      "description": "Pendant de supportdesk-api pour la seconde application. Aucun flow actif.",
+      "enabled": true,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false
     },
     {
       "clientId": "supportdesk-api",

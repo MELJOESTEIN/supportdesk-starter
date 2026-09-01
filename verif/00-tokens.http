@@ -1,0 +1,57 @@
+### Où naît un jeton
+#
+# Le mot de passe ne transite QUE vers Keycloak. L'application ne le voit jamais — c'est
+# tout l'intérêt d'un fournisseur d'identité, et ça se vérifie ici.
+#
+# Ce flux (« mot de passe ») est activé sur le client public pour les tests. Le navigateur,
+# lui, utilise le flux « code + PKCE » : voir verif/pkce.sh.
+
+@keycloak = http://localhost:8081/realms/supportdesk
+@api = http://localhost:8080
+
+### 1 · Le jeton d'alice — CLIENT, rattachée à CLI-0001
+# @name jetonAlice
+POST {{keycloak}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=supportdesk-front&username=alice&password=password
+
+### 2 · Le jeton de david — CLIENT, rattaché à CLI-0002
+# @name jetonDavid
+POST {{keycloak}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=supportdesk-front&username=david&password=password
+
+### 3 · Le jeton de bob — AGENT, rattaché à aucun compte
+# @name jetonBob
+POST {{keycloak}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=supportdesk-front&username=bob&password=password
+
+### 4 · Le jeton de carol — ADMIN + AGENT
+# @name jetonCarol
+POST {{keycloak}}/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&client_id=supportdesk-front&username=carol&password=password
+
+###
+# Colle la valeur de `access_token` sur https://jwt.io (ou décode-la à la main) et
+# regarde trois choses :
+#
+#   "preferred_username": "alice"
+#   "crm_client_ref":     "CLI-0001"      <- c'est ELLE qui décide de ce qu'alice voit
+#   "realm_access": { "roles": ["CLIENT"] }
+#   "aud":                "supportdesk-api"
+#
+# Rien de tout cela n'est envoyé par l'application : c'est signé par Keycloak, et le
+# backend vérifie la signature. Un jeton modifié à la main est refusé.
+
+### 5 · Sans jeton : 401
+GET {{api}}/api/tickets
+
+### 6 · Avec un jeton bricolé : 401 aussi
+GET {{api}}/api/tickets
+Authorization: Bearer ceci.nest.pas.un.jeton

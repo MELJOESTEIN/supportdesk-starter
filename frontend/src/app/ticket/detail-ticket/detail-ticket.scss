@@ -1,0 +1,103 @@
+.detail {
+  display: grid;
+  // Colonne latérale de largeur fixe : sous ~860 px elle écrase le fil de discussion,
+  // qui tombait à trois mots par ligne. Elle passe dessous plutôt que de le comprimer.
+  grid-template-columns: minmax(0, 1fr);
+
+  @media (min-width: 860px) {
+    grid-template-columns: minmax(0, 1fr) var(--sd-aside-largeur);
+  }
+  gap: var(--sd-space-5);
+  align-items: start;
+
+  &__retour {
+    font-size: var(--sd-fs-2);
+  }
+
+  &__titre {
+    margin: var(--sd-space-2) 0 var(--sd-space-1) 0;
+    font-size: var(--sd-fs-5);
+    font-weight: var(--sd-weight-semibold);
+    line-height: 1.2;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sd-space-3);
+    margin-bottom: var(--sd-space-5);
+    flex-wrap: wrap;
+  }
+
+  &__ref {
+    font-family: var(--sd-font-mono);
+    font-size: 13px;
+    color: var(--sd-text-2);
+  }
+
+  &__ouverture {
+    font-size: var(--sd-fs-1);
+    color: var(--sd-text-3);
+  }
+
+  &__composeur {
+    margin-top: var(--sd-space-5);
+  }
+}
+
+.recap {
+  background: var(--sd-surface);
+  border: var(--sd-border-w) solid var(--sd-border);
+  border-radius: var(--sd-radius-2);
+  padding: var(--sd-space-4);
+
+  &__titre {
+    margin: 0 0 var(--sd-space-3) 0;
+    font: var(--sd-weight-semibold) var(--sd-fs-1) / 1 var(--sd-font-mono);
+    letter-spacing: var(--sd-track-caps);
+    color: var(--sd-text-3);
+  }
+
+  &__liste {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    row-gap: var(--sd-space-2);
+    column-gap: var(--sd-space-3);
+    font-size: var(--sd-fs-2);
+
+    dt {
+      color: var(--sd-text-3);
+    }
+
+    dd {
+      margin: 0;
+    }
+  }
+
+  &__mono {
+    font-family: var(--sd-font-mono);
+    font-size: 13px;
+  }
+
+  &__actions {
+    margin-top: var(--sd-space-4);
+    padding-top: var(--sd-space-4);
+    border-top: var(--sd-border-w) solid var(--sd-border);
+  }
+
+  &__bouton {
+    width: 100%;
+    height: 36px;
+    border: var(--sd-border-w) solid var(--sd-border-strong);
+    border-radius: var(--sd-radius-2);
+    background: var(--sd-surface);
+    font-size: var(--sd-fs-2);
+    color: var(--sd-text);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--sd-surface-2);
+    }
+  }
+}

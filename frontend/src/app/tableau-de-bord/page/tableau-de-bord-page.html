@@ -1,0 +1,100 @@
+<h1 class="sd-hors-ecran">Tableau de bord</h1>
+
+@if (donnees.isLoading()) {
+  <sd-etat-chargement [nombreLignes]="6" />
+} @else if (donnees.error()) {
+  <!-- Sans cette branche, une requête en échec ne rendait rien du tout : page blanche,
+       aucun message, aucun moyen de réessayer. -->
+  <sd-etat-erreur reference="ERR-TDB-01" (reessayer)="donnees.reload()" />
+} @else if (donnees.value()?.tableauDeBord; as d) {
+  <div class="entete">
+    <h2 class="entete__titre">Tableau de bord</h2>
+    <span class="entete__contexte">Équipe {{ d.equipe }} · {{ d.arreteLe | dateLongue }}</span>
+    <select class="entete__periode" aria-label="Période">
+      <option>14 derniers jours</option>
+      <option>7 derniers jours</option>
+      <option>Mois en cours</option>
+    </select>
+  </div>
+
+  <div class="tuiles">
+    @for (indicateur of d.indicateurs; track indicateur.cle) {
+      <!-- L'alerte est portée par la tuile entière, pas seulement par son texte : le liseré
+           était câblé sur la CLÉ de l'indicateur, si bien que seule « sans réponse > 48 h »
+           pouvait virer au rouge, quel que soit l'état des autres. -->
+      <article
+        class="tuile"
+        [class]="'tuile--' + indicateur.cle.toLowerCase()"
+        [class.tuile--alerte]="indicateur.alerte"
+      >
+        <h2 class="tuile__libelle" [class.tuile__libelle--alerte]="indicateur.alerte">
+          {{ indicateur.libelle }}
+        </h2>
+        <p class="tuile__valeur" [class.tuile__valeur--alerte]="indicateur.alerte">
+          {{ indicateur.valeur }}
+        </p>
+        <p class="tuile__precision">
+          @if (indicateur.cle === 'SANS_REPONSE_48H') {
+            <a routerLink="/agent/file">{{ indicateur.precision }}</a>
+          } @else {
+            {{ indicateur.precision }}
+          }
+        </p>
+      </article>
+    }
+  </div>
+
+  <div class="bas">
+    <section class="carte">
+      <header class="carte__entete">
+        <h2 class="carte__titre">Activité — 14 derniers jours</h2>
+        <div class="legende">
+          <span><span class="legende__pastille legende__pastille--crees"></span>Créés</span>
+          <span><span class="legende__pastille legende__pastille--resolus"></span>Résolus</span>
+        </div>
+      </header>
+
+      <div class="graphe" role="img"
+           [attr.aria-label]="'Activité sur 14 jours, total ' + d.totalPeriode + ' tickets'">
+        @for (jour of d.activite; track jour.jour) {
+          <div class="graphe__jour">
+            <span class="graphe__barre graphe__barre--crees" [style.height]="hauteur(jour.crees)"
+                  [title]="jour.crees + ' créés'"></span>
+            <span class="graphe__barre graphe__barre--resolus" [style.height]="hauteur(jour.resolus)"
+                  [title]="jour.resolus + ' résolus'"></span>
+          </div>
+        }
+      </div>
+      <div class="graphe__axe">
+        @for (jour of d.activite; track jour.jour) {
+          <span>{{ jourCourt(jour.jour) }}</span>
+        }
+      </div>
+    </section>
+
+    <section class="carte">
+      <h2 class="carte__titre">Répartition par statut</h2>
+      <div class="repartition">
+        @for (ligne of d.repartition; track ligne.statut) {
+          <div class="repartition__ligne">
+            <div class="repartition__entete">
+              <span>
+                <span aria-hidden="true" class="repartition__glyphe">{{ glyphe(ligne.statut) }}</span>
+                {{ libelle(ligne.statut) }}
+              </span>
+              <span class="repartition__nombre">{{ ligne.nombre }}</span>
+            </div>
+            <div class="repartition__jauge">
+              <span [class]="'repartition__part repartition__part--' + ligne.statut.toLowerCase()"
+                    [style.width]="part(ligne.nombre)"></span>
+            </div>
+          </div>
+        }
+      </div>
+      <p class="repartition__note">
+        {{ d.totalPeriode }} tickets sur la période. Un ticket résolu passe à « fermé » après
+        sept jours sans réponse du client.
+      </p>
+    </section>
+  </div>
+}

@@ -1,0 +1,81 @@
+<div class="entete">
+  <h1 class="entete__titre">File des tickets</h1>
+  @if (resultats.value(); as p) {
+    <span class="entete__compte">{{ p.total }} résultats</span>
+  }
+</div>
+
+<div class="filtres">
+  <div class="filtres__statuts">
+    <span class="filtres__libelle">STATUT</span>
+    @for (statut of statuts; track statut) {
+      <button
+        type="button"
+        class="puce"
+        [class]="'puce--' + statut.toLowerCase()"
+        [class.puce--inactive]="!estActif(statut)"
+        [attr.aria-pressed]="estActif(statut)"
+        (click)="basculer(statut)"
+      >
+        <span aria-hidden="true">{{ glyphe(statut) }}</span>{{ statut }}
+        @if (estActif(statut)) {
+          <span aria-hidden="true" class="puce__retirer">✕</span>
+        }
+      </button>
+    }
+  </div>
+
+  <label class="filtres__champ">
+    Client
+    <select (change)="changerClient($any($event.target).value)">
+      <option value="">Tous les clients</option>
+      @for (option of clients.value(); track option.reference) {
+        <option [value]="option.reference" [selected]="option.reference === client()">
+          {{ option.raisonSociale }}
+        </option>
+      }
+    </select>
+  </label>
+
+  <label class="filtres__champ">
+    Assigné à
+    <select (change)="changerAssigne($any($event.target).value)">
+      <option value="">Tous les agents</option>
+      <option value="NON_ASSIGNE">Non assigné</option>
+      @for (agent of agents.value(); track agent.username) {
+        <option [value]="agent.username">{{ agent.nomComplet }}</option>
+      }
+    </select>
+  </label>
+
+  <button type="button" class="filtres__reinitialiser" (click)="reinitialiser()">
+    Réinitialiser
+  </button>
+</div>
+
+<div class="carte">
+  @if (resultats.isLoading()) {
+    <sd-etat-chargement [nombreLignes]="8" />
+  } @else if (resultats.error()) {
+    <sd-etat-erreur reference="ERR-8F2C41" (reessayer)="resultats.reload()" />
+  } @else if (resultats.value(); as p) {
+    @if (p.contenu.length === 0) {
+      <sd-etat-vide
+        titre="Aucun ticket ne correspond"
+        explication="Les filtres actifs ne renvoient aucun résultat."
+        actionPrincipale="Retirer les filtres"
+        actionSecondaire="Voir toute la file"
+        (principale)="reinitialiser()"
+        (secondaire)="voirToutLaFile()"
+      />
+    } @else {
+      <sd-tableau-tickets [tickets]="p.contenu" variante="agent" baseLien="/agent/tickets" />
+      <sd-pagination
+        [page]="p"
+        [taillesDisponibles]="taillesDisponibles"
+        (changerPage)="allerPage($event)"
+        (changerTaille)="changerTaille($event)"
+      />
+    }
+  }
+</div>

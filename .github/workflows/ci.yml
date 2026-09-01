@@ -1,0 +1,122 @@
+name: CI
+
+# Le but de cette CI n'est pas de déployer : c'est de faire échouer, chez tout le monde et
+# de la même façon, ce qui échouerait chez un seul. Elle construit, teste, et fabrique les
+# images sans les pousser.
+
+on:
+  push:
+    branches: [main, reference]
+  pull_request:
+
+# Une seule exécution par branche : une poussée annule la précédente plutôt que
+# d'accumuler des files d'attente sur des commits dépassés.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend — Spring Boot 4.1 / Java 25
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+
+      # Les tests d'intégration démarrent un vrai PostgreSQL 18 par Testcontainers.
+      # Le démon Docker est présent sur ubuntu-latest ; rien à installer.
+      - name: Tests
+        working-directory: backend
+        run: ./mvnw -B -ntp verify
+
+      - name: Rapports de test
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: rapports-backend
+          path: backend/target/surefire-reports/
+          retention-days: 7
+
+  frontend:
+    name: Frontend — Angular 22 / Node 24
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          # 24.20 et pas « 24 » : le CLI Angular 22 refuse de démarrer sous 24.15,
+          # et « 24 » résoudrait un jour vers une version antérieure.
+          node-version: '24.20'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Installation
+        working-directory: frontend
+        run: npm ci
+
+      - name: Garde-fou des jetons de design
+        working-directory: frontend
+        run: npm run verifier:jetons
+
+      - name: Tests
+        working-directory: frontend
+        run: npm test
+
+      - name: Construction
+        working-directory: frontend
+        run: npm run build
+
+  legacy-crm:
+    name: CRM legacy — le contrat doit rester stable
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+      - name: Tests
+        working-directory: legacy-crm
+        run: ./mvnw -B -ntp test
+
+  images:
+    name: Images Docker
+    runs-on: ubuntu-latest
+    # Construire les images d'un code qui ne passe pas les tests n'a aucun intérêt.
+    needs: [backend, frontend, legacy-crm]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+
+      # Construction seule, sans publication : ce dépôt est un support de formation,
+      # il n'a pas de registre. La preuve recherchée est que les Dockerfile tiennent.
+      - name: Backend
+        uses: docker/build-push-action@v7
+        with:
+          context: ./backend
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Frontend
+        uses: docker/build-push-action@v7
+        with:
+          context: ./frontend
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: CRM legacy
+        uses: docker/build-push-action@v7
+        with:
+          context: ./legacy-crm
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

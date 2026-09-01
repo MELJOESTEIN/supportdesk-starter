@@ -1,0 +1,77 @@
+### LA DÉMONSTRATION DU J2
+#
+# Autorisation au niveau objet cassée — OWASP API1, « BOLA ».
+# C'est le fichier à rejouer devant l'étudiant. Il tient en une page, et il se suffit.
+#
+# Joue 00-tokens.http d'abord.
+
+@api = http://localhost:8080
+@alice = {{jetonAlice.response.body.access_token}}
+@david = {{jetonDavid.response.body.access_token}}
+@bob = {{jetonBob.response.body.access_token}}
+
+### 1 · La liste d'alice est CORRECTE
+# Que des tickets CLI-0001. À ce stade, l'application a l'air sûre — et c'est
+# exactement ce qui rend la faille suivante dangereuse.
+GET {{api}}/api/tickets?taille=100
+Authorization: Bearer {{alice}}
+
+### 2 · La liste de david est CORRECTE aussi
+# Note l'`id` du premier ticket : c'est la cible de la requête suivante.
+GET {{api}}/api/tickets?taille=5
+Authorization: Bearer {{david}}
+
+### 3 · alice demande un ticket de david
+# Change l'identifiant ci-dessous pour celui relevé à la requête 2.
+#
+#   AVANT la correction du lot 4 : HTTP 200 — sujet, description et fil complet.
+#   APRÈS                        : HTTP 403, et le corps ne contient AUCUNE donnée du ticket.
+#
+# Rien n'a été « piraté » : un identifiant a été changé dans une URL.
+GET {{api}}/api/tickets/9
+Authorization: Bearer {{alice}}
+
+### 4 · alice accède toujours à SES tickets
+# Le contre-test. Sans lui, un endpoint cassé ferait passer la requête 3 pour une réussite.
+GET {{api}}/api/tickets/1
+Authorization: Bearer {{alice}}
+
+### 5 · bob (AGENT) accède au ticket de n'importe quel compte
+# Le rôle décide de la RÈGLE appliquée, pas de la présence d'une règle.
+GET {{api}}/api/tickets/9
+Authorization: Bearer {{bob}}
+
+### 6 · Le paramètre de requête ne peut pas élargir le périmètre
+# `?crmClientRef=CLI-0002` avec le jeton d'alice : la réponse ne contient que du CLI-0001.
+#
+# La règle, en une phrase : une valeur envoyée par le client décide de CE QU'IL DEMANDE,
+# jamais de CE QU'IL A LE DROIT D'OBTENIR.
+GET {{api}}/api/tickets?crmClientRef=CLI-0002&taille=100
+Authorization: Bearer {{alice}}
+
+### 7 · Écrire sur le ticket d'un autre est refusé comme le lire
+# On oublie souvent le second. Lire les échanges d'un concurrent est grave ; écrire en son
+# nom auprès du support l'est autant.
+POST {{api}}/api/tickets/9/commentaires
+Authorization: Bearer {{alice}}
+Content-Type: application/json
+
+{ "contenu": "Bonjour", "visibilite": "PUBLIC" }
+
+### 8 · La note interne ne part jamais sur le réseau
+# Cherche « Ne pas mentionner la migration » dans la réponse : absent.
+GET {{api}}/api/tickets/1
+Authorization: Bearer {{alice}}
+
+### 9 · La même requête, par un agent
+# La même chaîne y est. La différence est dans la RÉPONSE, pas dans l'affichage.
+GET {{api}}/api/tickets/1
+Authorization: Bearer {{bob}}
+
+###
+# Ce que l'étudiant doit retenir :
+#
+# 1. La liste juste ne prouve rien sur le détail.
+# 2. Un guard Angular n'a jamais été rencontré par aucune de ces requêtes.
+# 3. La vérification vit dans TicketService#chargerAutorise — un seul endroit, par lequel
+#    passent REST et GraphQL. Deux implémentations d'une même règle divergent tôt ou tard.

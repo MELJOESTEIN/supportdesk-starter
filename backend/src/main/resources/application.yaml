@@ -1,0 +1,129 @@
+spring:
+  application:
+    name: supportdesk
+
+  # Le module docker-compose démarre les services de compose.yaml et injecte les
+  # JdbcConnectionDetails du conteneur Postgres.
+  # AUCUN spring.datasource.url / username / password ici : ils contrediraient
+  # la configuration détectée. C'est une règle du projet, pas une préférence.
+  docker:
+    compose:
+      file: ../compose.yaml
+      # start-only : les conteneurs survivent à l'arrêt du backend. Sinon Keycloak
+      # tomberait alors que le frontend en dépend. Pour les arrêter : docker compose stop
+      lifecycle-management: start-only
+
+  jpa:
+    hibernate:
+      # validate, jamais update : c'est Flyway qui fait le schéma, et lui seul.
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        # Le compteur de requêtes des tests lit ces statistiques.
+        generate_statistics: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  cache:
+    cache-names: clientsCrm
+    caffeine:
+      # 60 s : une raison sociale ne change pas dans la minute, et le CRM coûte 400 ms
+      # par appel. Au-delà, on servirait une identité périmée sans bénéfice.
+      spec: maximumSize=500,expireAfterWrite=60s
+
+  graphql:
+    http:
+      # Ce n'est PAS spring.graphql.path (Boot 2.7 / 3.0) : la propriété a changé de nom.
+      path: /graphql
+    schema:
+      # Rapport de cohérence entre le schéma et le code, au démarrage. Un champ du schéma
+      # sans résolveur, ou l'inverse, se voit dans les logs plutôt qu'en production.
+      inspection:
+        enabled: true
+      introspection:
+        # Vrai en développement pour GraphiQL. Coupé en production (application-prod).
+        enabled: true
+    graphiql:
+      enabled: true
+      path: /graphiql
+    # Aucun transport WebSocket n'est activé : pas de subscriptions ici, donc pas de
+    # surface pour le détournement de WebSocket par cookie (CVE-2026-41700).
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # L'issuer est celui que le NAVIGATEUR voit, parce que c'est lui qui est inscrit
+          # dans le jeton. En conteneur (lot 6), le backend joint Keycloak par un autre nom :
+          # c'est jwk-set-uri qui change alors, pas issuer-uri.
+          issuer-uri: http://localhost:8081/realms/supportdesk
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    access:
+      default: none
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      access: read-only
+      show-details: never
+
+# Documentation d'exploration. Coupée en production par application-prod.yaml :
+# la démonstration de la faille du J2 se fait en .http / curl, pas dans Swagger UI,
+# parce que le bouton « Authorize » masque justement le transport du jeton.
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+
+supportdesk:
+  # Délai contractuel de première réponse, utilisé pour le drapeau « SLA dépassé ».
+  sla-premiere-reponse: 2h
+  # Un jeton émis par le realm pour une AUTRE application ne doit pas ouvrir cette API.
+  audience: supportdesk-api
+  # Origines listées une par une. Jamais « * ».
+  origines-autorisees: http://localhost:4200
+
+  crm:
+    # URL du référentiel legacy. Elle vient de la configuration, jamais d'une requête :
+    # une URL cible influençable par l'appelant, c'est une SSRF.
+    url: http://localhost:8082/services
+    connect-timeout: 2s
+    # Le CRM répond en 400 ms. 5 s laisse de la marge sans transformer sa lenteur en panne.
+    read-timeout: 5s
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    # Le N+1 se voit ici. C'est le sujet de l'après-midi du J1.
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+
+spring.jpa.properties.hibernate.format_sql: true
+
+supportdesk:
+  # L'intranet de démonstration du SSO (profil Compose « sso », port 4300) doit pouvoir
+  # appeler cette API DEPUIS LE NAVIGATEUR — pour se faire refuser. Sans cette origine, le
+  # navigateur bloque la requête avant la réponse et l'écran montre une erreur CORS au lieu
+  # du 401 attendu.
+  #
+  # C'est le meilleur moment de la démonstration : l'origine est autorisée, et pourtant
+  # l'appel échoue. CORS dit QUI PEUT APPELER ; il ne dit jamais QUI A LE DROIT. Les deux
+  # sont confondus en permanence, et c'est ici que la différence se voit à l'œil nu.
+  #
+  # Profil dev uniquement : en production, seule l'origine du front est déclarée
+  # (voir compose.yaml, service backend).
+  origines-autorisees: http://localhost:4200,http://localhost:4300

@@ -1,0 +1,7 @@
+<span class="badge" [class]="'badge--' + statut().toLowerCase()">
+  <span class="badge__glyphe" aria-hidden="true">{{ traitement().glyphe }}</span>
+  <span class="badge__libelle" [class.badge__libelle--barre]="traitement().barre">
+    {{ traitement().libelle }}
+  </span>
+  <span class="sd-hors-ecran">{{ traitement().description }}</span>
+</span>

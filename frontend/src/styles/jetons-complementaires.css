@@ -1,0 +1,33 @@
+/* ============================================================
+   Jetons complémentaires — SupportDesk
+   Valeurs présentes dans la maquette mais absentes de tokens.css.
+   Fichier séparé volontairement : tokens.css est livré par le design
+   et ne se modifie pas ici.
+   ============================================================ */
+
+:root {
+  /* Barre latérale du back-office (écrans 04 à 06) : texte sur fond --sd-inverse-bg */
+  --sd-nav-fg: #cfd8de;          /* 9.4:1 sur #16202b */
+  --sd-nav-fg-discret: #9aa8b4;  /* 5.6:1 — compteurs et libellés secondaires */
+  --sd-nav-actif-bg: rgba(255, 255, 255, 0.1);
+  --sd-nav-separateur: rgba(255, 255, 255, 0.14);
+
+  /* Survol d'une ligne en alerte (SLA dépassé) : un cran plus soutenu que --sd-danger-bg */
+  --sd-danger-bg-survol: #fbe0e0;
+
+  /* Écran 10, session terminée : bordure de badge sur fond sombre */
+  --sd-inverse-border: #6b7b8a;
+
+  /* Priorités — texte seul, jamais un aplat : la priorité n'est pas un statut */
+  --sd-priorite-haute: var(--sd-danger-fg);
+  --sd-priorite-normale: var(--sd-text-2);
+  --sd-priorite-basse: var(--sd-text-3);
+
+  /* Gabarits repris de la maquette */
+  --sd-largeur-max: 1440px;
+  --sd-nav-largeur: 208px;
+  --sd-entete-h: 56px;
+  --sd-barre-agent-h: 48px;
+  --sd-aside-largeur: 280px;
+  --sd-aside-largeur-agent: 292px;
+}

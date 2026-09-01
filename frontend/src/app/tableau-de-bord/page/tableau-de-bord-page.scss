@@ -1,0 +1,235 @@
+.entete {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sd-space-3);
+  margin-bottom: var(--sd-space-4);
+
+  &__titre {
+    margin: 0;
+    font-size: var(--sd-fs-5);
+    font-weight: var(--sd-weight-semibold);
+    line-height: 1.2;
+  }
+
+  &__contexte {
+    font-size: var(--sd-fs-2);
+    color: var(--sd-text-3);
+    padding-bottom: var(--sd-space-1);
+  }
+
+  &__periode {
+    margin-left: auto;
+    height: var(--sd-control-h);
+    border: var(--sd-border-w) solid var(--sd-border-strong);
+    border-radius: var(--sd-radius-2);
+    padding: 0 var(--sd-space-2);
+    font-size: var(--sd-fs-2);
+    background: var(--sd-surface);
+  }
+}
+
+.tuiles {
+  display: grid;
+  // `repeat(6, ...)` imposait six colonnes quelle que soit la largeur : sous ~900 px les
+  // libellés se coupaient en syllabes (« TICK OUVE »), et « 4,3 % » passait sur deux lignes.
+  // `auto-fit` retombe sur trois colonnes, puis deux, puis une, sans point de rupture à
+  // écrire — la grille se replie d'elle-même.
+  grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: var(--sd-space-3);
+}
+
+.tuile {
+  background: var(--sd-surface);
+  border: var(--sd-border-w) solid var(--sd-border);
+  border-radius: var(--sd-radius-2);
+  padding: var(--sd-space-4);
+  border-top: 3px solid var(--sd-border-strong);
+
+  &--ouverts { border-top-color: var(--sd-status-open-border); }
+  &--en_cours { border-top-color: var(--sd-status-progress-border); }
+  &--resolus_7j { border-top-color: var(--sd-accent); }
+  &--sans_reponse_48h { border-top-color: var(--sd-danger-border); }
+
+  // Placé après les règles par clé pour l'emporter sur elles : un indicateur au-delà de son
+  // seuil se signale, quel que soit l'indicateur.
+  &--alerte {
+    border-top-color: var(--sd-danger-border);
+    border-color: var(--sd-danger-border);
+  }
+
+  &__libelle {
+    margin: 0;
+    font: var(--sd-weight-semibold) 11px / 1.3 var(--sd-font-mono);
+    letter-spacing: var(--sd-track-caps);
+    color: var(--sd-text-3);
+    min-height: 28px;
+
+    &--alerte { color: var(--sd-danger-fg); }
+  }
+
+  &__valeur {
+    margin: var(--sd-space-2) 0 0 0;
+    font-size: var(--sd-fs-5);
+    font-weight: var(--sd-weight-semibold);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+
+    &--alerte { color: var(--sd-danger-fg); }
+  }
+
+  &__precision {
+    margin: var(--sd-space-1) 0 0 0;
+    font-size: var(--sd-fs-1);
+    color: var(--sd-text-2);
+  }
+}
+
+.bas {
+  margin-top: var(--sd-space-4);
+  display: grid;
+  // LA CAUSE DU CHEVAUCHEMENT. `320px` est une largeur fixe : sous ~640 px, elle ne laisse
+  // plus assez de place à la première colonne, qui déborde sous la seconde. Les deux cartes
+  // se superposaient — « Répartition par statut » peinte par-dessus le graphique d'activité.
+  //
+  // Ce n'était pas un défaut de rendu propre aux fenêtres étroites : c'était une grille sans
+  // repli, qui n'avait simplement jamais été regardée ailleurs qu'en pleine largeur.
+  grid-template-columns: 1fr;
+  gap: var(--sd-space-4);
+  align-items: start;
+
+  @media (min-width: 900px) {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+}
+
+.carte {
+  background: var(--sd-surface);
+  border: var(--sd-border-w) solid var(--sd-border);
+  border-radius: var(--sd-radius-2);
+  padding: 20px;
+
+  &__entete {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sd-space-4);
+    margin-bottom: 20px;
+  }
+
+  &__titre {
+    margin: 0 0 var(--sd-space-4) 0;
+    font-size: var(--sd-fs-3);
+    font-weight: var(--sd-weight-semibold);
+  }
+
+  &__entete &__titre {
+    margin: 0;
+  }
+}
+
+.legende {
+  margin-left: auto;
+  display: flex;
+  gap: var(--sd-space-4);
+  font-size: var(--sd-fs-1);
+  color: var(--sd-text-2);
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__pastille {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+
+    &--crees { background: var(--sd-status-progress-border); }
+    &--resolus { background: var(--sd-accent); }
+  }
+}
+
+.graphe {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 168px;
+  border-bottom: var(--sd-border-w) solid var(--sd-border-strong);
+
+  &__jour {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 100%;
+  }
+
+  &__barre {
+    flex: 1;
+
+    &--crees { background: var(--sd-status-progress-border); }
+    &--resolus { background: var(--sd-accent); }
+  }
+
+  &__axe {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px;
+    font: var(--sd-weight-regular) 11px / 1 var(--sd-font-mono);
+    color: var(--sd-text-3);
+
+    span {
+      flex: 1;
+      text-align: center;
+    }
+  }
+}
+
+.repartition {
+  display: grid;
+  gap: var(--sd-space-3);
+
+  &__entete {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--sd-fs-2);
+    margin-bottom: var(--sd-space-1);
+  }
+
+  &__nombre {
+    font-family: var(--sd-font-mono);
+    color: var(--sd-text-2);
+  }
+
+  /* Les glyphes de statut (● ◑ ✓ ✕) n'existent pas dans IBM Plex Sans : sans la police
+     mono, ◑ tombe en glyphe de substitution et le signal redondant disparaît. */
+  &__glyphe {
+    font-family: var(--sd-font-mono);
+  }
+
+  &__jauge {
+    height: 8px;
+    background: var(--sd-surface-3);
+    border-radius: var(--sd-radius-2);
+    overflow: hidden;
+  }
+
+  &__part {
+    display: block;
+    height: 100%;
+
+    &--ouvert { background: var(--sd-status-open-border); }
+    &--en_cours { background: var(--sd-status-progress-border); }
+    &--resolu { background: var(--sd-accent); }
+    &--ferme { background: var(--sd-status-closed-border); }
+  }
+
+  &__note {
+    margin: var(--sd-space-4) 0 0 0;
+    padding-top: var(--sd-space-4);
+    border-top: var(--sd-border-w) solid var(--sd-border);
+    font-size: var(--sd-fs-1);
+    color: var(--sd-text-3);
+    line-height: var(--sd-lh-normal);
+  }
+}

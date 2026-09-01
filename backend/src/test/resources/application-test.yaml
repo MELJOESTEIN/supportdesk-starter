@@ -1,0 +1,25 @@
+# Profil de test : le module docker-compose ne doit pas démarrer l'infra de développement.
+# Les tests ont leur propre conteneur, fourni par Testcontainers.
+spring:
+  docker:
+    compose:
+      enabled: false
+  jpa:
+    properties:
+      hibernate:
+        generate_statistics: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Les tests n'appellent pas Keycloak : ils fabriquent leurs jetons avec jwt().
+          # L'issuer doit néanmoins être défini, la configuration le lit au démarrage.
+          issuer-uri: http://localhost:8081/realms/supportdesk
+
+springdoc:
+  api-docs:
+    enabled: false
+
+supportdesk:
+  audience: supportdesk-api
+  origines-autorisees: http://localhost:4200

@@ -1,0 +1,121 @@
+# Schéma du back-office agent.
+#
+# GraphQL n'est PAS ouvert à l'espace client : un langage de requête entre les mains du
+# public élargit la surface d'attaque sans bénéfice, et le portail client a exactement
+# trois écrans dont les besoins sont connus. Ici, l'agent compose ses vues — c'est le cas
+# d'usage où GraphQL gagne.
+
+type Query {
+  "File des tickets, tous comptes confondus. Réservée aux agents."
+  tickets(filtre: FiltreTickets, page: Int = 0, taille: Int = 25): PageTickets!
+
+  "Détail d'un ticket. Le propriétaire est vérifié comme en REST."
+  ticket(id: ID!): Ticket
+
+  "Agrégats de l'écran 04."
+  tableauDeBord(jours: Int = 14): TableauDeBord!
+}
+
+type Mutation {
+  changerStatut(id: ID!, statut: Statut!): Ticket!
+  changerPriorite(id: ID!, priorite: Priorite!): Ticket!
+  "username de l'agent, ou null pour désassigner."
+  assigner(id: ID!, agent: String): Ticket!
+  ajouterCommentaire(id: ID!, contenu: String!, visibilite: Visibilite!): Ticket!
+}
+
+input FiltreTickets {
+  statuts: [Statut!]
+  crmClientRef: String
+  assigneA: String
+  recherche: String
+}
+
+type PageTickets {
+  contenu: [Ticket!]!
+  page: Int!
+  taille: Int!
+  total: Int!
+  totalPages: Int!
+}
+
+type Ticket {
+  id: ID!
+  reference: String!
+  sujet: String!
+  statut: Statut!
+  priorite: Priorite!
+  crmClientRef: String!
+  creeLe: String!
+  derniereActiviteLe: String!
+  nombreMessages: Int!
+  slaDepasse: Boolean!
+
+  "Résolu par @BatchMapping : un appel SOAP par référence distincte, pas un par ticket."
+  client: ClientCrm
+
+  "Résolu par @BatchMapping."
+  assigneA: Agent
+
+  "Chargés à la demande. Les notes internes n'y figurent que pour un agent."
+  commentaires: [Commentaire!]!
+}
+
+type ClientCrm {
+  clientRef: String!
+  raisonSociale: String!
+  siret: String!
+  contactEmail: String!
+  contactTel: String!
+  actif: Boolean!
+}
+
+type Agent {
+  username: String!
+  nomComplet: String!
+  niveau: String
+  equipe: String
+}
+
+type Commentaire {
+  id: ID!
+  auteurUsername: String!
+  auteurNom: String!
+  auteurType: AuteurType!
+  contenu: String!
+  creeLe: String!
+  visibilite: Visibilite!
+}
+
+type TableauDeBord {
+  arreteLe: String!
+  equipe: String!
+  indicateurs: [Indicateur!]!
+  activite: [ActiviteJour!]!
+  repartition: [RepartitionStatut!]!
+  totalPeriode: Int!
+}
+
+type Indicateur {
+  cle: String!
+  libelle: String!
+  valeur: String!
+  precision: String!
+  alerte: Boolean!
+}
+
+type ActiviteJour {
+  jour: String!
+  crees: Int!
+  resolus: Int!
+}
+
+type RepartitionStatut {
+  statut: Statut!
+  nombre: Int!
+}
+
+enum Statut { OUVERT EN_COURS RESOLU FERME }
+enum Priorite { BASSE NORMALE HAUTE }
+enum Visibilite { PUBLIC INTERNE }
+enum AuteurType { CLIENT AGENT }

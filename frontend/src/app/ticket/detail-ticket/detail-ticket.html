@@ -1,0 +1,64 @@
+<h1 class="sd-hors-ecran">Détail d'un ticket</h1>
+
+@if (refuse()) {
+  <sd-acces-refuse />
+} @else if (ticket.isLoading()) {
+  <sd-etat-chargement [nombreLignes]="4" />
+} @else if (ticket.error()) {
+  <sd-etat-erreur
+    titre="Ce ticket n'a pas pu être chargé"
+    (reessayer)="ticket.reload()"
+  />
+} @else if (ticket.value(); as t) {
+  <div class="detail">
+    <div class="detail__fil">
+      <a routerLink="/mes-tickets" class="detail__retour">← Mes tickets</a>
+
+      <h2 class="detail__titre">{{ t.sujet }}</h2>
+
+      <div class="detail__meta">
+        <span class="detail__ref">{{ t.reference }}</span>
+        <sd-badge-statut [statut]="t.statut" />
+        <span class="detail__ouverture">
+          Ouvert le {{ t.creeLe | dateLongue }} · {{ t.nombreMessages }} messages
+        </span>
+      </div>
+
+      <sd-fil-commentaires
+        [commentaires]="t.commentaires"
+        [usernameCourant]="usernameCourant()"
+      />
+
+      <div class="detail__composeur">
+        <sd-composeur (envoyer)="repondre($event)" />
+      </div>
+    </div>
+
+    <aside class="recap">
+      <h2 class="recap__titre">RÉCAPITULATIF</h2>
+      <dl class="recap__liste">
+        <dt>Référence</dt>
+        <dd class="recap__mono">{{ t.reference }}</dd>
+        <dt>Catégorie</dt>
+        <dd>{{ t.categorie | categorie }}</dd>
+        <dt>Créé le</dt>
+        <dd>{{ t.creeLe | dateCourte }}</dd>
+        <dt>Dernière act.</dt>
+        <dd>{{ t.derniereActiviteLe | dateRelative }}</dd>
+        <dt>Interlocuteur</dt>
+        <dd>{{ t.assigneA?.nomComplet ?? 'À attribuer' }}</dd>
+      </dl>
+
+      <!--
+        La maquette prévoyait ici « Clôturer ce ticket ». Le bouton est retiré : le backend
+        réserve tout changement de statut aux agents, et le laisser affiché revenait à
+        promettre au client une action qui repart en 403 — voir TicketController#modifier et
+        AutorisationFonctionsTests#changementDeStatut_refuseAUnClient.
+
+        Écart assumé par rapport au design, tranché en faveur du modèle d'autorisation.
+        Ouvrir la clôture au client demande un endpoint dédié, surtout pas un élargissement
+        du PATCH : il porte aussi la priorité et l'assignation.
+      -->
+    </aside>
+  </div>
+}

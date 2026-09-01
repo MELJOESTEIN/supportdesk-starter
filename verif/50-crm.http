@@ -1,0 +1,77 @@
+### Le CRM legacy, derrière une façade REST
+#
+# Le front ne parle pas SOAP, et ne doit pas avoir à le faire. Ce fichier montre ce que la
+# façade absorbe : le contrat du fournisseur, ses faults, sa lenteur et ses pannes.
+
+@api = http://localhost:8080
+@bob = {{jetonBob.response.body.access_token}}
+@alice = {{jetonAlice.response.body.access_token}}
+
+### 1 · Le contrat, tel que le fournisseur le publie
+# C'est tout ce dont on dispose : pas de sources, pas de base, un WSDL.
+GET http://localhost:8082/services/clients.wsdl
+
+### 2 · Une fiche client
+GET {{api}}/api/clients/CLI-0001
+Authorization: Bearer {{bob}}
+
+### 3 · Un fault SOAP traduit en ProblemDetail
+# Le CRM répond `CLIENT_INCONNU`. Ce n'est pas une panne : c'est une réponse que le contrat
+# prévoit. La laisser remonter en 500 ferait passer une règle métier pour un incident.
+#
+#   -> 404, type https://supportdesk.local/erreurs/client-crm-inconnu
+GET {{api}}/api/clients/CLI-9999
+Authorization: Bearer {{bob}}
+
+### 4 · Un second fault, traduit différemment
+# `CRITERE_OBLIGATOIRE` : la demande était mal formée, pas introuvable.
+#   -> 400
+GET {{api}}/api/clients?recherche=
+Authorization: Bearer {{bob}}
+
+### 5 · Une recherche qui aboutit
+GET {{api}}/api/clients?recherche=atelier
+Authorization: Bearer {{bob}}
+
+### 6 · Un client ne consulte que SA fiche
+GET {{api}}/api/clients/CLI-0001
+Authorization: Bearer {{alice}}
+
+### 7 · … et pas celle du voisin : 403
+# Sans cette vérification, la façade serait une seconde faille BOLA — sur un référentiel
+# qui contient des SIRET et des coordonnées de contact.
+GET {{api}}/api/clients/CLI-0002
+Authorization: Bearer {{alice}}
+
+### 8 · Un client ne peut pas énumérer le référentiel : 403
+# Le CRM refuse déjà de se laisser énumérer. L'API ne doit pas offrir ce qu'il refuse.
+GET {{api}}/api/clients?recherche=a
+Authorization: Bearer {{alice}}
+
+### 9 · Le N+1 par le réseau — à mesurer, pas à croire
+# Chaque appel au CRM coûte 400 ms, par construction.
+#
+#   sans regroupement : 25 tickets = 25 appels = 10 s
+#   avec regroupement :  7 comptes =  7 appels =  3,3 s
+#   avec cache chaud  :             0 appel    =  0,1 s
+#
+# Lance cette requête deux fois de suite et regarde le temps de réponse : le cache expire
+# au bout de 60 s. C'est le même défaut qu'un N+1 SQL, cent fois plus cher.
+GET {{api}}/api/tickets?taille=25
+Authorization: Bearer {{bob}}
+
+### 10 · Quand le CRM tombe
+# Dans un autre terminal :
+#
+#     docker compose stop legacy-crm
+#
+# Rejoue la requête 2 : 503 en moins de six secondes, grâce au timeout de lecture. Sans
+# lui, les threads s'accumuleraient en attente et l'application entière tomberait avec sa
+# dépendance.
+#
+# Rejoue la requête 9 : la liste s'affiche quand même, `clientRaisonSociale` à null. Une
+# dépendance d'affichage ne doit pas emporter la fonctionnalité principale.
+#
+#     docker compose start legacy-crm
+GET {{api}}/api/clients/CLI-0001
+Authorization: Bearer {{bob}}
