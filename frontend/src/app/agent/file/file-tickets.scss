@@ -1,0 +1,133 @@
+.entete {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sd-space-3);
+  margin-bottom: var(--sd-space-4);
+
+  &__titre {
+    margin: 0;
+    font-size: var(--sd-fs-5);
+    font-weight: var(--sd-weight-semibold);
+    line-height: 1.2;
+  }
+
+  &__compte {
+    font-size: var(--sd-fs-2);
+    color: var(--sd-text-3);
+    padding-bottom: var(--sd-space-1);
+  }
+}
+
+.filtres {
+  background: var(--sd-surface);
+  border: var(--sd-border-w) solid var(--sd-border);
+  border-radius: var(--sd-radius-2) var(--sd-radius-2) 0 0;
+  border-bottom: 0;
+  padding: var(--sd-space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--sd-space-4);
+  flex-wrap: wrap;
+
+  &__statuts {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__libelle {
+    font: var(--sd-weight-semibold) 11px / 1 var(--sd-font-mono);
+    letter-spacing: var(--sd-track-caps);
+    color: var(--sd-text-3);
+    margin-right: 2px;
+  }
+
+  &__champ {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--sd-fs-2);
+    color: var(--sd-text-2);
+
+    select {
+      height: var(--sd-control-h);
+      border: var(--sd-border-w) solid var(--sd-border-strong);
+      border-radius: var(--sd-radius-2);
+      padding: 0 var(--sd-space-2);
+      font-size: var(--sd-fs-2);
+      background: var(--sd-surface);
+      min-width: 168px;
+    }
+  }
+
+  &__reinitialiser {
+    margin-left: auto;
+    height: var(--sd-control-h);
+    padding: 0 var(--sd-space-3);
+    border: var(--sd-border-w) solid var(--sd-border-strong);
+    border-radius: var(--sd-radius-2);
+    background: var(--sd-surface);
+    font-size: var(--sd-fs-2);
+    cursor: pointer;
+  }
+}
+
+/* Les puces de filtre reprennent le traitement des badges de statut : même vocabulaire
+   visuel, donc aucune grammaire supplémentaire à apprendre. */
+.puce {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  font: var(--sd-weight-semibold) var(--sd-fs-1) / 1 var(--sd-font-mono);
+  letter-spacing: var(--sd-track-caps);
+  cursor: pointer;
+
+  &__retirer {
+    opacity: 0.7;
+  }
+
+  &--ouvert {
+    border-radius: 13px;
+    background: var(--sd-status-open-bg);
+    color: var(--sd-status-open-fg);
+    border: var(--sd-border-w) solid var(--sd-status-open-border);
+  }
+
+  &--en_cours {
+    border-radius: var(--sd-radius-1);
+    background: var(--sd-status-progress-bg);
+    color: var(--sd-status-progress-fg);
+    border: var(--sd-border-w) dashed var(--sd-status-progress-border);
+  }
+
+  &--resolu {
+    border-radius: var(--sd-radius-1);
+    background: var(--sd-status-resolved-bg);
+    color: var(--sd-status-resolved-fg);
+    border: var(--sd-border-w) solid var(--sd-status-resolved-border);
+  }
+
+  &--ferme {
+    border-radius: var(--sd-radius-1);
+    background: var(--sd-status-closed-bg);
+    color: var(--sd-status-closed-fg);
+    border: var(--sd-border-w) solid var(--sd-status-closed-border);
+  }
+
+  /* Un filtre inactif perd son remplissage, jamais son glyphe ni son libellé. */
+  &--inactive {
+    background: var(--sd-surface);
+    color: var(--sd-text-2);
+    border: var(--sd-border-w) solid var(--sd-border-strong);
+    font-weight: var(--sd-weight-medium);
+  }
+}
+
+.carte {
+  background: var(--sd-surface);
+  border: var(--sd-border-w) solid var(--sd-border);
+  border-radius: 0 0 var(--sd-radius-2) var(--sd-radius-2);
+  overflow: hidden;
+}

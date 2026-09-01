@@ -1,0 +1,16 @@
+<div class="identite">
+  <div class="identite__nom">
+    <span class="identite__nom-complet">{{ utilisateur().nomComplet }}</span>
+    @if (rattachement()) {
+      <span class="identite__rattachement">{{ rattachement() }}</span>
+    }
+  </div>
+
+  <sd-badge-role [role]="rolePrincipal()" />
+
+  <span class="identite__separateur" aria-hidden="true"></span>
+
+  <button type="button" class="identite__deconnexion" (click)="deconnexion.emit()">
+    Se déconnecter
+  </button>
+</div>

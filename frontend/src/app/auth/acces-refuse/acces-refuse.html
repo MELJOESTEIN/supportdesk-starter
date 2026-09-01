@@ -1,0 +1,41 @@
+<div class="refus">
+  <span class="refus__code">403 · ACCÈS NON AUTORISÉ</span>
+
+  <h1 class="refus__titre">Ce ticket appartient à un autre compte</h1>
+
+  <p class="refus__explication">
+    Vous n'avez rien fait de mal, et rien n'a été signalé.
+    @if (reference()) {
+      Le ticket <span class="refus__ref">{{ reference() }}</span> est rattaché au compte
+    } @else {
+      Ce ticket est rattaché au compte
+    }
+    <strong>{{ proprietaire() }}</strong>. Chaque ticket n'est lisible que par le compte qui
+    l'a ouvert : c'est ce qui garantit que vos échanges avec le support restent privés, dans
+    les deux sens.
+  </p>
+
+  <section class="refus__causes">
+    <h2 class="refus__sous-titre">POURQUOI CE MESSAGE APPARAÎT</h2>
+    <ul class="refus__liste">
+      <li><span aria-hidden="true">1</span>Le lien vous a été transmis par une personne d'un autre compte.</li>
+      <li><span aria-hidden="true">2</span>Vous êtes connecté avec une adresse différente de celle qui a ouvert le ticket.</li>
+      <li><span aria-hidden="true">3</span>Le ticket a été transféré vers un autre compte à la demande de son auteur.</li>
+    </ul>
+  </section>
+
+  <h2 class="refus__titre-actions">Ce que vous pouvez faire</h2>
+  <div class="refus__actions">
+    <a routerLink="/mes-tickets" class="refus__bouton refus__bouton--primaire">Revenir à mes tickets</a>
+    <a routerLink="/mes-tickets/nouveau" class="refus__bouton">Ouvrir un ticket sur ce sujet</a>
+  </div>
+
+  <p class="refus__pied">
+    Si ce ticket devrait vous être accessible, demandez à son auteur de vous ajouter en
+    interlocuteur depuis le récapitulatif du ticket. Le support ne peut pas ouvrir cet accès
+    à sa place.
+  </p>
+  <p class="refus__tentative">
+    Réf. de la tentative : {{ referenceTentative() }} · aucune donnée du ticket n'a été affichée.
+  </p>
+</div>

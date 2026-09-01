@@ -1,0 +1,15 @@
+# Profil de test : le module docker-compose ne doit pas démarrer l'infra de développement.
+# Les tests ont leur propre conteneur, fourni par Testcontainers.
+spring:
+  docker:
+    compose:
+      enabled: false
+  jpa:
+    properties:
+      hibernate:
+        generate_statistics: true
+
+springdoc:
+  api-docs:
+    enabled: false
+

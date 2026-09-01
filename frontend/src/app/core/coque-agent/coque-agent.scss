@@ -1,0 +1,103 @@
+.coque {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: var(--sd-nav-largeur) minmax(0, 1fr);
+  background: var(--sd-bg);
+
+  &__droite {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__barre {
+    display: flex;
+    align-items: center;
+    gap: var(--sd-space-3);
+    height: var(--sd-barre-agent-h);
+    padding: 0 var(--sd-space-5);
+    background: var(--sd-surface);
+    border-bottom: var(--sd-border-w) solid var(--sd-border);
+  }
+
+  &__equipe {
+    font-size: var(--sd-fs-1);
+    color: var(--sd-text-3);
+  }
+
+  &__identite {
+    margin-left: auto;
+  }
+
+  &__contenu {
+    padding: var(--sd-space-5);
+    min-width: 0;
+  }
+}
+
+.nav {
+  background: var(--sd-inverse-bg);
+  color: var(--sd-inverse-text);
+  padding: var(--sd-space-4) 0;
+
+  &__marque {
+    padding: 0 var(--sd-space-4) var(--sd-space-4) var(--sd-space-4);
+    font: var(--sd-weight-semibold) 13px / 1 var(--sd-font-mono);
+    letter-spacing: var(--sd-track-caps);
+  }
+
+  &__sous-titre {
+    display: block;
+    margin-top: 6px;
+    font: var(--sd-weight-regular) 11px / 1 var(--sd-font-sans);
+    letter-spacing: 0;
+    color: var(--sd-nav-fg-discret);
+  }
+
+  &__liens {
+    display: grid;
+  }
+
+  &__lien {
+    padding: var(--sd-space-2) var(--sd-space-4);
+    font-size: var(--sd-fs-2);
+    color: var(--sd-nav-fg);
+    text-decoration: none;
+    border-left: 3px solid transparent;
+
+    &:hover {
+      color: var(--sd-inverse-text);
+      text-decoration: none;
+    }
+
+    &--actif {
+      font-weight: var(--sd-weight-medium);
+      color: var(--sd-inverse-text);
+      background: var(--sd-nav-actif-bg);
+      border-left-color: var(--sd-accent);
+    }
+
+    &--inerte {
+      cursor: default;
+    }
+  }
+
+  &__compteur {
+    font-family: var(--sd-font-mono);
+    font-size: 11px;
+    color: var(--sd-nav-fg-discret);
+  }
+
+  &__pied {
+    margin-top: var(--sd-space-5);
+    padding: var(--sd-space-3) var(--sd-space-4);
+    border-top: var(--sd-border-w) solid var(--sd-nav-separateur);
+    font-size: var(--sd-fs-1);
+    color: var(--sd-nav-fg-discret);
+  }
+
+  &__pied-role {
+    display: block;
+    margin-top: 2px;
+  }
+}

@@ -1,0 +1,32 @@
+.squelette {
+  display: grid;
+  gap: var(--sd-space-2);
+  padding: var(--sd-space-4);
+
+  &__ligne {
+    display: flex;
+    align-items: center;
+    gap: var(--sd-space-2);
+    height: var(--sd-row-h);
+    border-bottom: var(--sd-border-w) solid var(--sd-border);
+    animation: sd-pulse 1.4s ease-in-out infinite;
+  }
+
+  &__cellule {
+    height: 12px;
+    flex: 1;
+    background: var(--sd-surface-3);
+    border-radius: var(--sd-radius-1);
+
+    &--courte {
+      flex: none;
+      width: 88px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .squelette__ligne {
+    animation: none;
+  }
+}

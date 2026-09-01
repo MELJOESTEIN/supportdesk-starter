@@ -1,0 +1,71 @@
+<form class="formulaire" (ngSubmit)="envoyer()" (submit)="$event.preventDefault()">
+  <a routerLink="/mes-tickets" class="formulaire__retour">← Mes tickets</a>
+
+  <h1 class="formulaire__titre">Nouveau ticket</h1>
+  <p class="formulaire__intro">
+    Réponse sous un jour ouvré. Vous recevrez une confirmation par courriel.
+  </p>
+
+  <div class="formulaire__carte">
+    <div class="champ">
+      <label for="sujet" class="champ__libelle">Sujet</label>
+      <input
+        id="sujet"
+        type="text"
+        placeholder="Résumez le problème en une phrase"
+        [value]="sujet()"
+        (input)="sujet.set($any($event.target).value)"
+        [attr.aria-invalid]="sujetInvalide() || sujetTropLong() ? 'true' : null"
+        [attr.aria-describedby]="'sujet-aide'"
+      />
+      <span id="sujet-aide" class="champ__aide" [class.champ__aide--erreur]="sujetInvalide() || sujetTropLong()">
+        @if (sujetInvalide()) {
+          Le sujet est obligatoire.
+        } @else if (sujetTropLong()) {
+          {{ sujet().length }} caractères — {{ sujetMax }} au maximum.
+        } @else {
+          Obligatoire · {{ sujetMax }} caractères maximum
+        }
+      </span>
+    </div>
+
+    <div class="champ">
+      <label for="categorie" class="champ__libelle">Catégorie</label>
+      <select id="categorie" (change)="categorie.set($any($event.target).value)">
+        @for (c of categories; track c.valeur) {
+          <option [value]="c.valeur" [selected]="c.valeur === categorie()">{{ c.libelle }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="champ">
+      <label for="description" class="champ__libelle">Description</label>
+      <textarea
+        id="description"
+        placeholder="Ce que vous avez fait, ce que vous attendiez, ce qui s'est passé."
+        [value]="description()"
+        (input)="description.set($any($event.target).value)"
+      ></textarea>
+    </div>
+
+    <div class="champ">
+      <span class="champ__libelle">
+        Pièce jointe <span class="champ__facultatif">(facultatif)</span>
+      </span>
+      <div class="piece-jointe">
+        <button type="button" class="piece-jointe__bouton" disabled>Choisir un fichier</button>
+        <span class="piece-jointe__aide">
+          Capture d'écran, PDF ou journal. 10 Mo maximum.
+          <em>Le téléversement n'est pas encore branché.</em>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="formulaire__actions">
+    <button type="submit" class="formulaire__bouton formulaire__bouton--primaire">
+      Envoyer le ticket
+    </button>
+    <button type="button" class="formulaire__bouton" (click)="annuler()">Annuler</button>
+  </div>
+</form>

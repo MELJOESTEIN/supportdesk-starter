@@ -1,0 +1,109 @@
+.tableau {
+  width: 100%;
+  font-size: var(--sd-fs-2);
+
+  thead tr {
+    background: var(--sd-surface-2);
+  }
+
+  &__col {
+    text-align: left;
+    padding: var(--sd-space-2) var(--sd-space-3);
+    font: var(--sd-weight-semibold) var(--sd-fs-1) / 1 var(--sd-font-mono);
+    letter-spacing: var(--sd-track-caps);
+    color: var(--sd-text-3);
+    border-bottom: var(--sd-border-w) solid var(--sd-border);
+    white-space: nowrap;
+
+    &--ref { width: 116px; }
+    &--statut { width: 148px; }
+    &--date { width: 116px; }
+    &--activite { width: 168px; }
+    &--client { width: 156px; }
+    &--assigne { width: 140px; }
+    &--priorite { width: 92px; }
+    &--msg { width: 76px; text-align: right; }
+  }
+
+  &__case {
+    width: 32px;
+    padding: var(--sd-space-2) var(--sd-space-3);
+    border-bottom: var(--sd-border-w) solid var(--sd-border);
+  }
+
+  &__ligne {
+    border-bottom: var(--sd-border-w) solid var(--sd-border);
+
+    &:nth-child(even) {
+      background: var(--sd-surface-2);
+    }
+
+    &:hover {
+      background: var(--sd-surface-3);
+    }
+
+    /* Le dépassement de SLA teinte la ligne ET porte une étiquette : jamais la couleur seule. */
+    &--alerte {
+      background: var(--sd-danger-bg);
+
+      &:hover {
+        background: var(--sd-danger-bg-survol);
+      }
+    }
+
+    td {
+      padding: var(--sd-space-2) var(--sd-space-3);
+      height: var(--sd-row-h);
+    }
+  }
+
+  &__ref {
+    font-family: var(--sd-font-mono);
+    font-size: 13px;
+    color: var(--sd-text-2);
+  }
+
+  &__sujet {
+    font-weight: var(--sd-weight-medium);
+  }
+
+  &__sla {
+    margin-left: var(--sd-space-1);
+    padding: 2px var(--sd-space-1);
+    font: var(--sd-weight-semibold) 11px / 1 var(--sd-font-mono);
+    color: var(--sd-danger-fg);
+    border: var(--sd-border-w) solid var(--sd-danger-border);
+    border-radius: var(--sd-radius-1);
+    white-space: nowrap;
+  }
+
+  &__secondaire {
+    color: var(--sd-text-2);
+  }
+
+  &__auteur {
+    color: var(--sd-text-3);
+  }
+
+  &__date {
+    color: var(--sd-text-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__msg {
+    text-align: right;
+    font-family: var(--sd-font-mono);
+    color: var(--sd-text-2);
+  }
+
+  &__priorite {
+    font: var(--sd-weight-medium) var(--sd-fs-1) / 1 var(--sd-font-mono);
+
+    &--haute {
+      font-weight: var(--sd-weight-semibold);
+      color: var(--sd-priorite-haute);
+    }
+    &--normale { color: var(--sd-priorite-normale); }
+    &--basse { color: var(--sd-priorite-basse); }
+  }
+}

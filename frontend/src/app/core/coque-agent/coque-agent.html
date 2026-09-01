@@ -1,0 +1,47 @@
+<div class="coque">
+  <aside class="nav">
+    <div class="nav__marque">
+      SUPPORTDESK
+      <span class="nav__sous-titre">Back-office agent</span>
+    </div>
+
+    <nav class="nav__liens" aria-label="Navigation du back-office">
+      <a routerLink="/agent" [routerLinkActiveOptions]="{ exact: true }"
+         routerLinkActive="nav__lien--actif" class="nav__lien">Tableau de bord</a>
+      <a routerLink="/agent/file" routerLinkActive="nav__lien--actif" class="nav__lien">
+        File des tickets <span class="nav__compteur">247</span>
+      </a>
+      <span class="nav__lien nav__lien--inerte">
+        Mes assignations <span class="nav__compteur">12</span>
+      </span>
+      <span class="nav__lien nav__lien--inerte">Clients</span>
+      <span class="nav__lien nav__lien--inerte">Rapports</span>
+    </nav>
+
+    @if (session.utilisateur(); as utilisateur) {
+      <div class="nav__pied">
+        {{ utilisateur.nomComplet }}
+        <span class="nav__pied-role">Agent · Niveau 2</span>
+      </div>
+    }
+  </aside>
+
+  <div class="coque__droite">
+    <div class="coque__barre">
+      <span class="coque__equipe">Équipe Facturation</span>
+      @if (session.utilisateur(); as utilisateur) {
+        <div class="coque__identite">
+          <sd-bloc-identite
+            [utilisateur]="utilisateur"
+            rattachement="SupportDesk · Niveau 2"
+            (deconnexion)="deconnecter()"
+          />
+        </div>
+      }
+    </div>
+
+    <main class="coque__contenu">
+      <router-outlet />
+    </main>
+  </div>
+</div>

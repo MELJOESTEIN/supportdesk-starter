@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: legacy-crm
+  webservices:
+    # Valeur par défaut de Boot 4, écrite explicitement : ce n'est plus /ws depuis Boot 4.
+    path: /services
+
+server:
+  port: 8080
+
+# Actuator fermé par défaut, health seul ouvert : c'est ce que sonde le healthcheck Compose.
+management:
+  endpoints:
+    access:
+      default: none
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      access: read-only
+      show-details: never
+
+legacy-crm:
+  # Latence volontaire du système d'origine. Voir LatenceLegacy.
+  latence: 400ms
+
+logging:
+  level:
+    org.springframework.ws.server.MessageTracing.sent: INFO

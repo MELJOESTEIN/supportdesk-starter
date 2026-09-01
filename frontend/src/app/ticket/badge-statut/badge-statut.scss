@@ -1,0 +1,46 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 10px;
+  font: 600 var(--sd-fs-1) / 1 var(--sd-font-mono);
+  letter-spacing: var(--sd-track-caps);
+  white-space: nowrap;
+
+  &__libelle--barre {
+    text-decoration: line-through;
+  }
+}
+
+/* Pilule + bordure pleine + disque plein */
+.badge--ouvert {
+  border-radius: 11px;
+  background: var(--sd-status-open-bg);
+  color: var(--sd-status-open-fg);
+  border: var(--sd-border-w) solid var(--sd-status-open-border);
+}
+
+/* Angle droit + bordure TIRETÉE + demi-disque */
+.badge--en_cours {
+  border-radius: var(--sd-radius-1);
+  background: var(--sd-status-progress-bg);
+  color: var(--sd-status-progress-fg);
+  border: var(--sd-border-w) dashed var(--sd-status-progress-border);
+}
+
+/* Aplat foncé + texte inversé + coche */
+.badge--resolu {
+  border-radius: var(--sd-radius-1);
+  background: var(--sd-status-resolved-bg);
+  color: var(--sd-status-resolved-fg);
+  border: var(--sd-border-w) solid var(--sd-status-resolved-border);
+}
+
+/* Angle droit + libellé barré + croix */
+.badge--ferme {
+  border-radius: var(--sd-radius-1);
+  background: var(--sd-status-closed-bg);
+  color: var(--sd-status-closed-fg);
+  border: var(--sd-border-w) solid var(--sd-status-closed-border);
+}

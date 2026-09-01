@@ -1,0 +1,55 @@
+@if (refuse()) {
+  <sd-acces-refuse [id]="id()" />
+} @else if (ticket.isLoading()) {
+  <sd-etat-chargement [nombreLignes]="4" />
+} @else if (ticket.error()) {
+  <sd-etat-erreur
+    titre="Ce ticket n'a pas pu être chargé"
+    (reessayer)="ticket.reload()"
+  />
+} @else if (ticket.value(); as t) {
+  <div class="detail">
+    <div class="detail__fil">
+      <a routerLink="/mes-tickets" class="detail__retour">← Mes tickets</a>
+
+      <h1 class="detail__titre">{{ t.sujet }}</h1>
+
+      <div class="detail__meta">
+        <span class="detail__ref">{{ t.reference }}</span>
+        <sd-badge-statut [statut]="t.statut" />
+        <span class="detail__ouverture">
+          Ouvert le {{ t.creeLe | dateLongue }} · {{ t.nombreMessages }} messages
+        </span>
+      </div>
+
+      <sd-fil-commentaires
+        [commentaires]="t.commentaires"
+        [usernameCourant]="usernameCourant()"
+      />
+
+      <div class="detail__composeur">
+        <sd-composeur (envoyer)="repondre($event)" />
+      </div>
+    </div>
+
+    <aside class="recap">
+      <h2 class="recap__titre">RÉCAPITULATIF</h2>
+      <dl class="recap__liste">
+        <dt>Référence</dt>
+        <dd class="recap__mono">{{ t.reference }}</dd>
+        <dt>Catégorie</dt>
+        <dd>{{ t.categorie | categorie }}</dd>
+        <dt>Créé le</dt>
+        <dd>{{ t.creeLe | dateCourte }}</dd>
+        <dt>Dernière act.</dt>
+        <dd>{{ t.derniereActiviteLe | dateRelative }}</dd>
+        <dt>Interlocuteur</dt>
+        <dd>{{ t.assigneA?.nomComplet ?? 'À attribuer' }}</dd>
+      </dl>
+
+      <div class="recap__actions">
+        <button type="button" class="recap__bouton">Clôturer ce ticket</button>
+      </div>
+    </aside>
+  </div>
+}

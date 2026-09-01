@@ -1,0 +1,46 @@
+<div class="entete">
+  <h1 class="entete__titre">Mes tickets</h1>
+
+  @if (page.hasValue() && page.value(); as p) {
+    <span class="entete__compte">{{ p.total }} ticket{{ p.total > 1 ? 's' : '' }}</span>
+  }
+
+  <div class="entete__actions">
+    <label class="recherche">
+      <span aria-hidden="true" class="recherche__icone">⌕</span>
+      <input
+        type="search"
+        placeholder="Rechercher dans mes tickets"
+        aria-label="Rechercher dans mes tickets"
+        [value]="recherche()"
+        (input)="chercher($any($event.target).value)"
+      />
+    </label>
+
+    <a routerLink="/mes-tickets/nouveau" class="entete__bouton">Nouveau ticket</a>
+  </div>
+</div>
+
+<div class="carte">
+  @if (page.isLoading()) {
+    <sd-etat-chargement [nombreLignes]="6" />
+  } @else if (page.error()) {
+    <sd-etat-erreur reference="ERR-8F2C41" (reessayer)="page.reload()" />
+  } @else if (page.value(); as p) {
+    @if (p.contenu.length === 0) {
+      <sd-etat-vide
+        titre="Aucun ticket ne correspond"
+        [explication]="
+          aDesFiltres()
+            ? 'Votre recherche ne renvoie aucun résultat.'
+            : 'Vous n\'avez pas encore ouvert de ticket.'
+        "
+        [actionPrincipale]="aDesFiltres() ? 'Retirer les filtres' : null"
+        (principale)="reinitialiser()"
+      />
+    } @else {
+      <sd-tableau-tickets [tickets]="p.contenu" variante="client" baseLien="/tickets" />
+      <sd-pagination [page]="p" (changerPage)="allerPage($event)" />
+    }
+  }
+</div>

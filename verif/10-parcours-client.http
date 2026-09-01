@@ -1,0 +1,82 @@
+### Parcours nominal d'un client
+#
+# Joue d'abord 00-tokens.http pour disposer de {{jetonAlice.response.body.access_token}}.
+
+@api = http://localhost:8080
+@alice = {{jetonAlice.response.body.access_token}}
+
+### 1 · Mes tickets
+# La réponse ne contient que des tickets de CLI-0001. Le périmètre vient du jeton, pas
+# d'un paramètre : voir 40-bola.http pour la démonstration.
+GET {{api}}/api/tickets?taille=10
+Authorization: Bearer {{alice}}
+
+### 2 · Le détail d'un de mes tickets
+GET {{api}}/api/tickets/1
+Authorization: Bearer {{alice}}
+
+###
+# Regarde `commentaires` : trois messages, tous `PUBLIC`, et `evenements` est vide.
+# Compare avec 20-parcours-agent.http, requête 2, sur LE MÊME ticket.
+
+### 3 · Ouvrir un ticket
+POST {{api}}/api/tickets
+Authorization: Bearer {{alice}}
+Content-Type: application/json
+
+{
+  "sujet": "Le relevé de juillet n'arrive pas",
+  "categorie": "FACTURATION",
+  "description": "Bonjour, le relevé de juillet n'est pas arrivé par courriel."
+}
+
+### 4 · Tenter d'imposer un statut, une priorité, un propriétaire
+# Rien de tout cela n'est accepté : le DTO d'entrée ne les contient pas. La réponse
+# revient en OUVERT / NORMALE / CLI-0001, quoi qu'on écrive ici.
+POST {{api}}/api/tickets
+Authorization: Bearer {{alice}}
+Content-Type: application/json
+
+{
+  "sujet": "Essai d'affectation en masse",
+  "categorie": "AUTRE",
+  "description": "Test",
+  "statut": "RESOLU",
+  "priorite": "HAUTE",
+  "assigneA": "bob",
+  "crmClientRef": "CLI-0002"
+}
+
+### 5 · Répondre sur mon ticket
+POST {{api}}/api/tickets/1/commentaires
+Authorization: Bearer {{alice}}
+Content-Type: application/json
+
+{ "contenu": "Merci, je reste en attente.", "visibilite": "PUBLIC" }
+
+### 6 · Tenter d'écrire une note interne : 403
+# Un client ne peut pas écrire dans le canal réservé à l'équipe support.
+POST {{api}}/api/tickets/1/commentaires
+Authorization: Bearer {{alice}}
+Content-Type: application/json
+
+{ "contenu": "Ceci devrait être invisible", "visibilite": "INTERNE" }
+
+### 7 · Tenter de clôturer soi-même : 403
+# Le bouton n'existe pas dans l'interface. Ce n'est pas ce qui protège l'endpoint.
+PATCH {{api}}/api/tickets/1
+Authorization: Bearer {{alice}}
+Content-Type: application/json
+
+{ "statut": "RESOLU" }
+
+### 8 · Le tableau de bord agent : 403
+GET {{api}}/api/tableau-de-bord
+Authorization: Bearer {{alice}}
+
+### 9 · Une entrée invalide : ProblemDetail, pas une trace
+POST {{api}}/api/tickets
+Authorization: Bearer {{alice}}
+Content-Type: application/json
+
+{ "sujet": "   ", "categorie": "FACTURATION", "description": "" }

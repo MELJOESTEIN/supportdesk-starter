@@ -1,0 +1,29 @@
+<div class="coque">
+  <header class="coque__entete">
+    <span class="coque__marque">SUPPORTDESK</span>
+    <span class="coque__espace">Espace client</span>
+
+    <nav class="coque__nav" aria-label="Navigation principale">
+      <a routerLink="/mes-tickets" routerLinkActive="coque__lien--actif" class="coque__lien">
+        Mes tickets
+      </a>
+      <span class="coque__lien coque__lien--inerte" aria-disabled="true">
+        Base de connaissances
+      </span>
+    </nav>
+
+    @if (session.utilisateur(); as utilisateur) {
+      <div class="coque__identite">
+        <sd-bloc-identite
+          [utilisateur]="utilisateur"
+          rattachement="Transports Nord"
+          (deconnexion)="deconnecter()"
+        />
+      </div>
+    }
+  </header>
+
+  <main class="coque__contenu">
+    <router-outlet />
+  </main>
+</div>

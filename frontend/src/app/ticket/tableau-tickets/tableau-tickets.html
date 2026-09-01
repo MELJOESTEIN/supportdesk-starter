@@ -1,0 +1,76 @@
+<table class="tableau">
+  <thead>
+    <tr>
+      @if (variante() === 'agent') {
+        <th class="tableau__case">
+          <input type="checkbox" aria-label="Tout sélectionner" />
+        </th>
+      }
+      <th class="tableau__col tableau__col--ref">RÉF</th>
+      <th class="tableau__col">SUJET</th>
+      @if (variante() === 'agent') {
+        <th class="tableau__col tableau__col--client">CLIENT</th>
+        <th class="tableau__col tableau__col--assigne">ASSIGNÉ À</th>
+        <th class="tableau__col tableau__col--priorite">PRIORITÉ</th>
+      }
+      <th class="tableau__col tableau__col--statut">STATUT</th>
+      @if (variante() === 'client') {
+        <th class="tableau__col tableau__col--date">CRÉÉ LE</th>
+      }
+      <th class="tableau__col tableau__col--activite">DERNIÈRE ACTIVITÉ ↓</th>
+      @if (variante() === 'client') {
+        <th class="tableau__col tableau__col--msg">MSG</th>
+      }
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (ticket of tickets(); track ticket.id) {
+      <tr class="tableau__ligne" [class.tableau__ligne--alerte]="ticket.slaDepasse">
+        @if (variante() === 'agent') {
+          <td class="tableau__case">
+            <input type="checkbox" [attr.aria-label]="'Sélectionner ' + ticket.reference" />
+          </td>
+        }
+
+        <td class="tableau__ref">{{ ticket.reference }}</td>
+
+        <td>
+          <a [routerLink]="[baseLien(), ticket.id]" class="tableau__sujet">{{ ticket.sujet }}</a>
+          @if (ticket.slaDepasse) {
+            <span class="tableau__sla">SLA DÉPASSÉ</span>
+          }
+        </td>
+
+        @if (variante() === 'agent') {
+          <td class="tableau__secondaire">
+            {{ ticket.clientRaisonSociale ?? ticket.crmClientRef }}
+          </td>
+          <td class="tableau__secondaire">{{ ticket.assigneA?.nomComplet ?? 'Non assigné' }}</td>
+          <td class="tableau__priorite" [class]="'tableau__priorite--' + ticket.priorite.toLowerCase()">
+            {{ ticket.priorite }}
+          </td>
+        }
+
+        <td><sd-badge-statut [statut]="ticket.statut" /></td>
+
+        @if (variante() === 'client') {
+          <td class="tableau__date">{{ ticket.creeLe | dateCourte }}</td>
+        }
+
+        <td class="tableau__secondaire" [title]="ticket.derniereActiviteLe | dateLongue">
+          {{ ticket.derniereActiviteLe | dateRelative }}
+          @if (ticket.derniereActivitePar) {
+            · <span class="tableau__auteur" [title]="ticket.derniereActivitePar">{{
+            ticket.derniereActivitePar | nomAbrege
+          }}</span>
+          }
+        </td>
+
+        @if (variante() === 'client') {
+          <td class="tableau__msg">{{ ticket.nombreMessages }}</td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

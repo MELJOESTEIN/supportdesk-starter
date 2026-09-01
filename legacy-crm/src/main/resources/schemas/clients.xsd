@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Contrat du référentiel clients ACME (système legacy, 2009).
+  Ce fichier est la source de vérité : le WSDL en est dérivé, et les classes Java
+  sont générées par XJC au build. Ne pas écrire de POJO à la main.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://legacy.acme.fr/crm"
+           targetNamespace="http://legacy.acme.fr/crm"
+           elementFormDefault="qualified">
+
+  <xs:complexType name="Client">
+    <xs:sequence>
+      <xs:element name="clientRef"      type="xs:string"/>
+      <xs:element name="raisonSociale"  type="xs:string"/>
+      <xs:element name="siret"          type="xs:string"/>
+      <xs:element name="contactEmail"   type="xs:string"/>
+      <xs:element name="contactTel"     type="xs:string"/>
+      <xs:element name="actif"          type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- GetClient : une référence exacte, un client. Référence inconnue => SOAP Fault. -->
+  <xs:element name="GetClientRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="clientRef" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="GetClientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="client" type="tns:Client"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- SearchClients : motif sur la raison sociale. Motif vide => Fault CRITERE_OBLIGATOIRE. -->
+  <xs:element name="SearchClientsRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="namePattern" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="SearchClientsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="client" type="tns:Client" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

@@ -1,0 +1,54 @@
+<div class="fil">
+  @for (commentaire of commentaires(); track commentaire.id) {
+    @if (commentaire.visibilite === 'INTERNE') {
+      <article class="fil__bloc fil__bloc--interne">
+        <span class="fil__avatar fil__avatar--interne" aria-hidden="true">
+          {{ initiales(commentaire.auteurNom) }}
+        </span>
+
+        <div class="note">
+          <div class="note__hachures" aria-hidden="true"></div>
+          <div class="note__bandeau">
+            <span aria-hidden="true">🔒</span>
+            <span class="note__libelle">NOTE INTERNE · NON VISIBLE PAR LE CLIENT</span>
+            <span class="note__meta">
+              {{ commentaire.auteurNom }} · {{ commentaire.creeLe | dateRelative }}
+            </span>
+          </div>
+          <div class="note__contenu">{{ commentaire.contenu }}</div>
+        </div>
+      </article>
+    } @else {
+      <article class="fil__bloc">
+        <span
+          class="fil__avatar"
+          [class.fil__avatar--agent]="commentaire.auteurType === 'AGENT'"
+          aria-hidden="true"
+        >{{ initiales(commentaire.auteurNom) }}</span>
+
+        <div class="bulle" [class.bulle--agent]="commentaire.auteurType === 'AGENT'">
+          <header class="bulle__entete" [class.bulle__entete--agent]="commentaire.auteurType === 'AGENT'">
+            <span class="bulle__auteur">{{ commentaire.auteurNom }}</span>
+
+            @if (commentaire.auteurType === 'AGENT') {
+              <span class="bulle__role">
+                {{ vueAgent() ? 'RÉPONSE ENVOYÉE AU CLIENT' : 'SUPPORT SUPPORTDESK' }}
+              </span>
+            } @else if (vueAgent()) {
+              <span class="bulle__role bulle__role--client">CLIENT</span>
+            } @else if (commentaire.auteurUsername === usernameCourant()) {
+              <span class="bulle__role bulle__role--client">vous</span>
+            }
+
+            <time class="bulle__date" [attr.datetime]="commentaire.creeLe"
+                  [title]="commentaire.creeLe | dateLongue">
+              {{ commentaire.creeLe | dateRelative }}
+            </time>
+          </header>
+
+          <div class="bulle__contenu">{{ commentaire.contenu }}</div>
+        </div>
+      </article>
+    }
+  }
+</div>

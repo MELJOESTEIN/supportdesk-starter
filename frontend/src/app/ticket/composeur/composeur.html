@@ -1,0 +1,92 @@
+@if (modeAgent()) {
+  <div class="onglets" role="tablist">
+    <button
+      type="button"
+      role="tab"
+      class="onglets__onglet onglets__onglet--public"
+      [class.onglets__onglet--actif]="visibilite() === 'PUBLIC'"
+      [attr.aria-selected]="visibilite() === 'PUBLIC'"
+      (click)="choisir('PUBLIC')"
+    >
+      <span aria-hidden="true">✉</span>Répondre au client
+    </button>
+    <button
+      type="button"
+      role="tab"
+      class="onglets__onglet onglets__onglet--interne"
+      [class.onglets__onglet--actif]="visibilite() === 'INTERNE'"
+      [attr.aria-selected]="visibilite() === 'INTERNE'"
+      (click)="choisir('INTERNE')"
+    >
+      <span aria-hidden="true">🔒</span>Note interne
+    </button>
+  </div>
+}
+
+@if (visibilite() === 'INTERNE') {
+  <div class="zone zone--interne">
+    <div class="zone__hachures" aria-hidden="true"></div>
+    <div class="zone__bandeau zone__bandeau--interne">
+      <span aria-hidden="true">🔒</span>
+      <span class="zone__libelle">NOTE INTERNE · NON VISIBLE PAR LE CLIENT</span>
+      <span class="zone__meta">Visible par l'équipe support uniquement</span>
+    </div>
+    <textarea
+      class="zone__saisie zone__saisie--interne"
+      placeholder="Note pour l'équipe — le client ne la verra pas."
+      [value]="contenu()"
+      (input)="saisir($any($event.target).value)"
+      aria-label="Note interne"
+    ></textarea>
+    <div class="zone__pied zone__pied--interne">
+      <button
+        type="button"
+        class="zone__envoyer zone__envoyer--interne"
+        [disabled]="!contenu().trim()"
+        (click)="soumettre()"
+      >
+        <span aria-hidden="true">🔒</span>Enregistrer la note interne
+      </button>
+    </div>
+    <div class="zone__hachures" aria-hidden="true"></div>
+  </div>
+} @else {
+  <div class="zone" [class.zone--publique-agent]="modeAgent()">
+    <div class="zone__bandeau" [class.zone__bandeau--agent]="modeAgent()">
+      @if (modeAgent()) {
+        <span aria-hidden="true">✉</span>
+        <span class="zone__libelle">
+          RÉPONSE PUBLIQUE · SERA ENVOYÉE À {{ destinataire().toUpperCase() }}
+        </span>
+      } @else {
+        <span class="zone__libelle">RÉPONDRE</span>
+      }
+    </div>
+    <textarea
+      class="zone__saisie"
+      [placeholder]="modeAgent() ? 'Votre réponse au client…' : 'Votre réponse…'"
+      [value]="contenu()"
+      (input)="saisir($any($event.target).value)"
+      aria-label="Réponse publique"
+    ></textarea>
+    <div class="zone__pied">
+      @if (modeAgent()) {
+        <label class="zone__option">
+          <input type="checkbox" [checked]="basculerStatut()"
+                 (change)="basculerStatut.set($any($event.target).checked)" />
+          Passer à <span class="zone__code">EN_COURS</span>
+        </label>
+      } @else {
+        <span class="zone__note">Visible par l'équipe support.</span>
+      }
+      <button
+        type="button"
+        class="zone__envoyer"
+        [disabled]="!contenu().trim()"
+        (click)="soumettre()"
+      >
+        {{ modeAgent() ? 'Envoyer au client' : 'Envoyer la réponse' }}
+      </button>
+    </div>
+  </div>
+}

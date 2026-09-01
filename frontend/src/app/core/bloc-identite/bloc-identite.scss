@@ -1,0 +1,44 @@
+.identite {
+  display: flex;
+  align-items: center;
+  gap: var(--sd-space-3);
+
+  &__nom {
+    display: grid;
+    gap: 2px;
+    justify-items: end;
+  }
+
+  &__nom-complet {
+    font-size: var(--sd-fs-2);
+    font-weight: var(--sd-weight-medium);
+    line-height: 1.2;
+  }
+
+  &__rattachement {
+    font: var(--sd-weight-regular) 11px / 1.2 var(--sd-font-mono);
+    color: var(--sd-text-3);
+    text-transform: uppercase;
+  }
+
+  &__separateur {
+    width: 1px;
+    height: 24px;
+    background: var(--sd-border);
+  }
+
+  &__deconnexion {
+    height: var(--sd-control-h);
+    padding: 0 var(--sd-space-3);
+    border: var(--sd-border-w) solid var(--sd-border-strong);
+    border-radius: var(--sd-radius-2);
+    background: var(--sd-surface);
+    font-size: 13px;
+    color: var(--sd-text);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--sd-surface-2);
+    }
+  }
+}

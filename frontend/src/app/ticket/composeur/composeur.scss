@@ -1,0 +1,178 @@
+.onglets {
+  display: flex;
+  gap: var(--sd-space-1);
+
+  &__onglet {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sd-space-2);
+    height: 40px;
+    padding: 0 var(--sd-space-4);
+    border-radius: var(--sd-radius-2) var(--sd-radius-2) 0 0;
+    font-size: var(--sd-fs-2);
+    font-weight: var(--sd-weight-semibold);
+    cursor: pointer;
+    margin-bottom: -2px;
+
+    &--public {
+      border: 2px solid var(--sd-accent);
+      background: var(--sd-surface);
+      color: var(--sd-accent);
+    }
+
+    &--interne {
+      border: 2px solid var(--sd-internal-border);
+      background: var(--sd-internal-bg);
+      color: var(--sd-internal-fg);
+    }
+
+    &--actif {
+      z-index: 2;
+      position: relative;
+    }
+
+    &--public.onglets__onglet--actif {
+      border-bottom-color: var(--sd-surface);
+    }
+
+    &--interne.onglets__onglet--actif {
+      border-bottom-color: var(--sd-internal-bg);
+    }
+  }
+}
+
+.zone {
+  background: var(--sd-surface);
+  border: var(--sd-border-w) solid var(--sd-border-strong);
+  border-radius: var(--sd-radius-2);
+  overflow: hidden;
+
+  &--publique-agent {
+    border: 2px solid var(--sd-accent);
+    border-radius: 0 var(--sd-radius-2) var(--sd-radius-2) var(--sd-radius-2);
+  }
+
+  /* Le mode interne change TOUT : couleur, bordure, hachures, ombre, police de saisie. */
+  &--interne {
+    border: 2px solid var(--sd-internal-border);
+    border-radius: 0 var(--sd-radius-2) var(--sd-radius-2) var(--sd-radius-2);
+    background: var(--sd-internal-bg);
+    box-shadow: 0 0 0 4px rgba(74, 31, 99, 0.12);
+  }
+
+  &__hachures {
+    height: 10px;
+    background: var(--sd-internal-hatch);
+    background-color: var(--sd-internal-bg);
+  }
+
+  &__bandeau {
+    display: flex;
+    align-items: center;
+    gap: var(--sd-space-2);
+    padding: 10px var(--sd-space-4);
+    background: var(--sd-surface-2);
+    border-bottom: var(--sd-border-w) solid var(--sd-border);
+    font: var(--sd-weight-semibold) var(--sd-fs-1) / 1 var(--sd-font-mono);
+    letter-spacing: var(--sd-track-caps);
+    color: var(--sd-text-3);
+
+    &--agent {
+      background: var(--sd-accent-tint);
+      border-bottom-color: var(--sd-accent);
+      color: var(--sd-accent);
+    }
+
+    &--interne {
+      background: var(--sd-internal-surface);
+      color: var(--sd-internal-on-dark);
+      border-bottom: 0;
+    }
+  }
+
+  &__libelle {
+    letter-spacing: 0.08em;
+  }
+
+  &__meta {
+    margin-left: auto;
+    font-size: var(--sd-fs-1);
+    opacity: 0.85;
+    letter-spacing: 0;
+  }
+
+  &__saisie {
+    display: block;
+    width: 100%;
+    min-height: 112px;
+    border: 0;
+    outline: none;
+    resize: vertical;
+    padding: var(--sd-space-4);
+    font-family: var(--sd-font-sans);
+    font-size: var(--sd-fs-3);
+    line-height: var(--sd-lh-normal);
+    color: var(--sd-text);
+    background: var(--sd-surface);
+
+    &--interne {
+      font-family: var(--sd-font-mono);
+      font-size: 15px;
+      color: var(--sd-internal-fg);
+      background: var(--sd-internal-bg);
+    }
+  }
+
+  &__pied {
+    display: flex;
+    align-items: center;
+    gap: var(--sd-space-3);
+    padding: var(--sd-space-3) var(--sd-space-4);
+    border-top: var(--sd-border-w) solid var(--sd-border);
+    background: var(--sd-surface);
+
+    &--interne {
+      border-top: 2px solid var(--sd-internal-border);
+      background: var(--sd-internal-bg);
+    }
+  }
+
+  &__option,
+  &__note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--sd-fs-2);
+    color: var(--sd-text-2);
+  }
+
+  &__code {
+    font: var(--sd-weight-semibold) var(--sd-fs-1) / 1 var(--sd-font-mono);
+  }
+
+  &__envoyer {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sd-space-2);
+    height: 40px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: var(--sd-radius-2);
+    background: var(--sd-accent);
+    color: var(--sd-accent-fg);
+    font-size: var(--sd-fs-2);
+    font-weight: var(--sd-weight-semibold);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &--interne {
+      background: var(--sd-internal-surface);
+      color: var(--sd-internal-on-dark);
+    }
+  }
+}

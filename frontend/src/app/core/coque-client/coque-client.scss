@@ -1,0 +1,61 @@
+.coque {
+  min-height: 100vh;
+  background: var(--sd-bg);
+
+  &__entete {
+    display: flex;
+    align-items: center;
+    gap: var(--sd-space-5);
+    padding: 0 var(--sd-space-5);
+    height: var(--sd-entete-h);
+    background: var(--sd-surface);
+    border-bottom: var(--sd-border-w) solid var(--sd-border);
+  }
+
+  &__marque {
+    font: var(--sd-weight-semibold) var(--sd-fs-2) / 1 var(--sd-font-mono);
+    letter-spacing: var(--sd-track-caps);
+  }
+
+  &__espace {
+    font-size: var(--sd-fs-1);
+    color: var(--sd-text-3);
+    border-left: var(--sd-border-w) solid var(--sd-border);
+    padding-left: var(--sd-space-5);
+  }
+
+  &__nav {
+    display: flex;
+    gap: var(--sd-space-1);
+  }
+
+  &__lien {
+    padding: 6px var(--sd-space-3);
+    font-size: var(--sd-fs-2);
+    color: var(--sd-text-2);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+
+    &--actif {
+      color: var(--sd-text);
+      font-weight: var(--sd-weight-medium);
+      border-bottom-color: var(--sd-accent);
+    }
+
+    /* Présent dans la maquette, sans écran derrière : inerte et signalé comme tel. */
+    &--inerte {
+      color: var(--sd-text-3);
+      cursor: default;
+    }
+  }
+
+  &__identite {
+    margin-left: auto;
+  }
+
+  &__contenu {
+    max-width: var(--sd-largeur-max);
+    margin: 0 auto;
+    padding: var(--sd-space-5);
+  }
+}
