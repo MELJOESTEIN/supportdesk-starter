@@ -50,6 +50,21 @@ curl -s -o /dev/null -w "URL nue  %{http_code}\n" localhost:8082/services
 > **Le piège d'URL.** `/services` est une **adresse d'envoi**, pas une page : elle n'accepte que
 > `POST`. Beaucoup d'étudiants testent l'URL nue, voient `405` et croient le service cassé.
 
+### Il n'y a pas d'interface, et c'est normal
+
+<http://localhost:8082/services/clients.wsdl> s'ouvre dans un navigateur — le service le sert en
+`text/xml`. Mais **il n'y a pas d'équivalent de Swagger UI ou de GraphiQL** : SOAP est plus ancien
+que l'idée d'explorateur web intégré.
+
+| Protocole | Contrat | Interface |
+|---|---|---|
+| REST | <http://localhost:8080/v3/api-docs> | <http://localhost:8080/swagger-ui.html> |
+| GraphQL | le schéma, introspectable | <http://localhost:8080/graphiql> |
+| **SOAP** | ce WSDL | **aucune** — l'outil de référence est SoapUI, en application de bureau |
+
+Tu vas donc travailler au `curl`. C'est austère, et c'est exactement ce qu'un vrai fournisseur te
+donnera : un WSDL, et débrouille-toi.
+
 ### Les opérations disponibles
 
 ```bash

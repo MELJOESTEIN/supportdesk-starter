@@ -33,6 +33,69 @@ Le profil `dev` allume les logs SQL. Tu en auras besoin à l'étape 6.
 
 ---
 
+## 0 bis · Les trois explorateurs, et ce qu'ils disent de chaque protocole
+
+Avant de taper une seule commande, ouvre ces trois adresses dans ton navigateur. Elles montrent
+une différence de fond entre les trois protocoles.
+
+| Protocole | À ouvrir | Ce que c'est |
+|---|---|---|
+| **REST** | <http://localhost:8080/swagger-ui.html> | Swagger UI — la doc **navigable**, avec un bouton « Try it out » |
+| **REST** | <http://localhost:8080/v3/api-docs> | le même contrat, en JSON, pour les machines |
+| **GraphQL** | <http://localhost:8080/graphiql> | GraphiQL — un éditeur avec **complétion** sur le schéma |
+| **SOAP** | <http://localhost:8082/services/clients.wsdl> | le WSDL brut. **Il n'y a pas d'interface.** |
+
+### La différence qui compte
+
+```
+                doc machine              interface web       introspection
+REST            /v3/api-docs             Swagger UI          non
+                généré DEPUIS le code                        (la doc décrit, elle n'impose rien)
+
+GraphQL         le schéma                GraphiQL            oui, native
+                écrit AVANT le code                          (l'éditeur connaît tous les champs)
+
+SOAP            le WSDL                  aucune              oui
+                imposé PAR le fournisseur                    (le WSDL EST l'introspection)
+```
+
+**Ce qu'il faut en retenir :**
+
+- Le contrat REST est **descriptif** : springdoc le génère en lisant tes `@RestController`. Change
+  ton code, la doc suit. Elle ne t'empêche jamais rien.
+- Le contrat GraphQL est **prescriptif** : tu écris le schéma, Spring y raccroche tes méthodes. Un
+  champ absent du schéma n'existe pas, même si la méthode Java existe.
+- Le contrat SOAP est **imposé** : le fournisseur publie le WSDL, tu génères ton code depuis lui.
+  Tu n'as pas voix au chapitre.
+
+### Vérifie les comptes toi-même
+
+```bash
+curl -s localhost:8080/v3/api-docs | python3 -c "
+import sys,json; d=json.load(sys.stdin); p=d['paths']
+n=sum(len([m for m in v if m in ('get','post','put','patch','delete')]) for v in p.values())
+print(f\"{len(p)} chemins · {n} opérations\")"
+```
+
+**Attendu : `8 chemins · 10 opérations`.** C'est exactement le nombre d'endpoints REST du projet —
+et tu peux le recouper en comptant les annotations dans le code.
+
+### Pourquoi SOAP n'a pas d'interface
+
+Ce n'est pas un oubli : SOAP est plus ancien que l'idée d'explorateur web intégré. L'outil de
+référence est **SoapUI**, une application de bureau — écartée de cette formation parce qu'elle fait
+doublon avec ce que tu sais déjà faire au `curl`.
+
+Le WSDL s'ouvre quand même dans un navigateur (`Content-Type: text/xml`) : tu peux le lire, le
+déplier, chercher dedans. C'est austère, et c'est tout ce qu'un vrai fournisseur te donnera.
+
+> **Attention à ne pas confondre ces trois adresses avec les API elles-mêmes.** `/swagger-ui.html`
+> et `/graphiql` sont des **outils de développement**, coupés en production. `/v3/api-docs` et le
+> WSDL sont des **contrats**. Les vraies API sont `/api/**`, `POST /graphql` et
+> `POST :8082/services`.
+
+---
+
 ## 1 · Le jeton, d'abord
 
 Sans jeton, tout répond `401`. **Toutes les commandes de ce guide se lancent depuis la racine du
