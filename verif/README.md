@@ -16,6 +16,17 @@ toute la leçon du J2 en une page.
 
 ## Ordre de lecture en séance
 
+## Deux guides pas à pas
+
+Avant les collections `.http`, deux parcours guidés, avec la sortie attendue à chaque étape :
+
+| Guide | Ce qu'on y fait |
+|---|---|
+| **[`GUIDE-PRATIQUE.md`](GUIDE-PRATIQUE.md)** | éprouver REST, GraphQL et SOAP — dix étapes |
+| **[`GUIDE-SOAP.md`](GUIDE-SOAP.md)** | SOAP de bout en bout : contrat, faults, façade, panne |
+
+## Les collections
+
 | Fichier | Ce qu'il montre |
 |---|---|
 | `00-tokens.http` | où naît un jeton, et ce qu'il contient |
