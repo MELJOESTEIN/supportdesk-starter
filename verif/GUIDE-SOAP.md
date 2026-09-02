@@ -23,12 +23,29 @@ cd backend && ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
 Deux raccourcis à coller dans ton terminal — tout le guide s'appuie dessus :
 
 ```bash
-env() { echo "<?xml version=\"1.0\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body>$1</soap:Body></soap:Envelope>"; }
+crm_enveloppe() { echo "<?xml version=\"1.0\"?><soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body>$1</soap:Body></soap:Envelope>"; }
 
-soap() { curl -s -X POST http://localhost:8082/services \
-           -H 'Content-Type: text/xml;charset=UTF-8' \
-           -w "\n__ HTTP %{http_code} · %{time_total}s\n" -d "$(env "$1")"; }
+crm_appel() { curl -s -X POST http://localhost:8082/services \
+                -H 'Content-Type: text/xml;charset=UTF-8' \
+                -w "\n__ HTTP %{http_code} · %{time_total}s\n" -d "$(crm_enveloppe "$1")"; }
 ```
+
+**Vérifie tout de suite qu'elles sont bien définies :**
+
+```bash
+type crm_appel | head -1
+```
+
+**Attendu : `crm_appel is a function`.** Si tu obtiens `not found`, tu ne les as pas collées dans
+*ce* terminal — une fonction shell ne survit pas à l'ouverture d'un nouvel onglet.
+
+> **Pourquoi ces noms longs.** Les noms courts et évidents sont déjà pris. `soap` est un binaire de
+> bio-informatique présent sur beaucoup de distributions Linux, et `env` est une commande POSIX
+> fondamentale. Appeler ta fonction `soap` te vaudrait, dans un terminal neuf, une page d'aide de
+> **SOAPaligner** au lieu de ta requête — et redéfinir `env` casserait des scripts sans prévenir.
+>
+> C'est une leçon en soi : **avant de nommer une commande, vérifie qu'elle est libre** avec
+> `command -v <nom>`.
 
 > **Ne lis pas les sources de `legacy-crm/`.** Elles sont dans le dépôt pour que l'infrastructure
 > démarre sans préparation, mais un vrai legacy ne t'ouvre pas son code. Tu as le WSDL — c'est tout
@@ -99,7 +116,7 @@ Le WSDL répond à la première. Les deux autres se découvrent en essayant — 
 ### `GetClient` — une référence, une fiche
 
 ```bash
-soap '<GetClientRequest xmlns="http://legacy.acme.fr/crm"><clientRef>CLI-0001</clientRef></GetClientRequest>'
+crm_appel '<GetClientRequest xmlns="http://legacy.acme.fr/crm"><clientRef>CLI-0001</clientRef></GetClientRequest>'
 ```
 
 **Attendu :** du XML contenant
@@ -120,7 +137,7 @@ namespace compte, pas le préfixe choisi pour l'écrire.
 ### `SearchClients` — un motif, plusieurs fiches
 
 ```bash
-soap '<SearchClientsRequest xmlns="http://legacy.acme.fr/crm"><namePattern>atelier</namePattern></SearchClientsRequest>'
+crm_appel '<SearchClientsRequest xmlns="http://legacy.acme.fr/crm"><namePattern>atelier</namePattern></SearchClientsRequest>'
 ```
 
 **Attendu :** deux fiches — `Ateliers Sud` et `Atelier Vernet` — en ~0,5 s.
@@ -133,10 +150,10 @@ C'est l'étape la plus instructive du guide.
 
 ```bash
 echo "--- référence inconnue ---"
-soap '<GetClientRequest xmlns="http://legacy.acme.fr/crm"><clientRef>CLI-9999</clientRef></GetClientRequest>'
+crm_appel '<GetClientRequest xmlns="http://legacy.acme.fr/crm"><clientRef>CLI-9999</clientRef></GetClientRequest>'
 
 echo "--- motif de recherche vide ---"
-soap '<SearchClientsRequest xmlns="http://legacy.acme.fr/crm"><namePattern></namePattern></SearchClientsRequest>'
+crm_appel '<SearchClientsRequest xmlns="http://legacy.acme.fr/crm"><namePattern></namePattern></SearchClientsRequest>'
 ```
 
 **Attendu :**
@@ -164,7 +181,7 @@ __ HTTP 500
 ### Une opération qui n'existe pas
 
 ```bash
-soap '<InconnueRequest xmlns="http://legacy.acme.fr/crm"><x>1</x></InconnueRequest>'
+crm_appel '<InconnueRequest xmlns="http://legacy.acme.fr/crm"><x>1</x></InconnueRequest>'
 ```
 
 **Attendu : `404`.** Pas de fault : le service ne reconnaît même pas la demande. À distinguer du
@@ -176,7 +193,7 @@ cas précédent, où l'opération existait mais la donnée non.
 
 ```bash
 for i in 1 2 3; do
-  soap '<GetClientRequest xmlns="http://legacy.acme.fr/crm"><clientRef>CLI-0002</clientRef></GetClientRequest>' | tail -1
+  crm_appel '<GetClientRequest xmlns="http://legacy.acme.fr/crm"><clientRef>CLI-0002</clientRef></GetClientRequest>' | tail -1
 done
 ```
 

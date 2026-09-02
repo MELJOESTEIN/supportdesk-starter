@@ -211,7 +211,13 @@ fixer.** C'est la protection contre l'*affectation en masse* — et elle vient d
 
 ```bash
 gql() { curl -s -X POST -H "Authorization: Bearer $BOB" -H "Content-Type: application/json" -d "{\"query\":\"$1\"}" localhost:8080/graphql; }
+
+type gql | head -1        # doit répondre : gql is a function
 ```
+
+> Une fonction shell ne vit que dans le terminal où tu l'as collée. Si tu ouvres un nouvel onglet,
+> recolle-la. Et avant de nommer une commande, vérifie qu'elle est libre : `command -v <nom>`.
+> `soap`, par exemple, est déjà un binaire de bio-informatique sur beaucoup de distributions.
 
 ### Les trois requêtes
 
