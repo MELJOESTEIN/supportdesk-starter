@@ -16,14 +16,21 @@ toute la leçon du J2 en une page.
 
 ## Ordre de lecture en séance
 
-## Deux guides pas à pas
+## Trois guides pas à pas
 
-Avant les collections `.http`, deux parcours guidés, avec la sortie attendue à chaque étape :
+Avant les collections `.http`, trois parcours guidés, avec la sortie attendue à chaque étape :
 
 | Guide | Ce qu'on y fait |
 |---|---|
 | **[`GUIDE-PRATIQUE.md`](GUIDE-PRATIQUE.md)** | éprouver REST, GraphQL et SOAP — dix étapes |
 | **[`GUIDE-SOAP.md`](GUIDE-SOAP.md)** | SOAP de bout en bout : contrat, faults, façade, panne |
+| **[`GUIDE-SECURITE.md`](GUIDE-SECURITE.md)** | **attaquer son propre projet** — six manches, du jeton au `429` |
+
+## Le bonus
+
+**[`KIT-IA-CLAUDE-CODE.pdf`](KIT-IA-CLAUDE-CODE.pdf)** — cinq pages sur la configuration d'un
+projet pour travailler avec Claude Code : `CLAUDE.md`, règles conditionnelles, skills,
+subagents, hooks, et surtout ce qu'un agent ne trouvera jamais tout seul.
 
 ## Les collections
 
